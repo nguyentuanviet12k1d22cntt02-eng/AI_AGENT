@@ -205,18 +205,18 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
     3: {
-      timing: "20 phút",
-      objective: "Giải mã cơ chế Cửa sổ ngữ cảnh (Context Window) & Hiện tượng Lost in the Middle trong công việc văn phòng.",
+      timing: "15 phút",
+      objective: "Dùng sơ đồ dẫn chứng trực quan (Anthropic Research) giải thích cơ chế gửi yêu cầu & tích lũy ngữ cảnh (Multi-turn Accumulation) và 3 ý đúc kết cho công việc văn phòng.",
       talkingPoints: [
-        "Ví von mặt bàn làm việc: Context Window là bộ nhớ tức thời (RAM). AI không nhớ vĩnh viễn, mỗi lần hỏi là toàn bộ lịch sử chat phải nhét lại lên mặt bàn.",
-        "Khi bàn đầy (tràn token) $\rightarrow$ Những trang giấy cũ nhất rơi xuống đất (AI bắt đầu hay quên và trả lời lan man).",
-        "So sánh sức chứa: GPT-3.5 (16K ~12 trang) $\rightarrow$ GPT-4o (128K ~300 trang) $\rightarrow$ Claude 3.5 Sonnet (200K ~500 trang) $\rightarrow$ Gemini 1.5 Pro (2 TRIỆU tokens ~3.000 trang / 1h video).",
-        "Phân tích hiện tượng Lost in the Middle (Stanford): Cơ chế Attention nhớ rất tốt 20% đầu và 20% cuối, nhưng dễ bỏ quên các chi tiết ở giữa văn bản dài.",
-        "3 Quy tắc thực chiến: 1) Đặt yêu cầu cốt lõi ở đầu hoặc cuối prompt; 2) Lọc sạch dữ liệu rác trước khi nạp; 3) Chủ động mở New Chat khi đổi chủ đề để tránh nhiễm độc ngữ cảnh!"
+        "Chiếu hình ảnh sơ đồ thực tế (image.png): AI hoàn toàn KHÔNG có bộ nhớ tự động lưu như não người.",
+        "Phân tích Turn 1 -> Turn 2 -> Turn 3: Mỗi lần người dùng gửi 1 câu hỏi mới, toàn bộ lịch sử hỏi-đáp trước đó đều được hệ thống đóng gói và nạp lại vào Input của mô hình.",
+        "Càng chat dài, Input càng phình to -> AI càng tốn thời gian đọc lại từ đầu, làm tăng độ trễ và chi phí token.",
+        "Giải thích Vạch Cắt Ngữ Cảnh (Cut-off Line ✂️): Khi vượt quá sức chứa của Cửa sổ ngữ cảnh, những tin nhắn đầu tiên sẽ bị rơi ra ngoài -> AI quên sạch các yêu cầu/quy ước bạn đã dặn ở đầu buổi!",
+        "3 Ý ĐÚC KẾT THỰC CHIẾN: 1) AI không tự nhớ; 2) Tránh 'nhiễm độc ngữ cảnh' làm AI trả lời lan man/ảo giác; 3) Chủ động mở New Chat khi chuyển sang công việc hoặc tài liệu mới!"
       ],
       questions: [
-        "Tại sao khi nạp một file hợp đồng dài 50 trang vào hỏi, AI hay trả lời chung chung hoặc bỏ sót điều khoản nằm ở giữa?",
-        "Vì sao khi chuyển sang làm một bảng báo cáo khác, chúng ta nên mở New Chat thay vì tiếp tục chat trong luồng cũ?"
+        "Tại sao trong một phiên chat quá dài, AI lại bắt đầu quên các quy tắc ta đã dặn ở câu đầu tiên?",
+        "Vì sao khi chuyển sang xử lý bảng Excel mới, ta nên mở New Chat thay vì tiếp tục chat trong luồng cũ?"
       ]
     },
     4: {
@@ -390,6 +390,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (zoomChatGPT) {
     zoomChatGPT.addEventListener('click', () => {
       openLightbox('assets/chatgpt_trongxanh.png', 'Minh chứng thực tế trên OpenAI ChatGPT: "trong xanh."');
+    });
+  }
+
+  const zoomContextDiagram = document.getElementById('zoomContextDiagram');
+  if (zoomContextDiagram) {
+    zoomContextDiagram.addEventListener('click', () => {
+      openLightbox('assets/image.png', 'Minh chứng thực tế: Sơ đồ tích lũy ngữ cảnh khi gửi yêu cầu qua từng lượt chat (Anthropic Research)');
     });
   }
 
