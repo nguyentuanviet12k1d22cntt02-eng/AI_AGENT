@@ -529,6 +529,64 @@
               <div class="meta-item"><i class="fa-solid fa-desktop text-info"></i> <strong>02:50 - 03:33:</strong> Kích hoạt chế độ Canvas, tự động tạo Web Dashboard tương tác trực quan.</div>
             </div>
           </div>
+
+          <!-- MẸO THỰC CHIẾN / TROUBLESHOOTING: TẠI SAO PHẢI XUẤT VĂN BẢN TRƯỚC RỒI MỚI SANG NEW CHAT DỰNG CANVAS? -->
+          <div class="canvas-protip-box glass-card gsap-fade">
+            <div class="protip-header">
+              <div class="protip-title">
+                <i class="fa-solid fa-lightbulb text-warning"></i>
+                <span>Mẹo Thực Chiến: Vì Sao Phải Xuất Báo Cáo Trước Rồi Mới Mở "New Chat" Dựng Giao Diện Canvas?</span>
+              </div>
+              <span class="protip-tag"><i class="fa-solid fa-shield-halved"></i> Giải Mã Gemini Sandbox</span>
+            </div>
+
+            <p class="protip-desc">
+              Khi dùng Gemini Canvas, nhiều người gặp tình trạng <strong>chỉ sinh mã Code mà mất hẳn nút Preview</strong> (không xem trước được giao diện). Đây không phải do bạn viết prompt sai, mà xuất phát từ 4 nguyên nhân kỹ thuật sau:
+            </p>
+
+            <div class="protip-table-wrapper">
+              <table class="protip-table">
+                <thead>
+                  <tr>
+                    <th>Nguyên Nhân Kỹ Thuật</th>
+                    <th style="width: 130px;">Tần Suất Gặp</th>
+                    <th>Biểu Hiện & Bản Chất Vấn Đề</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1. File / Google Drive trong Context</strong></td>
+                    <td><span class="risk-tag risk-high"><i class="fa-solid fa-circle-exclamation"></i> Rất Cao</span></td>
+                    <td>Khi luồng chat có đính kèm file Excel hoặc dữ liệu Drive, cơ chế bảo mật sandbox của Google sẽ tự động vô hiệu hóa nút Preview để ngăn rò rỉ dữ liệu.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>2. Ngữ cảnh (Context) quá phức tạp</strong></td>
+                    <td><span class="risk-tag risk-high"><i class="fa-solid fa-circle-exclamation"></i> Khá Cao</span></td>
+                    <td>Đoạn chat quá dài, nhiều lượt hỏi đáp và tính toán số liệu lớn khiến trình biên dịch Canvas bị quá tải và không thể dựng web trực tiếp.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>3. Gemini Canvas UI Glitch</strong></td>
+                    <td><span class="risk-tag risk-med"><i class="fa-solid fa-triangle-exclamation"></i> Thỉnh Thoảng</span></td>
+                    <td>Lỗi hiển thị giao diện tạm thời từ máy chủ Google (Code sinh bình thường nhưng nút Preview bị ẩn).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>4. Code không tương thích Sandbox</strong></td>
+                    <td><span class="risk-tag risk-med"><i class="fa-solid fa-triangle-exclamation"></i> Trung Bình</span></td>
+                    <td>Mã nguồn chứa backend Node/Python hoặc gọi API bên ngoài không hỗ trợ render trực tiếp trong khung xem trước.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="protip-solution-banner">
+              <i class="fa-solid fa-circle-check"></i>
+              <div>
+                <strong>Quy trình thực chiến chuẩn 2 bước (Pro-Workflow):</strong><br>
+                • <strong>Bước 1:</strong> Trong chat phân tích, yêu cầu AI xuất toàn bộ báo cáo chi tiết thành <em>văn bản/bảng số liệu hoàn chỉnh</em>.<br>
+                • <strong>Bước 2:</strong> Mở một <strong>New Chat (luồng chat mới sạch sẽ)</strong>, dán nội dung tóm tắt và ra lệnh: <em>"Dựa vào thông tin trên, hãy tạo giao diện web chế độ Canvas"</em> → Nút <strong>Preview</strong> chắc chắn sẽ hiển thị 100% và chạy mượt mà không bao giờ bị lỗi!
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

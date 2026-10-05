@@ -227,11 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
         "Kỹ thuật 4 - Đóng khung định dạng & Lệnh cấm (Trang 35): Ép xuất bảng Markdown, cấm từ ngữ sáo rỗng.",
         "Công thức Master Prompt: [Vai trò] + [Nhiệm vụ] + [Bối cảnh/Dữ liệu] + [Định dạng/Lệnh cấm].",
         "Video 1 (3:03): Hướng dẫn tạo Dự án, nạp file tri thức nội bộ & chia sẻ nhóm trên ChatGPT.",
-        "Video 2 (3:33): Nạp file cấu hình SKILL.md Chuyên gia Marketing, phân tích 400 đơn hàng & tự động tạo Web Canvas Dashboard tương tác trên Gemini."
+        "Video 2 (3:33): Nạp file cấu hình SKILL.md Chuyên gia Marketing, phân tích 400 đơn hàng & tự động tạo Web Canvas Dashboard tương tác trên Gemini.",
+        "Mẹo thực chiến Gemini Sandbox: Giải thích tại sao phải xuất báo cáo văn bản trước rồi mới mở New Chat dựng Canvas. Khi chat có file Drive/Excel hoặc context quá dài, cơ chế sandbox an toàn của Google sẽ tự động ẩn nút Preview (chỉ hiện Code). Do đó, New Chat sạch sẽ giúp nút Preview hoạt động 100%!"
       ],
       questions: [
         "Tại sao khi giao việc cho ChatGPT, việc đưa ra 1 ví dụ mẫu (Few-Shot) lại hiệu quả hơn việc giải thích bằng 10 câu văn xuôi?",
-        "Tính năng Canvas trên Gemini giúp ích gì khi bạn cần trực quan hóa số liệu kinh doanh cho ban giám đốc?"
+        "Vì sao khi chat dài có file Excel thì Gemini Canvas hay bị mất nút Preview, và xử lý thế nào?"
       ]
     },
     5: {
