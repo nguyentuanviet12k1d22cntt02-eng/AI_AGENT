@@ -1,0 +1,18 @@
+# Non-Giao_dien folders
+Giao_trinh/
+.vscode/
+
+# Large raw video recordings (>100MB exceeds GitHub limit)
+Giao_dien/video/Sử dụng chatgpt.mp4
+Giao_dien/video/TẠO SKILL.mp4
+Giao_dien/video/NỐI TIẾP VIDEO TẠO SKILL .mp4
+
+# Intermediate audio & frame artifacts
+Giao_dien/video/build/
+Giao_dien/video/build_skill/
+Giao_dien/video/build_skill_full/
+Giao_dien/video/frames/
+Giao_dien/video/fine_frames/
+Giao_dien/video/skill_frames/
+Giao_dien/video/canvas_frames/
+*.wav

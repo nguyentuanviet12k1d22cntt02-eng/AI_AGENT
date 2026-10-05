@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học AI & Agent - Buổi 1: Giải Mã Mô Hình Hoạt Động Của AI</title>
+  <meta name="description" content="Giao diện bài giảng tương tác buổi 1: Cơ chế hoạt động của mô hình ngôn ngữ lớn (LLM), bản chất xác suất qua minh chứng thực tế và nền tảng bước vào thế giới AI Agent.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- GSAP 3 CDN (GreenSock Animation Platform) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-theme">
+  <!-- 3D FLOATING MESH BACKGROUND ORBS -->
+  <div class="mesh-bg-container" aria-hidden="true">
+    <div class="mesh-orb orb-1"></div>
+    <div class="mesh-orb orb-2"></div>
+    <div class="mesh-orb orb-3"></div>
+    <div class="mesh-grid-pattern"></div>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-nav">
+      <div class="nav-left">
+        <div class="brand-badge">
+          <span class="pulsing-dot"></span>
+          <span class="brand-text">AI & AGENT WORKSHOP</span>
+        </div>
+        <div class="session-info">
+          <span class="session-tag">BUỔI 01</span>
+          <span class="session-title">Giải Mã Mô Hình AI: Bản Chất Xác Suất & Nền Tảng AI Agent</span>
+        </div>
+      </div>
+
+      <div class="nav-center">
+        <div class="slide-indicator">
+          <button id="prevBtn" class="nav-btn" title="Slide trước (Phím ←)"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="slide-pills" id="slidePillsContainer">
+            <!-- Render dynamically via JavaScript -->
+          </div>
+          <button id="nextBtn" class="nav-btn" title="Slide tiếp (Phím →)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <button id="speakerNotesToggle" class="action-btn" title="Bật/Tắt Kịch bản Sư phạm Giảng viên (Phím S)">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <span>Kịch bản Giảng viên</span>
+        </button>
+        <button id="fullscreenToggle" class="action-btn icon-only" title="Chế độ Trình chiếu Toàn màn hình (F11)">
+          <i class="fa-solid fa-expand"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN SLIDE STAGE WITH 3D PERSPECTIVE -->
+    <main class="presentation-stage" id="presentationStage">
+
+      <!-- ================= SLIDE 1: MỞ ĐẦU & PHÁ BỎ ĐỊNH KIẾN ================= -->
+      <section class="slide-page active" data-slide="1" id="slide-1">
+        <div class="slide-content hero-slide">
+          <div class="hero-header gsap-fade">
+            <div class="glow-pill"><i class="fa-solid fa-microchip"></i> Nền Tảng Cốt Lõi Khóa Học AI & AI AGENT</div>
+            <h1 class="hero-title">
+              Bên Dưới "Bộ Não" Của AI:<br>
+              <span class="text-gradient">Trí Tuệ Thực Sự Hay Cỗ Máy Đoán Chữ?</span>
+            </h1>
+            <p class="hero-subtitle">
+              Trước khi học cách điều khiển một <strong>AI Agent tự hành</strong>, ta phải bóc trần sự thật về cách mà 
+              ChatGPT, Gemini và các mô hình ngôn ngữ lớn (LLM) thực sự xử lý thông tin.
+            </p>
+          </div>
+
+          <div class="grid-2-col hero-cards">
+            <!-- Card 1: Ảo tưởng của đại đa số -->
+            <div class="glass-card misconception-card gsap-stagger">
+              <div class="card-icon red-glow"><i class="fa-solid fa-brain"></i></div>
+              <h3>Ảo Tưởng Phổ Biến</h3>
+              <p class="card-desc">"AI thông minh như người, nó có tư duy logic, hiểu tường tận những gì nó nói và biết tất cả kiến thức trần gian."</p>
+              <div class="status-tag tag-danger"><i class="fa-solid fa-xmark"></i> Sai lầm tai hại</div>
+            </div>
+
+            <!-- Card 2: Sự thật kỹ thuật bên dưới -->
+            <div class="glass-card truth-card gsap-stagger">
+              <div class="card-icon blue-glow"><i class="fa-solid fa-calculator"></i></div>
+              <h3>Sự Thật Kỹ Thuật (LLM)</h3>
+              <p class="card-desc">"AI là một <strong>máy tính toán xác suất ngôn ngữ</strong>. Nó không có cảm xúc, không nhìn thấy thế giới, chỉ tìm từ tiếp theo có khả năng xuất hiện cao nhất."</p>
+              <div class="status-tag tag-success"><i class="fa-solid fa-check"></i> Bản chất cốt lõi</div>
+            </div>
+          </div>
+
+          <!-- CASE STUDY THỰC TẾ: CHUỖI KÝ TỰ BẪY CHATGPT -->
+          <div class="glass-card real-case-study gsap-stagger">
+            <div class="case-study-header">
+              <div class="case-study-badge">
+                <i class="fa-solid fa-bug-slash"></i> CASE STUDY MỞ ĐẦU: HIỆN TƯỢNG "HỎI GÀ TRẢ LỜI VỊT"
+              </div>
+              <span class="live-test-tag">Thử nghiệm thực tế</span>
+            </div>
+
+            <div class="case-study-body">
+              <!-- Cột trái: Ảnh chụp màn hình thật -->
+              <div class="case-img-col" id="zoomCaseStudy">
+                <div class="case-img-container">
+                  <img src="assets/chatgpt_count_r_bug.png" alt="Minh chứng ChatGPT trả lời lạc đề khi đếm chữ r" class="case-screenshot">
+                  <div class="img-overlay-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Nhấn để phóng to ảnh gốc</div>
+                </div>
+              </div>
+
+              <!-- Cột phải: Bóc tách tình huống -->
+              <div class="case-analysis-col">
+                <div class="dialogue-breakdown">
+                  <div class="prompt-chip">
+                    <span class="chip-label"><i class="fa-solid fa-user"></i> Người hỏi:</span>
+                    <code>"strbeekaspoaispojkapsjdoihaiuwnxro;abhdiosdn có bao nhiêu chữ r"</code>
+                  </div>
+                  <div class="response-chip">
+                    <span class="chip-label"><i class="fa-solid fa-robot"></i> ChatGPT trả lời:</span>
+                    <div class="bot-quote">
+                      "Chuỗi <code>strbeekaspoaispojkapsjdoihaiuwnxro;abhdiosdn</code> có <strong>44 ký tự</strong>.<br>
+                      Nếu <strong>không tính dấu ;</strong> thì có <strong>43 chữ cái</strong>."
+                    </div>
+                  </div>
+                </div>
+
+                <div class="irony-alert">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <span><strong>Điều kỳ lạ vừa xảy ra:</strong> Người dùng hỏi <em>"có bao nhiêu chữ r"</em>, AI không hề trả lời có mấy chữ r, mà lại đi đếm tổng số ký tự (44) và dấu chấm phẩy (;) một cách vô cùng tự tin!</span>
+                </div>
+
+                <!-- Nút bấm lật mở nguyên nhân kỹ thuật -->
+                <button id="btnExplainWhy" class="btn-primary-sm">
+                  <i class="fa-solid fa-lightbulb"></i> Tại sao AI lại trả lời kỳ quặc như vậy? (Giải mã kỹ thuật)
+                </button>
+              </div>
+            </div>
+
+            <!-- Khối giải thích chi tiết khi nhấn nút (GSAP Animation) -->
+            <div id="whyExplanationBox" class="explanation-accordion hidden">
+              <div class="accordion-grid">
+                <!-- Lý do 1 -->
+                <div class="reason-card">
+                  <div class="reason-num">1</div>
+                  <h4>Tokenization (Băm nhỏ từ ngữ)</h4>
+                  <p>Chuỗi trên là chuỗi vô nghĩa. Tokenizer của AI bị ép phải cắt vụn chuỗi thành hơn <strong>20 mảnh token nhỏ</strong> (<code>str</code>, <code>bee</code>, <code>kas</code>, <code>;</code>...). Mô hình không hề có "mắt" nhìn từng chữ cái như con người để quét chữ <code>r</code>.</p>
+                </div>
+
+                <!-- Lý do 2 -->
+                <div class="reason-card">
+                  <div class="reason-num">2</div>
+                  <h4>Attention Hijacking (Mất tập trung)</h4>
+                  <p>Cơ chế Attention bị "hút" toàn bộ năng lượng tính toán vào độ dài bất thường và ký tự lạ (dấu <code>;</code>). Trong dữ liệu học, khuôn mẫu "chuỗi này có X ký tự, bỏ dấu thì còn Y" có trọng số xác suất quá lớn, khiến AI bị cuốn đi và <strong>quên mất câu hỏi gốc là đếm chữ r</strong>!</p>
+                </div>
+
+                <!-- Lý do 3 -->
+                <div class="reason-card">
+                  <div class="reason-num">3</div>
+                  <h4>Next-Token Prediction vs Code</h4>
+                  <p>AI <strong>không chạy code lập trình</strong> để đếm ký tự. Nó chỉ đoán từ tiếp theo theo xác suất văn bản phổ biến. Muốn đếm chuẩn, AI bắt buộc phải tiến hóa thành <strong>AI Agent</strong> để tự gọi Tool Python <code>text.count('r')</code> → ra kết quả chính xác 100% bằng <strong>2</strong>!</p>
+                </div>
+              </div>
+
+              <!-- ĐÚC KẾT HÀNH ĐỘNG DÀNH CHO DÂN VĂN PHÒNG -->
+              <div class="actionable-takeaway-card">
+                <div class="takeaway-header">
+                  <div class="takeaway-title-wrap">
+                    <span class="office-badge"><i class="fa-solid fa-briefcase"></i> DÀNH CHO DÂN VĂN PHÒNG</span>
+                    <h4>Đúc Kết Thực Chiến: Khi Gặp Tài Liệu Dài / Bảng Dữ Liệu, Ta Phải Sử Dụng AI Như Thế Nào?</h4>
+                  </div>
+                  <p class="takeaway-subtext">Trong công việc văn phòng, nếu bạn ném một hợp đồng 20 trang hoặc file báo cáo dày đặc rồi hỏi vu vơ, AI cũng sẽ <strong>"hỏi gà trả lời vịt"</strong> hoặc đếm nhầm dòng y hệt ví dụ trên! Để tránh rủi ro, hãy áp dụng 3 quy tắc sau:</p>
+                </div>
+
+                <div class="takeaway-steps">
+                  <!-- Quy tắc 1 -->
+                  <div class="takeaway-step-item">
+                    <span class="step-badge"><i class="fa-solid fa-crop-simple"></i> Quy Tắc 1: Khoanh Vùng Cụ Thể (Không Cho AI Đoán)</span>
+                    <p><strong>Sai lầm:</strong> Ném cả hợp đồng/báo cáo vào rồi hỏi chung chung: <em>"Kiểm tra xem có bao nhiêu lỗi..."</em> → AI bị ngợp và trả lời lan man.</p>
+                    <p><strong>Cách dùng đúng:</strong> Chỉ định rõ phạm vi: <em>"Chỉ đọc riêng Điều 5 về Điều khoản Thanh toán. Bỏ qua tất cả các điều khoản khác."</em></p>
+                  </div>
+
+                  <!-- Quy tắc 2 -->
+                  <div class="takeaway-step-item">
+                    <span class="step-badge"><i class="fa-solid fa-table-cells"></i> Quy Tắc 2: Đóng Khung Định Dạng Đầu Ra (Trang 31)</span>
+                    <p><strong>Sai lầm:</strong> Để AI tự do viết văn xuôi → AI sẽ tự ý thêm thắt những chi tiết thừa (như việc ChatGPT tự ý đếm 44 ký tự và dấu ; ở trên).</p>
+                    <p><strong>Cách dùng đúng:</strong> Ép khuôn kết quả: <em>"Chỉ trả về kết quả dưới dạng Bảng gồm 2 cột: [Nội dung] và [Số lượng]. Không giải thích thêm."</em></p>
+                  </div>
+
+                  <!-- Quy tắc 3 -->
+                  <div class="takeaway-step-item highlight-agent">
+                    <span class="step-badge badge-agent"><i class="fa-solid fa-user-check"></i> Quy Tắc 3: Tư Duy Quản Lý – Bắt AI Xác Nhận (Trang 19, 23)</span>
+                    <p><strong>Sai lầm:</strong> Coi AI là thần thánh, tin 100% câu trả lời đầu tiên mà không rà soát lại.</p>
+                    <p><strong>Cách dùng đúng:</strong> Xem AI là nhân viên mới nhận việc. Với báo cáo số liệu quan trọng, luôn ra lệnh: <em>"Trước khi trả lời, hãy nhắc lại bạn hiểu yêu cầu của tôi là gì và chỉ ra dòng dữ liệu bạn đã lấy thông tin."</em></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 2: MINH CHỨNG THỰC TẾ (GEMINI & CHATGPT) ================= -->
+      <section class="slide-page" data-slide="2" id="slide-2">
+        <div class="slide-content">
+          <div class="section-badge gsap-fade">BẰNG CHỨNG THỰC TẾ</div>
+          <h2 class="slide-title gsap-fade">Minh Chứng Trực Quan: "Bầu Trời Hôm Nay Rất [...]"</h2>
+          <p class="slide-desc gsap-fade">
+            Cùng thử nghiệm một câu lệnh điền từ trống đơn giản trên <strong>Gemini</strong> và <strong>ChatGPT</strong> 
+            để thấy cách mô hình xử lý khi bị ép buộc dự đoán từ tiếp theo.
+          </p>
+
+          <div class="evidence-grid">
+            <!-- Item 1: ChatGPT Evidence (trong xanh) -->
+            <div class="evidence-card glass-card gsap-stagger">
+              <div class="evidence-header">
+                <div class="model-badge chatgpt-badge">
+                  <i class="fa-solid fa-robot"></i> OpenAI ChatGPT
+                </div>
+                <span class="case-label">Đối chiếu 1</span>
+              </div>
+
+              <div class="evidence-img-wrapper" id="zoomChatGPT">
+                <img src="assets/chatgpt_trongxanh.png" alt="Minh chứng ChatGPT điền: trong xanh." class="evidence-img">
+                <div class="img-overlay-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Nhấn để phóng to</div>
+              </div>
+
+              <div class="evidence-analysis">
+                <div class="prompt-box">
+                  <span class="label">Câu lệnh:</span>
+                  <code>"bạn chỉ cần điền vào ô trống: Bầu trời hôm nay rất [...]"</code>
+                </div>
+                <div class="result-box info-box">
+                  <span class="label">ChatGPT trả lời:</span>
+                  <strong class="highlight-quote" style="color: #059669;">"trong xanh."</strong>
+                </div>
+
+                <div class="deep-dive">
+                  <h4><i class="fa-solid fa-circle-check text-success"></i> Cơ chế bốc thăm của ChatGPT:</h4>
+                  <ul>
+                    <li><strong>Dự đoán từ phổ biến nhất:</strong> Trong dữ liệu tiếng Việt, cụm từ <em>"bầu trời hôm nay rất..."</em> thường gắn liền nhất với tính từ <em>"trong xanh"</em> (xác suất cao nhất ~35-40%).</li>
+                    <li><strong>Thực tế:</strong> ChatGPT có mở cửa sổ nhìn trời không? <strong>Không hề!</strong> Nó chỉ chọn từ có xác suất thống kê cao nhất.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 2: Gemini Evidence (rất sấm sét) -->
+            <div class="evidence-card glass-card gsap-stagger">
+              <div class="evidence-header">
+                <div class="model-badge gemini-badge">
+                  <i class="fa-brands fa-google"></i> Google Gemini
+                </div>
+                <span class="case-label">Đối chiếu 2</span>
+              </div>
+
+              <div class="evidence-img-wrapper" id="zoomGemini">
+                <img src="assets/gemini_samset.png" alt="Minh chứng Gemini điền: Bầu trời hôm nay rất sấm sét" class="evidence-img">
+                <div class="img-overlay-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Nhấn để phóng to</div>
+              </div>
+
+              <div class="evidence-analysis">
+                <div class="prompt-box">
+                  <span class="label">Câu lệnh:</span>
+                  <code>"bạn chỉ cần điền vào ô trống: Bầu trời hôm nay rất [...]"</code>
+                </div>
+                <div class="result-box alert-box">
+                  <span class="label">Gemini trả lời:</span>
+                  <strong class="highlight-quote" style="color: #b45309;">"Bầu trời hôm nay rất sấm sét"</strong>
+                </div>
+
+                <div class="deep-dive">
+                  <h4><i class="fa-solid fa-bolt text-warning"></i> Cơ chế bốc thăm của Gemini:</h4>
+                  <ul>
+                    <li><strong>Bốc trúng ô xác suất thấp:</strong> <em>"Sấm sét"</em> là danh từ, nhưng vẫn nằm trong cụm từ vựng thời tiết. Do tính ngẫu nhiên (Temperature), con quay xác suất rơi trúng ô này!</li>
+                    <li><strong>Lặp từ:</strong> Gemini còn tự ý lặp lại cả câu thay vì chỉ điền từ vào ô trống.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ĐÚC KẾT THỰC CHIẾN DÀNH CHO DÂN VĂN PHÒNG (CHUẨN PHONG CÁCH MỤC 1) -->
+          <div class="actionable-takeaway-card gsap-fade">
+            <div class="takeaway-header">
+              <div class="takeaway-title-wrap">
+                <span class="office-badge"><i class="fa-solid fa-briefcase"></i> DÀNH CHO DÂN VĂN PHÒNG</span>
+                <h4>Đúc Kết Thực Chiến: Khi Cần Số Liệu Thực Tế, Ta Phải Sử Dụng AI Như Thế Nào?</h4>
+              </div>
+              <p class="takeaway-subtext">Cùng 1 câu lệnh: ChatGPT bảo <strong>"TRONG XANH"</strong>, còn Gemini bảo <strong>"SẤM SÉT"</strong> vì AI không nhìn thấy thực tế mà chỉ đoán mò xác suất! Khi làm việc văn phòng (báo cáo doanh thu, ngày họp, hợp đồng), hãy áp dụng 3 quy tắc sau để không lấy nhầm số liệu ảo:</p>
+            </div>
+
+            <div class="takeaway-steps">
+              <!-- Quy tắc 1 -->
+              <div class="takeaway-step-item">
+                <span class="step-badge"><i class="fa-solid fa-paperclip"></i> Quy Tắc 1: Luôn Cấp Dữ Liệu Nguồn (Trang 34)</span>
+                <p><strong>Sai lầm:</strong> Hỏi khơi khơi: <em>"Doanh số tháng này bao nhiêu?"</em> hay <em>"Quy chế công ty quy định thế nào?"</em> → AI tự bịa từ/bịa số theo xác suất.</p>
+                <p><strong>Cách dùng đúng:</strong> Luôn đính kèm tài liệu: <em>"Dựa vào file Excel/văn bản đính kèm dưới đây, hãy trích xuất doanh thu..."</em></p>
+              </div>
+
+              <!-- Quy tắc 2 -->
+              <div class="takeaway-step-item">
+                <span class="step-badge"><i class="fa-solid fa-arrows-rotate"></i> Quy Tắc 2: Kiểm Tra Đối Chiếu Chéo (Trang 22)</span>
+                <p><strong>Sai lầm:</strong> Thấy AI trả lời trôi chảy liền copy gửi sếp ngay mà không kiểm tra lại (rất dễ dính bẫy ngẫu nhiên như từ "sấm sét" của Gemini).</p>
+                <p><strong>Cách dùng đúng:</strong> Bấm thử nút Regenerate (làm lại) hoặc hỏi: <em>"Hãy chỉ ra vị trí và số liệu bạn vừa dùng để tôi đối chiếu lại."</em></p>
+              </div>
+
+              <!-- Quy tắc 3 -->
+              <div class="takeaway-step-item highlight-agent">
+                <span class="step-badge badge-agent"><i class="fa-solid fa-wand-magic-sparkles"></i> Quy Tắc 3: Tạo Skill Kiểm Tra Tính Toán & Trích Dẫn Nguồn</span>
+                <p><strong>Sai lầm:</strong> Phó mặc cho AI tự tính nhẩm và tin tưởng kết quả mà không biết số liệu đó được lấy từ dòng nào, trang nào.</p>
+                <p><strong>Cách dùng đúng:</strong> Thiết lập <strong>Skill chuyên biệt cho AI/Agent</strong>: Bắt buộc AI phải <em>tự kiểm tra lại phép tính</em> so với bảng dữ liệu gốc và <em>trích dẫn chính xác nguồn</em> (Ví dụ: "Số liệu lấy tại Cột C, Dòng 14 của Bảng 1").</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 3: TƯ DUY QUẢN LÝ TỪ GIÁO TRÌNH ================= -->
+      <section class="slide-page" data-slide="3" id="slide-3">
+        <div class="slide-content">
+          <div class="section-badge gsap-fade">TƯ DUY ĐIỀU KHIỂN AI (GIÁO TRÌNH TRANG 18-25)</div>
+          <h2 class="slide-title gsap-fade">Từ "Người Dùng Thụ Động" Sang "Nhà Quản Lý AI"</h2>
+          <p class="slide-desc gsap-fade">
+            Khi đã hiểu AI là cỗ máy xác suất, muốn có câu trả lời chính xác, ta không thể hỏi vu vơ mà phải áp dụng 
+            nguyên tắc quản lý luồng công việc chuẩn chỉnh.
+          </p>
+
+          <div class="pillars-grid">
+            <!-- Cột mốc 1: Quản lý vs Hỏi đáp -->
+            <div class="glass-card pillar-card tilt-card gsap-stagger">
+              <div class="pillar-num">01</div>
+              <div class="pillar-icon"><i class="fa-solid fa-user-tie"></i></div>
+              <h3>Xem AI Là Nhân Viên Mới</h3>
+              <p>AI như một thực tập sinh xuất sắc, đọc vạn cuốn sách nhưng <strong>chưa hiểu bối cảnh công ty bạn</strong>. Đừng hỏi bâng quơ, hãy giao việc cụ thể với quyền hạn rõ ràng.</p>
+              <div class="quote-pill">"Người dùng là người quản lý, không phải người hỏi" <em>(Trang 19)</em></div>
+            </div>
+
+            <!-- Cột mốc 2: Quy trình 4 bước kiểm soát -->
+            <div class="glass-card pillar-card tilt-card gsap-stagger">
+              <div class="pillar-num">02</div>
+              <div class="pillar-icon"><i class="fa-solid fa-diagram-project"></i></div>
+              <h3>Tư Duy Đa Bước (Multi-step)</h3>
+              <p>Việc phức tạp tuyệt đối không làm trong 1 lệnh duy nhất. Phải phân rã bài toán thành các chặng nhỏ liên tiếp để giảm sai sót xác suất.</p>
+              <div class="quote-pill">Hiểu đề → Phân tích → Xác nhận → Thực thi <em>(Trang 25)</em></div>
+            </div>
+
+            <!-- Cột mốc 3: Công thức 3 yếu tố -->
+            <div class="glass-card pillar-card tilt-card gsap-stagger">
+              <div class="pillar-num">03</div>
+              <div class="pillar-icon"><i class="fa-solid fa-layer-group"></i></div>
+              <h3>Công Thức Khóa Xác Suất</h3>
+              <p>Để "giam lỏng" không gian ngẫu nhiên của AI, câu lệnh chuyên nghiệp luôn phải kết hợp đủ 3 yếu tố vững chắc:</p>
+              <div class="formula-chips">
+                <span class="chip-item chip-task"><i class="fa-solid fa-list-check"></i> Nhiệm vụ (Task)</span>
+                <span class="chip-item chip-context"><i class="fa-solid fa-compass"></i> Ngữ cảnh (Context)</span>
+                <span class="chip-item chip-ref"><i class="fa-solid fa-book-bookmark"></i> Tham chiếu (Ref)</span>
+              </div>
+            </div>
+
+            <!-- Cột mốc 4: Tương tác đảo ngược -->
+            <div class="glass-card pillar-card tilt-card gsap-stagger">
+              <div class="pillar-num">04</div>
+              <div class="pillar-icon"><i class="fa-solid fa-comments-dollar"></i></div>
+              <h3>Kỹ Thuật Đảo Ngược</h3>
+              <p>Nếu chưa biết mô tả chi tiết, hãy ép AI hỏi ngược lại bạn 3-5 câu hỏi mấu chốt trước khi nó bắt tay làm bài.</p>
+              <div class="quote-pill">"Trước khi trả lời, hãy hỏi tôi những gì bạn cần" <em>(Trang 43)</em></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 4: BỘ KỸ THUẬT SỬ DỤNG CHATGPT HIỆU QUẢ ================= -->
+      <section class="slide-page" data-slide="4" id="slide-4">
+        <div class="slide-content">
+          <div class="section-badge gsap-fade">KỸ THUẬT THỰC CHIẾN (PROMPT ENGINEERING)</div>
+          <h2 class="slide-title gsap-fade">Bộ 4 Kỹ Thuật Điều Khiển ChatGPT Chuẩn Xác Cho Dân Văn Phòng</h2>
+          <p class="slide-desc gsap-fade">
+            Không cần học lập trình phức tạp, chỉ cần nắm vững 4 kỹ thuật giao tiếp này từ giáo trình để biến ChatGPT thành một trợ lý đắc lực, luôn trả lời đúng ý và không lan man.
+          </p>
+
+          <div class="skills-grid-4">
+            <!-- Kỹ thuật 1: Phân vai chuyên sâu -->
+            <div class="glass-card skill-card gsap-stagger">
+              <div class="skill-header">
+                <span class="skill-badge"><i class="fa-solid fa-id-badge"></i> KỸ THUẬT 1 (Trang 26)</span>
+                <h4>Phân Vai Chuyên Sâu (Role & Persona)</h4>
+              </div>
+              <p class="skill-desc">Đừng để AI là "người biết tuốt chung chung". Hãy cấp cho nó một chức danh, số năm kinh nghiệm và đối tượng phục vụ cụ thể.</p>
+              <div class="skill-compare">
+                <div class="cmp-bad">
+                  <span class="cmp-label"><i class="fa-solid fa-xmark text-danger"></i> Viết thường:</span>
+                  <code>"Viết thư từ chối ứng viên giúp tôi."</code>
+                </div>
+                <div class="cmp-good">
+                  <span class="cmp-label"><i class="fa-solid fa-check text-success"></i> Viết chuẩn:</span>
+                  <code>"Đóng vai Trưởng phòng Tuyển dụng 8 năm kinh nghiệm. Hãy viết thư từ chối ứng viên với giọng văn lịch sự, chuyên nghiệp và giữ quan hệ tốt."</code>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kỹ thuật 2: Đưa mẫu đầu vào - đầu ra -->
+            <div class="glass-card skill-card gsap-stagger">
+              <div class="skill-header">
+                <span class="skill-badge"><i class="fa-solid fa-shapes"></i> KỸ THUẬT 2 (Trang 31)</span>
+                <h4>Đưa Mẫu Tham Chiếu (Few-Shot Pattern)</h4>
+              </div>
+              <p class="skill-desc">Trăm lời miêu tả không bằng 1 ví dụ mẫu. Cung cấp trước 1 đoạn văn mẫu hoặc 1 dòng dữ liệu chuẩn để AI tự động sao chép phong cách 100%.</p>
+              <div class="skill-compare">
+                <div class="cmp-bad">
+                  <span class="cmp-label"><i class="fa-solid fa-xmark text-danger"></i> Viết thường:</span>
+                  <code>"Hãy chuẩn hóa lại danh sách khách hàng này."</code>
+                </div>
+                <div class="cmp-good">
+                  <span class="cmp-label"><i class="fa-solid fa-check text-success"></i> Viết chuẩn:</span>
+                  <code>"Mẫu chuẩn: [Họ tên] - [SĐT] - [Khu vực]. Hãy định dạng lại toàn bộ 50 dòng dữ liệu sau đây y hệt theo mẫu trên."</code>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kỹ thuật 3: Suy luận từng bước -->
+            <div class="glass-card skill-card gsap-stagger">
+              <div class="skill-header">
+                <span class="skill-badge"><i class="fa-solid fa-stairs"></i> KỸ THUẬT 3 (Trang 24)</span>
+                <h4>Suy Luận Từng Bước (Step-by-Step)</h4>
+              </div>
+              <p class="skill-desc">Với các bài toán tính toán, tổng hợp chi phí hoặc phân tích số liệu, bắt AI giải thích logic và suy nghĩ từng bước trước khi chốt kết quả.</p>
+              <div class="skill-compare">
+                <div class="cmp-bad">
+                  <span class="cmp-label"><i class="fa-solid fa-xmark text-danger"></i> Viết thường:</span>
+                  <code>"Tính xem tổng chi phí tiếp khách tháng này là bao nhiêu?"</code>
+                </div>
+                <div class="cmp-good">
+                  <span class="cmp-label"><i class="fa-solid fa-check text-success"></i> Viết chuẩn:</span>
+                  <code>"Hãy suy nghĩ từng bước: 1) Liệt kê từng khoản chi; 2) Cộng dồn theo nhóm; 3) Kiểm tra lại công thức trước khi đưa ra tổng số tiền."</code>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kỹ thuật 4: Đóng khung giới hạn & Lệnh cấm -->
+            <div class="glass-card skill-card gsap-stagger">
+              <div class="skill-header">
+                <span class="skill-badge"><i class="fa-solid fa-ban"></i> KỸ THUẬT 4 (Trang 35)</span>
+                <h4>Đóng Khung Định Dạng & Lệnh Cấm (Negative Constraints)</h4>
+              </div>
+              <p class="skill-desc">Quy định chặt chẽ những gì ĐƯỢC LÀM và TUYỆT ĐỐI KHÔNG ĐƯỢC LÀM (giới hạn độ dài, cấm từ ngữ sáo rỗng, ép xuất ra bảng Markdown).</p>
+              <div class="skill-compare">
+                <div class="cmp-bad">
+                  <span class="cmp-label"><i class="fa-solid fa-xmark text-danger"></i> Viết thường:</span>
+                  <code>"Tóm tắt cuộc họp sáng nay cho tôi."</code>
+                </div>
+                <div class="cmp-good">
+                  <span class="cmp-label"><i class="fa-solid fa-check text-success"></i> Viết chuẩn:</span>
+                  <code>"Tóm tắt dưới dạng bảng 3 cột: [Vấn đề] | [Quyết định] | [Người phụ trách]. Không viết văn xuôi, không vượt quá 5 dòng, không thêm lời chào."</code>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MASTER PROMPT TEMPLATE BOX -->
+          <div class="master-prompt-banner glass-card gsap-fade">
+            <div class="banner-icon"><i class="fa-solid fa-gem text-accent"></i></div>
+            <div class="banner-content">
+              <h4>Công Thức Khóa Câu Lệnh Vàng (Master Prompt Formula Cho Dân Văn Phòng)</h4>
+              <div class="formula-chain">
+                <span class="f-tag f-role">[1. Vai trò]</span> + 
+                <span class="f-tag f-task">[2. Nhiệm vụ cụ thể]</span> + 
+                <span class="f-tag f-context">[3. Bối cảnh & Dữ liệu nguồn]</span> + 
+                <span class="f-tag f-format">[4. Định dạng đầu ra & Lệnh cấm]</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIDEO DEMO THỰC CHIẾN 1: DỰ ÁN TRÊN CHATGPT (CÓ THUYẾT MINH & PHỤ ĐỀ) -->
+          <div class="video-showcase-card glass-card gsap-fade">
+            <div class="video-card-header">
+              <div class="video-card-badge">
+                <i class="fa-solid fa-circle-play"></i> VIDEO THỰC HÀNH 1: THIẾT LẬP DỰ ÁN & CHIA SẺ NHÓM TRÊN CHATGPT
+              </div>
+              <span class="video-dur-tag"><i class="fa-regular fa-clock"></i> 3:03 (Thuyết minh AI & Phụ đề)</span>
+            </div>
+
+            <div class="video-player-wrapper">
+              <video id="chatgptProjectVideo" controls preload="metadata" poster="assets/video_poster.jpg" class="custom-video-player">
+                <source src="video/Huong_dan_su_dung_ChatGPT_Project_Thuyet_minh.mp4" type="video/mp4">
+                Trình duyệt của bạn không hỗ trợ thẻ video HTML5.
+              </video>
+            </div>
+
+            <div class="video-meta-summary">
+              <div class="meta-item"><i class="fa-solid fa-folder-plus text-primary"></i> <strong>00:00 - 00:25:</strong> Khởi tạo dự án & cấu hình bộ nhớ độc lập.</div>
+              <div class="meta-item"><i class="fa-solid fa-file-arrow-up text-success"></i> <strong>00:25 - 00:52:</strong> Nạp file tri thức doanh nghiệp vào mục Nguồn.</div>
+              <div class="meta-item"><i class="fa-solid fa-wand-magic-sparkles text-warning"></i> <strong>00:52 - 01:25:</strong> Cài đặt vai trò Giám đốc Marketing CMO.</div>
+              <div class="meta-item"><i class="fa-solid fa-users text-accent"></i> <strong>01:25 - 03:03:</strong> Chia sẻ email, phân quyền & trải nghiệm thực tế.</div>
+            </div>
+          </div>
+
+          <!-- VIDEO DEMO THỰC CHIẾN 2: NẠP VÀ KÍCH HOẠT SKILL TRÊN GEMINI KẾT HỢP CANVAS -->
+          <div class="video-showcase-card glass-card gsap-fade" style="margin-top: 1.5rem;">
+            <div class="video-card-header">
+              <div class="video-card-badge">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> VIDEO THỰC HÀNH 2: NẠP FILE SKILL.MD, PHÂN TÍCH 400 ĐƠN & TẠO DASHBOARD CANVAS
+              </div>
+              <span class="video-dur-tag"><i class="fa-regular fa-clock"></i> 3:33 (Thuyết minh AI & Phụ đề)</span>
+            </div>
+
+            <div class="video-player-wrapper">
+              <video id="geminiSkillVideo" controls preload="metadata" poster="assets/skill_video_poster.jpg" class="custom-video-player">
+                <source src="video/Huong_dan_tao_va_su_dung_SKILL_Thuyet_minh.mp4" type="video/mp4">
+                Trình duyệt của bạn không hỗ trợ thẻ video HTML5.
+              </video>
+            </div>
+
+            <div class="video-meta-summary">
+              <div class="meta-item"><i class="fa-solid fa-file-code text-primary"></i> <strong>00:00 - 00:55:</strong> Nạp file <code>SKILL.md</code> vào mục Upload a skill trên Gemini.</div>
+              <div class="meta-item"><i class="fa-solid fa-terminal text-success"></i> <strong>00:55 - 01:25:</strong> Gọi lệnh <code>/marketing-expert-assistant</code> + đính kèm file Excel.</div>
+              <div class="meta-item"><i class="fa-solid fa-chart-pie text-warning"></i> <strong>01:25 - 02:10:</strong> AI tự động chạy Python phân tích 400 đơn Shopee/Lazada/TikTok Shop.</div>
+              <div class="meta-item"><i class="fa-solid fa-lightbulb text-accent"></i> <strong>02:10 - 02:50:</strong> Đề xuất chiến lược tối ưu ROI, doanh thu 166 triệu và tăng trưởng LTV.</div>
+              <div class="meta-item"><i class="fa-solid fa-desktop text-info"></i> <strong>02:50 - 03:33:</strong> Kích hoạt chế độ Canvas, tự động tạo Web Dashboard tương tác trực quan.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 5: CẦU NỐI SANG KỶ NGUYÊN AI AGENT ================= -->
+      <section class="slide-page" data-slide="5" id="slide-5">
+        <div class="slide-content">
+          <div class="section-badge gsap-fade">BƯỚC NHẢY TIẾP THEO</div>
+          <h2 class="slide-title gsap-fade">Tại Sao Cần AI Agent? Giải Pháp Cho Cơn Ác Mộng Xác Suất</h2>
+          <p class="slide-desc gsap-fade">
+            Nếu LLM chỉ ngồi đoán từ trong khung chat, nó không thể tự động hóa doanh nghiệp. 
+            <strong>AI Agent ra đời để cấp "tay, chân, mắt và công cụ" cho bộ não LLM.</strong>
+          </p>
+
+          <div class="agent-architecture-diagram">
+            <!-- Visual comparison -->
+            <div class="comp-col llm-traditional glass-card tilt-card gsap-stagger">
+              <div class="comp-header">
+                <span class="badge-tag tag-old"><i class="fa-solid fa-comment-dots"></i> Chatbot LLM Thuần Túy</span>
+                <h3>"Bộ Não Ngâm Trong Lọ Thủy Tinh"</h3>
+              </div>
+              <div class="comp-visual">
+                <div class="brain-in-jar float-3d">
+                  <i class="fa-solid fa-brain jar-brain"></i>
+                  <span class="jar-glass"></span>
+                </div>
+              </div>
+              <ul class="comp-list">
+                <li><i class="fa-solid fa-xmark text-danger"></i> Thụ động: Chỉ ngồi chờ người dùng gõ phím.</li>
+                <li><i class="fa-solid fa-xmark text-danger"></i> Không có công cụ: Không gọi được API, không đọc được dữ liệu trực tiếp từ máy tính.</li>
+                <li><i class="fa-solid fa-xmark text-danger"></i> Dễ bịa chuyện khi thiếu thông tin (Ảo giác xác suất).</li>
+                <li><i class="fa-solid fa-xmark text-danger"></i> Người dùng phải copy-paste thủ công từng bước.</li>
+              </ul>
+            </div>
+
+            <div class="transformation-arrow gsap-fade">
+              <div class="arrow-line"></div>
+              <div class="arrow-badge">TIẾN HÓA THÀNH</div>
+              <i class="fa-solid fa-angles-right"></i>
+            </div>
+
+            <!-- Agent Modern -->
+            <div class="comp-col agent-system glass-card tilt-card gsap-stagger">
+              <div class="comp-header">
+                <span class="badge-tag tag-agent"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Agent Tự Hành</span>
+                <h3>Hệ Sinh Thái Hoàn Chỉnh (Agent Framework)</h3>
+              </div>
+              <div class="agent-quadrant">
+                <div class="quad-item quad-brain float-item">
+                  <div class="quad-icon"><i class="fa-solid fa-brain"></i></div>
+                  <h4>LLM (Bộ Não)</h4>
+                  <p>Lý luận, hiểu ý định, phân tích ngữ cảnh.</p>
+                </div>
+                <div class="quad-item quad-planning float-item">
+                  <div class="quad-icon"><i class="fa-solid fa-route"></i></div>
+                  <h4>Planning (Kế Hoạch)</h4>
+                  <p>Tự chia nhỏ mục tiêu, kiểm tra lại lỗi (Reflection).</p>
+                </div>
+                <div class="quad-item quad-memory float-item">
+                  <div class="quad-icon"><i class="fa-solid fa-database"></i></div>
+                  <h4>Memory (Trí Nhớ)</h4>
+                  <p>Ghi nhớ ngắn hạn & dài hạn, tích hợp RAG.</p>
+                </div>
+                <div class="quad-item quad-tools float-item">
+                  <div class="quad-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                  <h4>Tools (Công Cụ)</h4>
+                  <p>Tra cứu Google, chạy Code Python, gửi Email, gọi API.</p>
+                </div>
+              </div>
+              <div class="agent-benefit">
+                <i class="fa-solid fa-circle-check text-success"></i>
+                <span><strong>Agent khắc phục điểm yếu của ví dụ "bầu trời sấm sét":</strong> Thay vì đoán mò, nó tự kích hoạt Tool Tra Cứu Thời Tiết để có câu trả lời chính xác 100%!</span>
+              </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 6: TỔNG KẾT & NHIỆM VỤ THỰC CHIẾN ================= -->
+      <section class="slide-page" data-slide="6" id="slide-6">
+        <div class="slide-content">
+          <div class="section-badge gsap-fade">KẾT THÚC BUỔI 01</div>
+          <h2 class="slide-title gsap-fade">Hành Trang Cần Nhớ & Thử Thách Về Nhà</h2>
+          <p class="slide-desc gsap-fade">
+            Nắm chắc 3 quy luật nền tảng để sẵn sàng bước vào Buổi 2: Tự tay thiết kế và cấu hình AI Agent đầu tiên.
+          </p>
+
+          <div class="grid-2-col summary-cards">
+            <!-- Takeaway -->
+            <div class="glass-card summary-card tilt-card gsap-stagger">
+              <div class="card-top-icon"><i class="fa-solid fa-bookmark text-accent"></i></div>
+              <h3>3 Điều Khắc Cốt Ghi Tâm</h3>
+              <ol class="numbered-list">
+                <li>
+                  <strong>AI không có giác quan:</strong> Nó là một bộ máy tính toán xác suất liên kết token. Nó không nhìn thấy bầu trời bên ngoài.
+                </li>
+                <li>
+                  <strong>Chất lượng đầu ra = Dữ liệu tham chiếu + Cách đặt lệnh:</strong> Nếu muốn AI không "bịa chuyện", phải cung cấp ngữ cảnh rõ ràng và áp dụng tư duy đa bước.
+                </li>
+                <li>
+                  <strong>Agent là tương lai:</strong> Muốn giải quyết công việc tự động, phải trang bị cho LLM các công cụ kiểm chứng (Tools) và bộ nhớ (Memory).
+                </li>
+              </ol>
+            </div>
+
+            <!-- Homework Challenge -->
+            <div class="glass-card mission-card tilt-card gsap-stagger">
+              <div class="card-top-icon"><i class="fa-solid fa-trophy text-warning"></i></div>
+              <h3>Thử Thách Về Nhà (Workshop Mission)</h3>
+              
+              <div class="mission-guide-box">
+                <div class="mission-header-tag">
+                  <span class="mission-badge"><i class="fa-solid fa-calendar-check"></i> Tình Huống Thực Chiến: Lập Kế Hoạch Tuần (Tương Tác Đảo Ngược - Trang 43)</span>
+                </div>
+                <p class="mission-intro">Nếu bạn chỉ gõ chung chung: <em>"Lập cho tôi kế hoạch tuần tới"</em> → AI sẽ tự bịa ra những đầu việc viển vông, không khớp công việc thật! Hãy áp dụng 3 bước quản lý sau:</p>
+
+                <!-- 3 Bước thực hiện -->
+                <div class="mission-steps-list">
+                  <div class="m-step">
+                    <span class="m-step-num">B1</span>
+                    <div class="m-step-content">
+                      <strong>Xác định nhu cầu:</strong> Bạn cần lập lịch trình làm việc tuần tới cho bản thân hoặc phòng ban của mình (Hành chính, Kế toán, Sales, Marketing, Nhân sự...).
+                    </div>
+                  </div>
+
+                  <div class="m-step">
+                    <span class="m-step-num">B2</span>
+                    <div class="m-step-content">
+                      <strong>Dán câu lệnh ép AI phỏng vấn ngược lại bạn (Bấm nút sao chép):</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Khung Prompt Mẫu có nút sao chép -->
+                <div class="prompt-template-container">
+                  <div class="prompt-template-header">
+                    <span><i class="fa-solid fa-terminal"></i> Câu lệnh mẫu chuẩn quản lý (Copy & Dán):</span>
+                    <button class="btn-copy-prompt" id="btnCopyMissionPrompt" title="Sao chép câu lệnh">
+                      <i class="fa-regular fa-copy"></i> <span id="copyBtnText">Sao chép</span>
+                    </button>
+                  </div>
+                  <pre class="prompt-template-code" id="missionPromptText">"Tôi muốn bạn đóng vai trò là Chuyên gia Quản lý Dự án & Điều phối Công việc.
+Tôi đang cần bạn giúp tôi: Lập bảng kế hoạch làm việc chi tiết cho tuần tới.
+
+TUY NHIÊN, trước khi lên kế hoạch, bạn KHÔNG ĐƯỢC tự ý suy đoán hay đưa ra các đầu việc chung chung. Nếu bạn thấy chưa rõ vấn đề hoặc còn thiếu dữ liệu, hãy chủ động đặt cho tôi từ 3 đến 5 câu hỏi trọng tâm nhất về những thông tin bạn cần để tôi cung cấp thêm.
+
+Sau khi tôi trả lời xong các câu hỏi của bạn, bạn mới tiến hành xuất kết quả thành Bảng Kế Hoạch Tuần (Thứ 2 đến Thứ 6) gồm các cột: [Thứ] | [Khung giờ / Buổi] | [Đầu việc cụ thể] | [Mức độ ưu tiên] | [Kết quả cần đạt]."</pre>
+                </div>
+
+                <div class="mission-steps-list" style="margin-top: 10px;">
+                  <div class="m-step">
+                    <span class="m-step-num">B3</span>
+                    <div class="m-step-content">
+                      <strong>Trả lời các câu hỏi mà AI vừa tự nghĩ ra:</strong> Bạn chỉ cần cung cấp nhanh vài gạch đầu dòng theo câu hỏi của AI → AI sẽ tự động ráp nối thành một bảng kế hoạch tuần chuẩn chỉ 100%, đúng người đúng việc!
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="next-session-teaser glass-card tilt-card gsap-stagger">
+            <div class="teaser-left">
+              <span class="teaser-label">HẸN GẶP LẠI TẠI BUỔI 02</span>
+              <h4>Xây Dựng AI Agent Đầu Tiên: Cơ Chế Cấp Công Cụ (Tool Calling) & Vòng Lặp ReAct</h4>
+            </div>
+            <div class="teaser-right">
+              <button class="btn-primary" onclick="alert('Đã lưu bài học Buổi 1! Hẹn gặp lại học viên vào Buổi 2.')">
+                <i class="fa-solid fa-check-double"></i> Hoàn Thành Buổi 1
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- SPEAKER NOTES DRAWER (KỊCH BẢN GIẢNG VIÊN ĐỨNG LỚP) -->
+    <aside class="speaker-drawer" id="speakerDrawer">
+      <div class="drawer-header">
+        <div class="drawer-title">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <span>KỊCH BẢN SƯ PHẠM GIẢNG VIÊN (SPEAKER NOTES)</span>
+        </div>
+        <div class="drawer-tools">
+          <span class="slide-indicator-tag" id="drawerSlideTag">Slide 1 / 6</span>
+          <button id="closeDrawerBtn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>
+      <div class="drawer-body" id="drawerContent">
+        <!-- Injected via JavaScript based on current slide -->
+      </div>
+    </aside>
+
+    <!-- IMAGE LIGHTBOX MODAL -->
+    <div id="imageModal" class="lightbox-modal">
+      <span class="lightbox-close" id="lightboxClose">&times;</span>
+      <div class="lightbox-content">
+        <img id="lightboxImg" src="" alt="Zoom Evidence">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
