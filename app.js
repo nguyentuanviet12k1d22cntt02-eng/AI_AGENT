@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   // 1. SLIDE NAVIGATION WITH CLEAN 2D TRANSITIONS
   // ==========================================
-  const totalSlides = 6;
+  const totalSlides = 7;
   let currentSlide = 1;
   let isAnimating = false;
 
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================
-  // 2. SPEAKER NOTES TELEPROMPTER DATA (6 SLIDES)
+  // 2. SPEAKER NOTES TELEPROMPTER DATA (7 SLIDES)
   // ==========================================
   const speakerNotesData = {
     1: {
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "Chiếu Case Study thực tế: Đưa chuỗi 'strbeekaspoaispojkapsjdoihaiuwnxro;abhdiosdn' và hỏi 'có bao nhiêu chữ r'.",
         "Chỉ ra sự nghịch lý hài hước: ChatGPT không hề trả lời có mấy chữ r, mà lại đi đếm 'có 44 ký tự, nếu không tính dấu ; thì có 43 chữ cái'!",
         "Phân tích 3 lý do kỹ thuật: 1) Tokenization (bị băm nhỏ hơn 20 mảnh, không nhìn được chữ cái); 2) Attention Hijacking (bị hút vào dấu ; và độ dài chuỗi); 3) Next-Token Prediction (chỉ đoán từ ngữ theo thói quen bài tập đếm chuỗi chứ không hề chạy code đếm).",
-        "ĐÚC KẾT THỰC CHIẾN CHO DÂN VĂN PHÒNG: Khi ném hợp đồng 20 trang hoặc bảng Excel lớn vào, AI cũng sẽ bị ngợp và đếm nhầm như vậy! Phải nhớ 3 quy tắc: 1) Khoanh vùng cụ thể (chỉ đọc Điều X, bỏ qua phần còn lại); 2) Đóng khung đầu ra (ép trả về bảng 2 cột, cấm viết văn xuôi lan man); 3) Tư duy quản lý (bắt AI xác nhận hiểu đề bài trước khi chốt số liệu).",
+        "ĐÚC KẾT THỰC CHIẾN CHO DÂN VĂN PHÒNG: Khi ném hợp đồng 20 trang hoặc bảng Excel lớn vào, AI cũng sẽ bị ngợp và đếm nhầm như vậy! Phải nhớ 3 quy tắc: 1) Khoanh vùng cụ thể; 2) Đóng khung đầu ra; 3) Bắt AI xác nhận hiểu đề bài trước khi chốt số liệu.",
         "Cầu nối sang AI Agent: Agent văn phòng tương lai sẽ tự động mở file, lọc đúng cột và kiểm tra logic 100% trước khi nộp báo cáo!"
       ],
       questions: [
@@ -191,21 +191,36 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
     2: {
-      timing: "20 phút",
+      timing: "15 phút",
       objective: "Dùng 2 hình ảnh đối đầu thực tế chứng minh cả 2 AI đều trả lời dựa trên xác suất chứ không biết thực tế.",
       talkingPoints: [
         "Chiếu song song 2 ảnh: ChatGPT (điền 'trong xanh.') và Gemini (điền 'Bầu trời hôm nay rất sấm sét').",
         "Chỉ ra sự mâu thuẫn: Cùng một câu lệnh, cùng một người hỏi tại cùng một giây, tại sao một bên bảo trời 'trong xanh', bên kia lại bảo trời 'sấm sét'?",
         "Hỏi học viên: Nếu AI thực sự thông minh và có mắt nhìn thấy thế giới, tại sao lại có 2 câu trả lời đá nhau chan chát như vậy?",
         "Bóc tách bản chất: ChatGPT chọn từ phổ biến nhất theo thống kê ('trong xanh'); còn Gemini bị con quay Temperature bốc trúng ô xác suất thấp ('sấm sét')!",
-        "ĐÚC KẾT VĂN PHÒNG: 1) Luôn cấp dữ liệu nguồn; 2) Đối chiếu chéo; 3) THIẾT LẬP SKILL cho AI/Agent: tự động kiểm tra lại phép tính so với bảng dữ liệu và bắt buộc trích dẫn rõ nguồn (dòng mấy, cột mấy) để không bị nhầm số liệu!"
+        "ĐÚC KẾT VĂN PHÒNG: 1) Luôn cấp dữ liệu nguồn; 2) Đối chiếu chéo; 3) Thiết lập Skill kiểm tra tính toán & trích dẫn nguồn."
       ],
       questions: [
         "Nếu hỏi cùng một giây mà 2 AI trả lời trái ngược nhau 180 độ, liệu chúng ta có thể đem số liệu chưa kiểm chứng của AI đi báo cáo sếp không?"
       ]
     },
     3: {
-      timing: "25 phút",
+      timing: "20 phút",
+      objective: "Giải mã cơ chế Cửa sổ ngữ cảnh (Context Window) & Hiện tượng Lost in the Middle trong công việc văn phòng.",
+      talkingPoints: [
+        "Ví von mặt bàn làm việc: Context Window là bộ nhớ tức thời (RAM). AI không nhớ vĩnh viễn, mỗi lần hỏi là toàn bộ lịch sử chat phải nhét lại lên mặt bàn.",
+        "Khi bàn đầy (tràn token) $\rightarrow$ Những trang giấy cũ nhất rơi xuống đất (AI bắt đầu hay quên và trả lời lan man).",
+        "So sánh sức chứa: GPT-3.5 (16K ~12 trang) $\rightarrow$ GPT-4o (128K ~300 trang) $\rightarrow$ Claude 3.5 Sonnet (200K ~500 trang) $\rightarrow$ Gemini 1.5 Pro (2 TRIỆU tokens ~3.000 trang / 1h video).",
+        "Phân tích hiện tượng Lost in the Middle (Stanford): Cơ chế Attention nhớ rất tốt 20% đầu và 20% cuối, nhưng dễ bỏ quên các chi tiết ở giữa văn bản dài.",
+        "3 Quy tắc thực chiến: 1) Đặt yêu cầu cốt lõi ở đầu hoặc cuối prompt; 2) Lọc sạch dữ liệu rác trước khi nạp; 3) Chủ động mở New Chat khi đổi chủ đề để tránh nhiễm độc ngữ cảnh!"
+      ],
+      questions: [
+        "Tại sao khi nạp một file hợp đồng dài 50 trang vào hỏi, AI hay trả lời chung chung hoặc bỏ sót điều khoản nằm ở giữa?",
+        "Vì sao khi chuyển sang làm một bảng báo cáo khác, chúng ta nên mở New Chat thay vì tiếp tục chat trong luồng cũ?"
+      ]
+    },
+    4: {
+      timing: "20 phút",
       objective: "Gắn liền bài giảng với Giáo trình cơ bản Sao Việt (Trang 18-25).",
       talkingPoints: [
         "Nhắc lại Trang 19 giáo trình: 'Người dùng là người quản lý, không phải người hỏi'.",
@@ -217,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "Nếu nhân viên mới vào công ty chưa hiểu quy trình, bạn giao việc chung chung hay phải đưa tài liệu mẫu và quy định cụ thể? AI cũng y như vậy!"
       ]
     },
-    4: {
+    5: {
       timing: "35 phút",
       objective: "Trang bị trọn bộ 4 Kỹ thuật Đặt lệnh & 2 Video thực hành thực chiến (ChatGPT Projects & Gemini Skills + Canvas).",
       talkingPoints: [
@@ -228,14 +243,14 @@ document.addEventListener('DOMContentLoaded', () => {
         "Công thức Master Prompt: [Vai trò] + [Nhiệm vụ] + [Bối cảnh/Dữ liệu] + [Định dạng/Lệnh cấm].",
         "Video 1 (3:03): Hướng dẫn tạo Dự án, nạp file tri thức nội bộ & chia sẻ nhóm trên ChatGPT.",
         "Video 2 (3:33): Nạp file cấu hình SKILL.md Chuyên gia Marketing, phân tích 400 đơn hàng & tự động tạo Web Canvas Dashboard tương tác trên Gemini.",
-        "Mẹo thực chiến Gemini Sandbox: Giải thích tại sao phải xuất báo cáo văn bản trước rồi mới mở New Chat dựng Canvas. Khi chat có file Drive/Excel hoặc context quá dài, cơ chế sandbox an toàn của Google sẽ tự động ẩn nút Preview (chỉ hiện Code). Do đó, New Chat sạch sẽ giúp nút Preview hoạt động 100%!"
+        "Mẹo thực chiến Gemini Sandbox: Giải thích tại sao phải xuất báo cáo văn bản trước rồi mới mở New Chat dựng Canvas để nút Preview hoạt động 100%!"
       ],
       questions: [
         "Tại sao khi giao việc cho ChatGPT, việc đưa ra 1 ví dụ mẫu (Few-Shot) lại hiệu quả hơn việc giải thích bằng 10 câu văn xuôi?",
         "Vì sao khi chat dài có file Excel thì Gemini Canvas hay bị mất nút Preview, và xử lý thế nào?"
       ]
     },
-    5: {
+    6: {
       timing: "20 phút",
       objective: "Tạo bước nhảy vọt (Bridge) từ LLM thụ động sang Kỷ nguyên AI Agent tự hành.",
       talkingPoints: [
@@ -248,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "Sự khác biệt lớn nhất giữa một 'Chatbot thông thường' và một 'AI Agent tự hành' là gì?"
       ]
     },
-    6: {
+    7: {
       timing: "10 phút",
       objective: "Chốt 3 chân lý cốt lõi và hướng dẫn bài tập thực chiến Lập kế hoạch tuần chuẩn Quản lý.",
       talkingPoints: [

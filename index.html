@@ -18,7 +18,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <!-- Stylesheet (with cache-busting version) -->
-  <link rel="stylesheet" href="style.css?v=20261005_1648">
+  <link rel="stylesheet" href="style.css?v=20261005_1656">
 </head>
 <body class="light-theme">
   <!-- 3D FLOATING MESH BACKGROUND ORBS -->
@@ -326,8 +326,140 @@
         </div>
       </section>
 
-      <!-- ================= SLIDE 3: TƯ DUY QUẢN LÝ TỪ GIÁO TRÌNH ================= -->
+      <!-- ================= SLIDE 3: CỬA SỔ NGỮ CẢNH (CONTEXT WINDOW) ================= -->
       <section class="slide-page" data-slide="3" id="slide-3">
+        <div class="slide-content">
+          <div class="section-badge gsap-fade">CƠ CHẾ BỘ NHỚ AI (CONTEXT WINDOW)</div>
+          <h2 class="slide-title gsap-fade">Cửa Sổ Ngữ Cảnh Hoạt Động Thế Nào? Giải Mã "Trí Nhớ Tức Thời" Của AI</h2>
+          <p class="slide-desc gsap-fade">
+            Cửa sổ ngữ cảnh (Context Window) là <strong>"mặt bàn làm việc tạm thời"</strong> của AI. AI không có trí nhớ vĩnh viễn trong một cuộc trò chuyện — mỗi khi bạn gửi câu hỏi mới, toàn bộ lịch sử trước đó phải được nhét lại vào cửa sổ này.
+          </p>
+
+          <!-- 2 Cột so sánh & Bản chất -->
+          <div class="context-hero-grid">
+            <!-- Cột trái: Bản chất mặt bàn & Token -->
+            <div class="glass-card context-card tilt-card gsap-stagger">
+              <div class="context-card-header">
+                <div class="context-icon-wrap"><i class="fa-solid fa-table-cells-large"></i></div>
+                <h3>Bản Chất: Chiếc Bàn Làm Việc Có Hạn</h3>
+              </div>
+
+              <div class="desk-analogy-box">
+                <p><strong>Ví dụ mặt bàn:</strong> Hãy tưởng tượng Context Window như một chiếc bàn làm việc. Bạn bày tài liệu, sách vở và câu hỏi lên bàn.</p>
+                <p>Khi bàn đầy chỗ, những tờ giấy cũ nhất sẽ bị <strong>đẩy rơi xuống đất (Sliding Window / Tràn bộ nhớ)</strong> $\rightarrow$ AI bắt đầu quên những gì bạn đã nói ở đầu cuộc trò chuyện!</p>
+              </div>
+
+              <div class="desk-analogy-box" style="margin-top: 6px;">
+                <p><strong>Đơn vị đo lường: Token</strong></p>
+                <div class="token-calc-chips">
+                  <span class="token-calc-item"><i class="fa-solid fa-cube text-primary"></i> 1 Token $\approx$ 0.75 từ tiếng Anh</span>
+                  <span class="token-calc-item"><i class="fa-solid fa-cube text-success"></i> 1 Token $\approx$ 1-2 ký tự tiếng Việt</span>
+                  <span class="token-calc-item"><i class="fa-solid fa-file-lines text-warning"></i> 1.000 Tokens $\approx$ 750 từ (~2 trang A4)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cột phải: Thước đo sức chứa các mô hình thực tế -->
+            <div class="glass-card context-card tilt-card gsap-stagger">
+              <div class="context-card-header">
+                <div class="context-icon-wrap"><i class="fa-solid fa-gauge-high"></i></div>
+                <h3>Sức Chứa Cửa Sổ Ngữ Cảnh Các Mô Hình</h3>
+              </div>
+
+              <div class="model-capacity-list">
+                <!-- GPT-3.5 -->
+                <div class="capacity-item">
+                  <div class="cap-header">
+                    <span class="cap-name"><i class="fa-solid fa-robot text-muted"></i> GPT-3.5 Legacy</span>
+                    <span class="cap-val">4K - 16K tokens</span>
+                  </div>
+                  <div class="cap-bar-track"><div class="cap-bar-fill" style="width: 10%;"></div></div>
+                  <p class="cap-desc">Sức chứa ~3 - 12 trang văn bản. Rất nhanh bị tràn bộ nhớ khi chat dài.</p>
+                </div>
+
+                <!-- GPT-4o -->
+                <div class="capacity-item">
+                  <div class="cap-header">
+                    <span class="cap-name"><i class="fa-solid fa-bolt text-primary"></i> ChatGPT / GPT-4o</span>
+                    <span class="cap-val">128K tokens</span>
+                  </div>
+                  <div class="cap-bar-track"><div class="cap-bar-fill" style="width: 45%;"></div></div>
+                  <p class="cap-desc">Sức chứa ~300 trang sách. Đủ đọc trọn vẹn 1 báo cáo tài chính năm của doanh nghiệp.</p>
+                </div>
+
+                <!-- Claude 3.5 Sonnet -->
+                <div class="capacity-item">
+                  <div class="cap-header">
+                    <span class="cap-name"><i class="fa-solid fa-feather text-accent"></i> Claude 3.5 Sonnet</span>
+                    <span class="cap-val">200K tokens</span>
+                  </div>
+                  <div class="cap-bar-track"><div class="cap-bar-fill" style="width: 60%;"></div></div>
+                  <p class="cap-desc">Sức chứa ~500 trang tài liệu. Tối ưu cực mạnh cho phân tích mã nguồn và văn bản pháp lý.</p>
+                </div>
+
+                <!-- Gemini 1.5 Pro -->
+                <div class="capacity-item highlight-king">
+                  <div class="cap-header">
+                    <span class="cap-name"><i class="fa-solid fa-crown text-warning"></i> Gemini 1.5 Pro / Flash</span>
+                    <span class="cap-val">1M - 2M tokens (Vua Ngữ Cảnh)</span>
+                  </div>
+                  <div class="cap-bar-track"><div class="cap-bar-fill" style="width: 100%;"></div></div>
+                  <p class="cap-desc"><strong>Sức chứa kỷ lục ~1.500 - 3.000 trang sách!</strong> Có thể đọc toàn bộ 1 video dài 1 tiếng hoặc file âm thanh 11 tiếng.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hiện tượng Lost in the Middle -->
+          <div class="lost-middle-card glass-card gsap-fade">
+            <div class="lost-header">
+              <h4><i class="fa-solid fa-triangle-exclamation text-warning"></i> Hiện Tượng "Lost In The Middle" (Nghiên Cứu Stanford)</h4>
+              <span class="lost-tag"><i class="fa-solid fa-brain"></i> Đường Cong Chú Ý Hình Chữ U</span>
+            </div>
+            <p class="protip-desc" style="margin: 0;">
+              Khi bạn nạp một tài liệu quá dài (50-100 trang) vào trong cửa sổ ngữ cảnh, cơ chế Attention của AI sẽ <strong>ghi nhớ rất tốt phần đầu và phần cuối, nhưng rất dễ bỏ sót hoặc trả lời sai các chi tiết nằm ở chính giữa!</strong>
+            </p>
+            <div class="lost-visual-row">
+              <div class="u-zone zone-head">
+                <span class="u-pct">95%</span>
+                <span class="u-lbl">ĐẦU PROMPT (20% Đầu)</span>
+                <span class="u-detail">Ghi nhớ & tuân thủ rất tốt</span>
+              </div>
+              <div class="u-zone zone-mid">
+                <span class="u-pct">40%</span>
+                <span class="u-lbl">GIỮA PROMPT (BỊ LÃNG QUÊN)</span>
+                <span class="u-detail">Dễ bị ảo giác & bỏ sót dữ liệu</span>
+              </div>
+              <div class="u-zone zone-tail">
+                <span class="u-pct">92%</span>
+                <span class="u-lbl">CUỐI PROMPT (20% Cuối)</span>
+                <span class="u-detail">Ghi nhớ & bám sát yêu cầu</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 Quy Tắc Thực Chiến Văn Phòng -->
+          <div class="context-rules-grid">
+            <div class="context-rule-item glass-card gsap-stagger">
+              <span class="c-rule-badge c-rule-1"><i class="fa-solid fa-thumbtack"></i> Quy Tắc 1: Đặt Trọng Tâm Đầu/Cuối</span>
+              <p>Luôn đặt dữ liệu quan trọng nhất và các lệnh cấm ở <strong>dòng đầu tiên</strong> hoặc <strong>dòng cuối cùng</strong> của câu lệnh để tránh bị "rơi vào điểm mù ở giữa".</p>
+            </div>
+
+            <div class="context-rule-item glass-card gsap-stagger">
+              <span class="c-rule-badge c-rule-2"><i class="fa-solid fa-filter"></i> Quy Tắc 2: Lọc Sạch Dữ Liệu Rác</span>
+              <p>Không copy nguyên cả file Excel 10.000 dòng thừa thãi. Hãy trích xuất chỉ những cột/dòng cần phân tích để không làm ngộp cửa sổ ngữ cảnh của AI.</p>
+            </div>
+
+            <div class="context-rule-item glass-card gsap-stagger">
+              <span class="c-rule-badge c-rule-3"><i class="fa-solid fa-plus-circle"></i> Quy Tắc 3: Mở New Chat Khi Đổi Việc</span>
+              <p>Tránh hiện tượng <em>"Nhiễm độc ngữ cảnh" (Context Pollution)</em>. Khi chuyển sang nhiệm vụ mới, hãy mở phiên Chat mới để AI có một chiếc bàn làm việc sạch 100%.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 4: TƯ DUY QUẢN LÝ TỪ GIÁO TRÌNH ================= -->
+      <section class="slide-page" data-slide="4" id="slide-4">
         <div class="slide-content">
           <div class="section-badge gsap-fade">TƯ DUY ĐIỀU KHIỂN AI (GIÁO TRÌNH TRANG 18-25)</div>
           <h2 class="slide-title gsap-fade">Từ "Người Dùng Thụ Động" Sang "Nhà Quản Lý AI"</h2>
@@ -380,8 +512,8 @@
         </div>
       </section>
 
-      <!-- ================= SLIDE 4: BỘ KỸ THUẬT SỬ DỤNG CHATGPT HIỆU QUẢ ================= -->
-      <section class="slide-page" data-slide="4" id="slide-4">
+      <!-- ================= SLIDE 5: BỘ KỸ THUẬT SỬ DỤNG CHATGPT HIỆU QUẢ ================= -->
+      <section class="slide-page" data-slide="5" id="slide-5">
         <div class="slide-content">
           <div class="section-badge gsap-fade">KỸ THUẬT THỰC CHIẾN (PROMPT ENGINEERING)</div>
           <h2 class="slide-title gsap-fade">Bộ 4 Kỹ Thuật Điều Khiển ChatGPT Chuẩn Xác Cho Dân Văn Phòng</h2>
@@ -610,8 +742,8 @@
         </div>
       </section>
 
-      <!-- ================= SLIDE 5: CẦU NỐI SANG KỶ NGUYÊN AI AGENT ================= -->
-      <section class="slide-page" data-slide="5" id="slide-5">
+      <!-- ================= SLIDE 6: CẦU NỐI SANG KỶ NGUYÊN AI AGENT ================= -->
+      <section class="slide-page" data-slide="6" id="slide-6">
         <div class="slide-content">
           <div class="section-badge gsap-fade">BƯỚC NHẢY TIẾP THEO</div>
           <h2 class="slide-title gsap-fade">Tại Sao Cần AI Agent? Giải Pháp Cho Cơn Ác Mộng Xác Suất</h2>
@@ -680,11 +812,12 @@
                 <span><strong>Agent khắc phục điểm yếu của ví dụ "bầu trời sấm sét":</strong> Thay vì đoán mò, nó tự kích hoạt Tool Tra Cứu Thời Tiết để có câu trả lời chính xác 100%!</span>
               </div>
             </div>
+          </div>
         </div>
       </section>
 
-      <!-- ================= SLIDE 6: TỔNG KẾT & NHIỆM VỤ THỰC CHIẾN ================= -->
-      <section class="slide-page" data-slide="6" id="slide-6">
+      <!-- ================= SLIDE 7: TỔNG KẾT & NHIỆM VỤ THỰC CHIẾN ================= -->
+      <section class="slide-page" data-slide="7" id="slide-7">
         <div class="slide-content">
           <div class="section-badge gsap-fade">KẾT THÚC BUỔI 01</div>
           <h2 class="slide-title gsap-fade">Hành Trang Cần Nhớ & Thử Thách Về Nhà</h2>
@@ -810,6 +943,6 @@ Sau khi tôi trả lời xong các câu hỏi của bạn, bạn mới tiến h�
 
   </div>
 
-  <script src="app.js?v=20261005_1648"></script>
+  <script src="app.js?v=20261005_1656"></script>
 </body>
 </html>
