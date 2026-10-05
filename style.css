@@ -2779,21 +2779,42 @@ body.light-theme {
 
 .turn-flow-formula {
   font-family: var(--font-mono);
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   background: #ffffff;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 5px 8px;
+  border-radius: 6px;
   border: 1px solid #e2e8f0;
-  color: #334155;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
-.turn-flow-formula strong {
-  color: #0f172a;
+.formula-block {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.74rem;
+}
+
+.formula-in {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.formula-out {
+  background: #fdf2f8;
+  color: #be185d;
+  border: 1px solid #fbcfe8;
+}
+
+.formula-arrow {
+  color: #94a3b8;
+  font-size: 0.72rem;
 }
 
 .turn-step-desc {
