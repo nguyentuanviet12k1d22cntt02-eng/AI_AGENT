@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
       timing: "15 phút",
       objective: "Dùng sơ đồ dẫn chứng trực quan (Anthropic Research) giải thích cơ chế gửi yêu cầu & tích lũy ngữ cảnh (Multi-turn Accumulation) và 3 ý đúc kết cho công việc văn phòng.",
       talkingPoints: [
-        "Chiếu hình ảnh sơ đồ thực tế (image.png): AI hoàn toàn KHÔNG có bộ nhớ tự động lưu như não người.",
+        "Chiếu hình ảnh sơ đồ thực tế (context-window.svg): AI hoàn toàn KHÔNG có bộ nhớ tự động lưu như não người.",
         "Phân tích Turn 1 -> Turn 2 -> Turn 3: Mỗi lần người dùng gửi 1 câu hỏi mới, toàn bộ lịch sử hỏi-đáp trước đó đều được hệ thống đóng gói và nạp lại vào Input của mô hình.",
         "Càng chat dài, Input càng phình to -> AI càng tốn thời gian đọc lại từ đầu, làm tăng độ trễ và chi phí token.",
         "Giải thích Vạch Cắt Ngữ Cảnh (Cut-off Line ✂️): Khi vượt quá sức chứa của Cửa sổ ngữ cảnh, những tin nhắn đầu tiên sẽ bị rơi ra ngoài -> AI quên sạch các yêu cầu/quy ước bạn đã dặn ở đầu buổi!",
@@ -396,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const zoomContextDiagram = document.getElementById('zoomContextDiagram');
   if (zoomContextDiagram) {
     zoomContextDiagram.addEventListener('click', () => {
-      openLightbox('assets/image.png', 'Minh chứng thực tế: Sơ đồ tích lũy ngữ cảnh khi gửi yêu cầu qua từng lượt chat (Anthropic Research)');
+      openLightbox('assets/context-window.svg', 'Minh chứng thực tế: Sơ đồ tích lũy ngữ cảnh khi gửi yêu cầu qua từng lượt chat (Anthropic Research)');
     });
   }
 

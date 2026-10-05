@@ -2633,22 +2633,23 @@ body.light-theme {
 
 .context-img-box {
   position: relative;
-  background: #0f172a;
+  background: #fafaf8;
   border-radius: var(--radius-sm);
   overflow: hidden;
-  border: 1px solid #334155;
+  border: 1px solid var(--border-card);
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 260px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .context-img-box:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.18);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
   border-color: #3b82f6;
 }
 
