@@ -530,60 +530,80 @@
             </div>
           </div>
 
-          <!-- MẸO THỰC CHIẾN / TROUBLESHOOTING: TẠI SAO PHẢI XUẤT VĂN BẢN TRƯỚC RỒI MỚI SANG NEW CHAT DỰNG CANVAS? -->
-          <div class="canvas-protip-box glass-card gsap-fade">
-            <div class="protip-header">
-              <div class="protip-title">
-                <i class="fa-solid fa-lightbulb text-warning"></i>
-                <span>Mẹo Thực Chiến: Vì Sao Phải Xuất Báo Cáo Trước Rồi Mới Mở "New Chat" Dựng Giao Diện Canvas?</span>
+          <!-- MẸO THỰC CHIẾN: GIẢI MÃ LỖI GEMINI CANVAS SANDBOX & NÚT PREVIEW -->
+          <div class="canvas-protip-card glass-card gsap-fade">
+            <div class="protip-top-banner">
+              <div class="protip-icon-badge">
+                <i class="fa-solid fa-lightbulb"></i>
               </div>
-              <span class="protip-tag"><i class="fa-solid fa-shield-halved"></i> Giải Mã Gemini Sandbox</span>
+              <div class="protip-title-area">
+                <h4>Mẹo Thực Chiến: Tại Sao Phải Xuất Báo Cáo Trước Rồi Mới Sang "New Chat" Dựng Canvas?</h4>
+                <p class="protip-subtitle">
+                  Khi dùng Gemini Canvas, nhiều người gặp tình trạng <strong>chỉ sinh mã Code mà mất hẳn nút Preview</strong> (không xem trước được giao diện). Đây là 4 nguyên nhân kỹ thuật cốt lõi:
+                </p>
+              </div>
             </div>
 
-            <p class="protip-desc">
-              Khi dùng Gemini Canvas, nhiều người gặp tình trạng <strong>chỉ sinh mã Code mà mất hẳn nút Preview</strong> (không xem trước được giao diện). Đây không phải do bạn viết prompt sai, mà xuất phát từ 4 nguyên nhân kỹ thuật sau:
-            </p>
+            <!-- 4 Grid Cards -->
+            <div class="protip-reasons-grid">
+              <!-- Reason 1 -->
+              <div class="protip-reason-item">
+                <div class="reason-item-header">
+                  <h5><i class="fa-solid fa-file-excel text-success"></i> 1. File / Drive Trong Chat</h5>
+                  <span class="risk-pill danger"><i class="fa-solid fa-triangle-exclamation"></i> Rất Cao</span>
+                </div>
+                <p>Khi luồng chat có đính kèm file Excel hoặc Google Drive, cơ chế bảo mật sandbox của Google sẽ tự động vô hiệu hóa nút Preview để ngăn rò rỉ dữ liệu.</p>
+              </div>
 
-            <div class="protip-table-wrapper">
-              <table class="protip-table">
-                <thead>
-                  <tr>
-                    <th>Nguyên Nhân Kỹ Thuật</th>
-                    <th style="width: 130px;">Tần Suất Gặp</th>
-                    <th>Biểu Hiện & Bản Chất Vấn Đề</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>1. File / Google Drive trong Context</strong></td>
-                    <td><span class="risk-tag risk-high"><i class="fa-solid fa-circle-exclamation"></i> Rất Cao</span></td>
-                    <td>Khi luồng chat có đính kèm file Excel hoặc dữ liệu Drive, cơ chế bảo mật sandbox của Google sẽ tự động vô hiệu hóa nút Preview để ngăn rò rỉ dữ liệu.</td>
-                  </tr>
-                  <tr>
-                    <td><strong>2. Ngữ cảnh (Context) quá phức tạp</strong></td>
-                    <td><span class="risk-tag risk-high"><i class="fa-solid fa-circle-exclamation"></i> Khá Cao</span></td>
-                    <td>Đoạn chat quá dài, nhiều lượt hỏi đáp và tính toán số liệu lớn khiến trình biên dịch Canvas bị quá tải và không thể dựng web trực tiếp.</td>
-                  </tr>
-                  <tr>
-                    <td><strong>3. Gemini Canvas UI Glitch</strong></td>
-                    <td><span class="risk-tag risk-med"><i class="fa-solid fa-triangle-exclamation"></i> Thỉnh Thoảng</span></td>
-                    <td>Lỗi hiển thị giao diện tạm thời từ máy chủ Google (Code sinh bình thường nhưng nút Preview bị ẩn).</td>
-                  </tr>
-                  <tr>
-                    <td><strong>4. Code không tương thích Sandbox</strong></td>
-                    <td><span class="risk-tag risk-med"><i class="fa-solid fa-triangle-exclamation"></i> Trung Bình</span></td>
-                    <td>Mã nguồn chứa backend Node/Python hoặc gọi API bên ngoài không hỗ trợ render trực tiếp trong khung xem trước.</td>
-                  </tr>
-                </tbody>
-              </table>
+              <!-- Reason 2 -->
+              <div class="protip-reason-item">
+                <div class="reason-item-header">
+                  <h5><i class="fa-solid fa-database text-warning"></i> 2. Context Dữ Liệu Quá Tải</h5>
+                  <span class="risk-pill danger"><i class="fa-solid fa-triangle-exclamation"></i> Khá Cao</span>
+                </div>
+                <p>Hội thoại quá dài, nhiều lượt prompt & phân tích 400 dòng số liệu khiến trình biên dịch Canvas sandbox bị quá tải bộ nhớ và không thể dựng web trực tiếp.</p>
+              </div>
+
+              <!-- Reason 3 -->
+              <div class="protip-reason-item">
+                <div class="reason-item-header">
+                  <h5><i class="fa-solid fa-bug text-danger"></i> 3. Gemini Canvas UI Glitch</h5>
+                  <span class="risk-pill warning"><i class="fa-solid fa-circle-exclamation"></i> Thỉnh Thoảng</span>
+                </div>
+                <p>Lỗi hiển thị giao diện tạm thời từ máy chủ Google (mã nguồn vẫn sinh đúng chuẩn 100% nhưng nút Preview bị ẩn tạm thời).</p>
+              </div>
+
+              <!-- Reason 4 -->
+              <div class="protip-reason-item">
+                <div class="reason-item-header">
+                  <h5><i class="fa-solid fa-code text-primary"></i> 4. Code Ngoài Phạm Vi Sandbox</h5>
+                  <span class="risk-pill warning"><i class="fa-solid fa-circle-exclamation"></i> Trung Bình</span>
+                </div>
+                <p>Mã nguồn chứa backend Node/Python hoặc gọi API bên ngoài không hỗ trợ render trực tiếp trong iframe xem trước của Gemini.</p>
+              </div>
             </div>
 
-            <div class="protip-solution-banner">
-              <i class="fa-solid fa-circle-check"></i>
-              <div>
-                <strong>Quy trình thực chiến chuẩn 2 bước (Pro-Workflow):</strong><br>
-                • <strong>Bước 1:</strong> Trong chat phân tích, yêu cầu AI xuất toàn bộ báo cáo chi tiết thành <em>văn bản/bảng số liệu hoàn chỉnh</em>.<br>
-                • <strong>Bước 2:</strong> Mở một <strong>New Chat (luồng chat mới sạch sẽ)</strong>, dán nội dung tóm tắt và ra lệnh: <em>"Dựa vào thông tin trên, hãy tạo giao diện web chế độ Canvas"</em> → Nút <strong>Preview</strong> chắc chắn sẽ hiển thị 100% và chạy mượt mà không bao giờ bị lỗi!
+            <!-- Solution 2 Steps -->
+            <div class="protip-solution-box">
+              <div class="solution-header">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>QUY TRÌNH THỰC CHIẾN 2 BƯỚC VÀNG (PRO-WORKFLOW)</span>
+              </div>
+              <div class="solution-steps">
+                <div class="solution-step-card">
+                  <span class="step-circle">1</span>
+                  <div class="step-card-text">
+                    <strong>Bước 1: Xuất Báo Cáo Văn Bản</strong><br>
+                    Trong chat phân tích dữ liệu, yêu cầu AI xuất toàn bộ báo cáo chi tiết thành <em>văn bản/bảng số liệu hoàn chỉnh</em>.
+                  </div>
+                </div>
+                <div class="solution-step-card">
+                  <span class="step-circle">2</span>
+                  <div class="step-card-text">
+                    <strong>Bước 2: Mở New Chat Dựng Canvas</strong><br>
+                    Mở <strong>New Chat sạch sẽ</strong>, dán nội dung tóm tắt và ra lệnh: <em>"Dựa vào thông tin trên, hãy tạo giao diện web chế độ Canvas"</em> → Nút <strong>Preview</strong> xuất hiện 100%!
+                  </div>
+                </div>
               </div>
             </div>
           </div>
