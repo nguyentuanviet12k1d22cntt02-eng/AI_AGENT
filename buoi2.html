@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học AI & Agent - Buổi 2: Tư Duy Quản Lý & Khởi Tạo Văn Bản Doanh Nghiệp</title>
+  <meta name="description" content="Bài giảng tương tác Buổi 2: Tư duy giao việc cho AI, ma trận đánh giá & kiểm soát rủi ro, cùng bộ 3 vũ khí khởi tạo văn bản hành chính thực chiến.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- GSAP 3 CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=20261011_2215">
+</head>
+<body class="light-theme">
+  <!-- 3D FLOATING MESH BACKGROUND -->
+  <div class="mesh-bg-container" aria-hidden="true">
+    <div class="mesh-orb orb-1"></div>
+    <div class="mesh-orb orb-2"></div>
+    <div class="mesh-orb orb-3"></div>
+    <div class="mesh-grid-pattern"></div>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-nav">
+      <div class="nav-left">
+        <div class="brand-badge">
+          <span class="pulsing-dot"></span>
+          <span class="brand-text">AI & AGENT WORKSHOP</span>
+        </div>
+        
+        <!-- BỘ CHUYỂN BUỔI HỌC (SESSION SWITCHER) -->
+        <div class="session-switcher">
+          <a href="index.html" class="session-btn" title="Chuyển sang Buổi 1: Giải Mã Mô Hình Hoạt Động Của AI">
+            <span class="dot-indicator"></span> Buổi 1
+          </a>
+          <a href="buoi2.html" class="session-btn active" title="Đang ở Buổi 2: Tư Duy Quản Lý & Khởi Tạo Văn Bản">
+            <span class="dot-indicator"></span> Buổi 2
+          </a>
+        </div>
+
+        <div class="session-info">
+          <span class="session-tag">BUỔI 02</span>
+          <span class="session-title">Tư Duy Quản Lý Thực Chiến & Bộ 3 Vũ Khí Khởi Tạo Văn Bản</span>
+        </div>
+      </div>
+
+      <div class="nav-center">
+        <div class="slide-indicator">
+          <button id="prevBtn" class="nav-btn" title="Slide trước (Phím ←)"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="slide-pills" id="slidePillsContainer">
+            <!-- Render dynamically via JavaScript -->
+          </div>
+          <button id="nextBtn" class="nav-btn" title="Slide tiếp (Phím →)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <button id="speakerNotesToggle" class="action-btn" title="Bật/Tắt Kịch bản Giảng viên (Phím S)">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <span>Kịch bản Giảng viên</span>
+        </button>
+        <button id="fullscreenToggle" class="action-btn icon-only" title="Toàn màn hình (Phím F)">
+          <i class="fa-solid fa-expand"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN SLIDE STAGE -->
+    <main class="presentation-stage" id="presentationStage">
+
+      <!-- ================= SLIDE 1: MỞ ĐẦU & NÂNG CẤP VỊ THẾ ================= -->
+      <section class="slide-page active" data-slide="1" id="slide-1">
+        <div class="slide-content hero-slide">
+          <div class="hero-header gsap-fade">
+            <div class="glow-pill"><i class="fa-solid fa-user-tie"></i> Khóa Học AI & AI AGENT — Buổi 02</div>
+            <h1 class="hero-title">
+              Nâng Cấp Vị Thế Văn Phòng:<br>
+              <span class="text-gradient">Đừng Hỏi Bâng Quơ — Hãy Giao Việc Chuẩn Quản Lý!</span>
+            </h1>
+            <p class="hero-subtitle">
+              Sau khi hiểu bản chất AI chỉ đoán từ xác suất (Buổi 1), hôm nay bạn sẽ nâng cấp vị thế thành 
+              <strong>Người Quản Lý Thực Tập Sinh AI</strong>: Giao việc có quy trình, khóa chặt rủi ro và làm chủ 
+              <strong>Bộ 3 Vũ Khí Khởi Tạo Văn Bản Doanh Nghiệp</strong>.
+            </p>
+          </div>
+
+          <div class="grid-2-col hero-cards">
+            <!-- Thẻ Cảnh Báo: Người hỏi thụ động -->
+            <div class="glass-card misconception-card gsap-stagger">
+              <div class="card-icon red-glow"><i class="fa-solid fa-comment-dots"></i></div>
+              <h3>Vị Thế "Người Hỏi Thụ Động"</h3>
+              <p class="card-desc">
+                Coi AI như Google Search, hỏi câu ngắn ngủn không ngữ cảnh: <em>"Làm sao để tăng doanh số?", "Viết cho tôi cái hợp đồng"</em>.<br>
+                <strong>Hậu quả:</strong> AI đoán mò, đưa ra lời khuyên chung chung vô thưởng vô phạt hoặc bịa số liệu nguy hiểm.
+              </p>
+              <div class="status-tag tag-danger"><i class="fa-solid fa-xmark"></i> Thói quen sai lầm của 90% người dùng</div>
+            </div>
+
+            <!-- Thẻ Chuẩn Mực: Người quản lý thực thụ -->
+            <div class="glass-card truth-card gsap-stagger">
+              <div class="card-icon blue-glow"><i class="fa-solid fa-briefcase"></i></div>
+              <h3>Vị Thế "Người Quản Lý Chuyên Nghiệp"</h3>
+              <p class="card-desc">
+                Coi AI như <strong>Thực tập sinh siêu tốc mới vào nghề</strong>: Có thẩm quyền, giao mục tiêu rõ ràng, 
+                cấp đủ dữ liệu nguồn, ép tuân thủ khuôn khổ pháp lý và kiểm tra nghiệm thu trước khi ban hành.
+              </p>
+              <div class="status-tag tag-success"><i class="fa-solid fa-check"></i> Tư duy chuẩn nhà quản lý 2026</div>
+            </div>
+          </div>
+
+          <div class="banner-box gsap-fade" style="margin-top: 1.5rem;">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span><strong>Chân lý cốt lõi:</strong> Trong doanh nghiệp, bạn không được trả lương để gõ lệnh tán gẫu với AI. Bạn được trả lương để <strong>chịu trách nhiệm về chất lượng đầu ra</strong> của công việc!</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 2: BÀI 5 - BỘ 5 QUY TẮC VÀNG GIAO VIỆC ================= -->
+      <section class="slide-page" data-slide="2" id="slide-2">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge"><i class="fa-solid fa-book-open"></i> Giáo Trình Cơ Bản — Bài 5 (Trang 18 - 19)</span>
+            <h2 class="slide-title">Bộ 5 Quy Tắc Vàng Giao Việc Cho AI</h2>
+            <p class="slide-subtitle">Áp dụng tư duy quản lý để biến câu lệnh thành mệnh lệnh hành chính có độ chính xác 100%.</p>
+          </div>
+
+          <div class="rule-cards-grid">
+            <!-- Quy tắc 1 -->
+            <div class="rule-card top-row gsap-stagger">
+              <div class="rule-card-header">
+                <div class="card-icon blue-glow"><i class="fa-solid fa-terminal"></i></div>
+                <span class="rule-badge">QUY TẮC 01</span>
+              </div>
+              <h4>1. Không Hiểu Ý – Chỉ Hiểu Lệnh</h4>
+              <p>AI không có trực giác và không đọc được suy nghĩ của bạn. Chất lượng câu lệnh quyết định 100% kết quả đầu ra.</p>
+              <div class="status-tag tag-primary">Chất lượng lệnh = Kết quả</div>
+            </div>
+
+            <!-- Quy tắc 2 -->
+            <div class="rule-card top-row gsap-stagger">
+              <div class="rule-card-header">
+                <div class="card-icon blue-glow"><i class="fa-solid fa-arrows-split-up-and-left"></i></div>
+                <span class="rule-badge">QUY TẮC 02</span>
+              </div>
+              <h4>2. Chuyển Từ Hỏi Sang Giao Việc</h4>
+              <p>Đừng hỏi lý thuyết chung chung. Hãy trao vai trò, thẩm quyền và yêu cầu hành động như đang giao task cho nhân viên dưới quyền.</p>
+              <div class="status-tag tag-primary">Người dùng là Quản lý</div>
+            </div>
+
+            <!-- Quy tắc 3 -->
+            <div class="rule-card top-row gsap-stagger">
+              <div class="rule-card-header">
+                <div class="card-icon blue-glow"><i class="fa-solid fa-cube"></i></div>
+                <span class="rule-badge">QUY TẮC 03</span>
+              </div>
+              <h4>3. Đủ 3 Chân Kiềng Đầu Vào</h4>
+              <p>Mọi câu lệnh chuẩn văn phòng phải hội tụ đủ: <strong>Làm việc gì</strong> + <strong>Dựa trên tài liệu nào</strong> + <strong>Định dạng xuất là gì</strong>.</p>
+              <div class="status-tag tag-primary">3 Chân kiềng bất biến</div>
+            </div>
+
+            <!-- Quy tắc 4 -->
+            <div class="rule-card bottom-row gsap-stagger">
+              <div class="rule-card-header">
+                <div class="card-icon blue-glow"><i class="fa-solid fa-list-ol"></i></div>
+                <span class="rule-badge">QUY TẮC 04</span>
+              </div>
+              <h4>4. Chia Nhỏ Việc Lớn (Multi-step)</h4>
+              <p>Đừng bắt AI làm 1 lèo văn bản phức tạp. Chia theo quy trình: <em>Lập dàn ý &rarr; Dự thảo từng phần &rarr; Rà soát tối ưu</em> để loại bỏ lỗi dồn tích.</p>
+              <div class="status-tag tag-primary">Từng bước luôn ít lỗi hơn</div>
+            </div>
+
+            <!-- Quy tắc 5 -->
+            <div class="rule-card bottom-row gsap-stagger">
+              <div class="rule-card-header">
+                <div class="card-icon red-glow"><i class="fa-solid fa-clipboard-check"></i></div>
+                <span class="rule-badge" style="color:var(--accent-rose); background:#fee2e2; border-color:#fecaca;">QUY TẮC 05</span>
+              </div>
+              <h4>5. Luôn Kiểm Tra & Nghiệm Thu Kết Quả</h4>
+              <p>AI là người soạn thảo đầu tiên, con người là người ký tên chịu trách nhiệm cuối cùng. Tuyệt đối không đem văn bản chưa kiểm chứng gửi đối tác hoặc cấp trên!</p>
+              <div class="status-tag tag-danger"><i class="fa-solid fa-shield"></i> Nguyên tắc an toàn tối cao</div>
+            </div>
+          </div>
+
+          <div class="case-study-card gsap-fade" style="margin-top: 1.25rem;">
+            <div class="case-header">
+              <span class="case-tag tag-neutral"><i class="fa-solid fa-code-compare"></i> So Sánh Thực Tế Tại Văn Phòng</span>
+            </div>
+            <div class="grid-2-col" style="gap: 1.5rem; margin-top: 0.5rem;">
+              <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 12px;">
+                <strong style="color: #dc2626;"><i class="fa-solid fa-xmark"></i> Prompt Hỏi (Yếu):</strong>
+                <p style="font-size: 0.88rem; color: #7f1d1d; margin-top: 4px;">"Làm thế nào để viết email báo cáo tuần cho sếp?" &rarr; AI trả lời bài học lý thuyết văn xuôi 500 từ.</p>
+              </div>
+              <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px;">
+                <strong style="color: #16a34a;"><i class="fa-solid fa-check"></i> Prompt Giao Việc (Chuẩn Quản Lý):</strong>
+                <p style="font-size: 0.88rem; color: #14532d; margin-top: 4px;">"Đóng vai Nhân viên Marketing, hãy soạn email báo cáo kết quả tuần 1/9/2026 gửi Trưởng phòng, nêu rõ chỉ số tăng 20% tương tác và 35 leads, định dạng đúng chuẩn email doanh nghiệp." &rarr; Ra ngay mẫu email dùng được 100%!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 3: BÀI 6 - MA TRẬN ĐÁNH GIÁ & PHẢN BIỆN AI ================= -->
+      <section class="slide-page" data-slide="3" id="slide-3">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge"><i class="fa-solid fa-shield-halved"></i> Giáo Trình Cơ Bản — Bài 6 (Trang 20 - 22)</span>
+            <h2 class="slide-title">Ma Trận 6 Kỹ Thuật Đánh Giá & "Kỹ Thuật Phản Biện AI"</h2>
+            <p class="slide-subtitle">Không bao giờ tin tưởng 100% — Kỹ thuật đặt câu hỏi ngược ép AI tự vạch lá tìm sâu.</p>
+          </div>
+
+          <div class="eval-cards-grid">
+            <div class="eval-card gsap-stagger">
+              <div class="card-icon blue-glow"><i class="fa-solid fa-magnifying-glass"></i></div>
+              <h4>1. Đối Chiếu Thực Tế</h4>
+              <p>So sánh nội dung với kiến thức chuyên ngành. Thấy số liệu hoặc điều khoản lạ &rarr; Bật đèn đỏ kiểm tra.</p>
+            </div>
+            <div class="eval-card gsap-stagger">
+              <div class="card-icon blue-glow"><i class="fa-solid fa-question"></i></div>
+              <h4>2. Ép AI Tự Giải Thích</h4>
+              <p>Bắt AI giải thích nguồn gốc con số hoặc điều khoản. Nếu AI trả lời vòng vo &rarr; Kết quả ban đầu có vấn đề.</p>
+            </div>
+            <div class="eval-card featured-card gsap-stagger">
+              <div class="card-icon red-glow"><i class="fa-solid fa-scale-unbalanced-flip"></i></div>
+              <h4 style="color:#e11d48;">3. Kỹ Thuật Phản Biện AI ⭐</h4>
+              <p>Đặt câu hỏi ngược thách thức: <em>"Văn bản này có lỗ hổng hoặc rủi ro pháp lý nào không?"</em> Ép AI tự đóng vai kiểm toán tìm lỗi.</p>
+            </div>
+            <div class="eval-card gsap-stagger">
+              <div class="card-icon blue-glow"><i class="fa-solid fa-code-branch"></i></div>
+              <h4>4. Kiểm Tra Chéo</h4>
+              <p>Đưa cùng câu lệnh qua Gemini và ChatGPT để đối chiếu kết quả. Đa số giống nhau &rarr; Độ tin cậy cao.</p>
+            </div>
+            <div class="eval-card gsap-stagger">
+              <div class="card-icon blue-glow"><i class="fa-solid fa-filter"></i></div>
+              <h4>5. Soát Lại Dữ Liệu Nguồn</h4>
+              <p>Kiểm tra thông tin đầu vào. Dữ liệu sai hoặc thiếu &rarr; AI chắc chắn suy diễn kết quả sai lệch.</p>
+            </div>
+            <div class="eval-card gsap-stagger">
+              <div class="card-icon blue-glow"><i class="fa-solid fa-puzzle-piece"></i></div>
+              <h4>6. Kiểm Tra Theo Module</h4>
+              <p>Chia nhỏ văn bản: Kiểm tra riêng bảng số liệu, riêng điều khoản bảo mật, riêng chính sách bồi thường.</p>
+            </div>
+          </div>
+
+          <!-- WIDGET TƯƠNG TÁC THỬ TÀI PHẢN BIỆN AI -->
+          <div class="case-study-card gsap-fade" style="margin-top: 1.25rem;">
+            <div class="case-header">
+              <span class="case-tag tag-primary"><i class="fa-solid fa-flask"></i> Trải Nghiệm Tương Tác: Thử Thách Phản Biện Bản Thảo HĐLĐ</span>
+            </div>
+            <div style="margin-top: 0.75rem;">
+              <p style="font-size: 0.9rem; color: #475569;">
+                Giả sử AI vừa tạo cho bạn một Hợp đồng Lao động 12 tháng. Thay vì gửi đi ngay, hãy bấm nút dưới đây để kích hoạt câu lệnh phản biện ngược:
+                <code style="background:#e2e8f0; padding:2px 6px; border-radius:4px; font-size:0.82rem;">"Hãy chỉ ra 3 rủi ro pháp lý lớn nhất trong hợp đồng này?"</code>
+              </p>
+              <div style="margin-top: 10px;">
+                <button id="triggerChallengeBtn" class="action-btn" style="background:var(--accent-primary); color:#fff; border:none; padding:8px 18px; border-radius:8px; cursor:pointer; font-weight:700;">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Bấm để Phản Biện Thử Nghiệm Ngay
+                </button>
+              </div>
+              <div id="challengeResponseBox" style="display:none;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 4: BÀI 6 - QUY TRÌNH KIỂM SOÁT 4 BƯỚC ================= -->
+      <section class="slide-page" data-slide="4" id="slide-4">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge"><i class="fa-solid fa-diagram-project"></i> Giáo Trình Cơ Bản — Bài 6 (Trang 23)</span>
+            <h2 class="slide-title">Quy Trình Kiểm Soát Chuẩn 4 Bước</h2>
+            <p class="slide-subtitle">Triệt tiêu hoàn toàn rủi ro "lạc đề": Không cho phép AI bấm chạy khi chưa hiểu thấu đáo đề bài.</p>
+          </div>
+
+          <!-- 4 PIPELINE STEPS -->
+          <div class="pipeline-container gsap-stagger">
+            <div class="pipeline-card">
+              <div class="step-num-badge">01</div>
+              <div class="pipeline-title">Yêu Cầu Phân Tích Đề</div>
+              <div class="pipeline-desc">Người dùng giao đề bài phức tạp và đính kèm lệnh cấm AI không được tự ý viết ngay.</div>
+              <div class="pipeline-tag"><i class="fa-solid fa-user"></i> Quản lý ra lệnh</div>
+            </div>
+
+            <div class="pipeline-card">
+              <div class="step-num-badge">02</div>
+              <div class="pipeline-title">AI Mô Tả Lại Hiểu Biết</div>
+              <div class="pipeline-desc">AI trình bày tóm tắt: Đã hiểu mục tiêu gì, các giả định cần có và dàn ý dự kiến.</div>
+              <div class="pipeline-tag"><i class="fa-solid fa-robot"></i> AI chứng minh hiểu đề</div>
+            </div>
+
+            <div class="pipeline-card active-step">
+              <div class="step-num-badge">03</div>
+              <div class="pipeline-title">Người Dùng Xác Nhận</div>
+              <div class="pipeline-desc">Bạn kiểm tra lại. Nếu chuẩn &rarr; Gõ <em>"ĐỒNG Ý"</em>. Nếu hiểu sai &rarr; Bổ sung ngay tại chỗ!</div>
+              <div class="pipeline-tag"><i class="fa-solid fa-circle-check"></i> Chốt khóa xác nhận</div>
+            </div>
+
+            <div class="pipeline-card">
+              <div class="step-num-badge">04</div>
+              <div class="pipeline-title">AI Mới Thực Thi</div>
+              <div class="pipeline-desc">AI bắt đầu xuất toàn văn bản hoàn chỉnh 100% chuẩn ý định, loại bỏ hoàn toàn làm lại.</div>
+              <div class="pipeline-tag"><i class="fa-solid fa-file-export"></i> Đầu ra chuẩn mực</div>
+            </div>
+          </div>
+
+          <!-- PROMPT KHÓA XÁC NHẬN CHUẨN THỰC CHIẾN -->
+          <div class="case-study-card gsap-fade" style="margin-top: 1.5rem;">
+            <div class="case-header">
+              <span class="case-tag tag-primary"><i class="fa-solid fa-key"></i> Câu Lệnh Thần Chú: Prompt Khóa Xác Nhận Thực Chiến (Copy 1-Chạm)</span>
+              <button class="action-btn copy-prompt-btn" data-target="promptLockCode">
+                <i class="fa-solid fa-copy"></i> Sao chép Prompt
+              </button>
+            </div>
+            <div class="code-preview" style="background:#0f172a; color:#e2e8f0; padding:1.2rem; border-radius:8px; margin-top:0.75rem;">
+              <pre id="promptLockCode" style="margin:0; font-family:var(--font-mono); font-size:0.9rem; white-space:pre-wrap; line-height:1.6;">
+"Tôi đang cần bạn thực hiện một nhiệm vụ quan trọng sau: [Mô tả chi tiết đề bài / dữ liệu của bạn].
+
+TUY NHIÊN, trước khi bắt đầu viết nội dung:
+1. Bạn hãy tóm tắt lại bài toán theo cách hiểu của bạn.
+2. Liệt kê các giả định và cấu trúc dàn ý bạn dự định triển khai.
+3. DỪNG LẠI và CHỜ TÔI GÕ 'ĐỒNG Ý' thì mới bắt đầu thực thi toàn bộ văn bản!"</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 5: THỰC CHIẾN 1 - EMAIL BÁO CÁO TUẦN (BÀI 3 MỞ RỘNG) ================= -->
+      <section class="slide-page" data-slide="5" id="slide-5">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge"><i class="fa-solid fa-envelope"></i> Giáo Trình Mở Rộng — Bài 3 (Trang 8 - 9)</span>
+            <h2 class="slide-title">Vũ Khí 1: Soạn Email Doanh Nghiệp Có Đo Lường KPI</h2>
+            <p class="slide-subtitle">Báo cáo tuần gửi Trưởng phòng: Cấu trúc trang trọng, số liệu định lượng và sẵn sàng gửi Gmail.</p>
+          </div>
+
+          <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+            <!-- Cột Trái: Prompt Thực Hành -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-terminal"></i> Prompt Mẫu Chuẩn Giáo Trình</span>
+                <button class="action-btn copy-prompt-btn" data-target="promptEmailCode">
+                  <i class="fa-solid fa-copy"></i> Sao chép
+                </button>
+              </div>
+              <div class="code-preview" style="background:#0f172a; color:#e2e8f0; padding:1rem; border-radius:8px; margin-top:0.5rem; max-height:360px; overflow-y:auto;">
+                <pre id="promptEmailCode" style="margin:0; font-family:var(--font-mono); font-size:0.83rem; white-space:pre-wrap; line-height:1.55;">
+Hãy đóng vai trò là nhân viên marketing và thực hiện yêu cầu sau:
+Hãy soạn email báo cáo kết quả công việc tuần gửi trưởng phòng marketing.
+Thông tin:
+- Người gửi: Nguyễn Văn An - Bộ phận Marketing
+- Thời gian báo cáo: Tuần 1 tháng 9/2026
+- Công việc đã thực hiện: Thiết kế 5 bài đăng Facebook; Viết nội dung quảng bá khóa học Excel; Hỗ trợ chạy quảng cáo.
+- Kết quả định lượng: 
+  + Tăng tương tác fanpage 20%
+  + Thu về 35 khách hàng tiềm năng
+- Yêu cầu: Văn phong chuyên nghiệp, trình bày rõ từng mục, có lời cảm ơn cuối email, đúng chuẩn email doanh nghiệp để gửi qua Gmail.</pre>
+              </div>
+              <div style="margin-top: 10px; font-size: 0.8rem; color: #64748b;">
+                <i class="fa-solid fa-arrow-right-arrow-left"></i> <strong>Quy trình gửi:</strong> Chạy lệnh trên ChatGPT/Gemini &rarr; Copy &rarr; Dán vào Gmail kiểm tra & Gửi.
+              </div>
+            </div>
+
+            <!-- Cột Phải: Mock Gmail Preview -->
+            <div class="mock-email-container gsap-stagger">
+              <div class="mock-email-header">
+                <div class="mock-email-row">
+                  <span class="mock-label">Đến:</span>
+                  <span class="mock-val">truongphong.marketing@tinhocsaoviet.com</span>
+                </div>
+                <div class="mock-email-row">
+                  <span class="mock-label">Tiêu đề:</span>
+                  <span class="mock-val"><strong>[BÁO CÁO TUẦN] - Kết Quả Công Việc Marketing Tuần 1 Tháng 9/2026 - Nguyễn Văn An</strong></span>
+                </div>
+              </div>
+              <div class="mock-email-body">
+                <p>Kính gửi Anh/Chị Trưởng phòng Marketing,</p>
+                <p>Em xin phép gửi báo cáo kết quả công việc của bộ phận Marketing trong Tuần 1 tháng 9/2026 như sau:</p>
+                
+                <h4>1. Các Công Việc Đã Triển Khai</h4>
+                <ul style="margin-left: 18px;">
+                  <li>Thiết kế hoàn thiện <strong>05 bài đăng Facebook</strong> theo đúng kế hoạch truyền thông.</li>
+                  <li>Biên soạn chuỗi bài viết chuyên sâu giới thiệu khóa học <em>Excel Văn Phòng Thực Chiến</em>.</li>
+                  <li>Phối hợp tối ưu và hỗ trợ kỹ thuật chiến dịch quảng cáo đa kênh.</li>
+                </ul>
+
+                <h4>2. Kết Quả Đo Lường Đạt Được (KPIs)</h4>
+                <div style="display:flex; gap:8px; margin: 8px 0;">
+                  <span class="badge-kpi"><i class="fa-solid fa-arrow-trend-up"></i> Tương tác Fanpage: +20%</span>
+                  <span class="badge-kpi"><i class="fa-solid fa-user-check"></i> 35 Khách hàng tiềm năng (Leads)</span>
+                </div>
+
+                <h4>3. Kế Hoạch Trọng Tâm Tuần Tiếp Theo</h4>
+                <p>Tiếp tục duy trì lịch đăng bài, đo lường tỷ lệ chuyển đổi của 35 data khách hàng và tối ưu ngân sách quảng cáo.</p>
+                
+                <p style="margin-top:14px;">Em xin chân thành cảm ơn sự hỗ trợ của Anh/Chị và Ban lãnh đạo!<br>
+                Trân trọng,<br>
+                <strong>Nguyễn Văn An</strong> - Chuyên viên Marketing</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 6: THỰC CHIẾN 2 - BÁO CÁO NGÀY 5 KHỐI (BÀI 2 MỞ RỘNG) ================= -->
+      <section class="slide-page" data-slide="6" id="slide-6">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge"><i class="fa-solid fa-file-lines"></i> Giáo Trình Mở Rộng — Bài 2 (Trang 6 - 7)</span>
+            <h2 class="slide-title">Vũ Khí 2: Báo Cáo Công Việc Ngày Chuẩn 5 Khối Hành Chính</h2>
+            <p class="slide-subtitle">Báo cáo công việc hằng ngày chuẩn doanh nghiệp Việt Nam: Sao chép mượt mà, không vỡ định dạng sang MS Word.</p>
+          </div>
+
+          <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+            <!-- Cột Trái: Prompt Báo Cáo Ngày -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-terminal"></i> Prompt Mẫu Chuẩn Giáo Trình</span>
+                <button class="action-btn copy-prompt-btn" data-target="promptDailyReportCode">
+                  <i class="fa-solid fa-copy"></i> Sao chép
+                </button>
+              </div>
+              <div class="code-preview" style="background:#0f172a; color:#e2e8f0; padding:1rem; border-radius:8px; margin-top:0.5rem; max-height:360px; overflow-y:auto;">
+                <pre id="promptDailyReportCode" style="margin:0; font-family:var(--font-mono); font-size:0.82rem; white-space:pre-wrap; line-height:1.55;">
+Hãy đóng vai trò là nhân viên văn phòng chuyên nghiệp và thực hiện yêu cầu sau:
+Soạn Báo Cáo Công Việc Hằng Ngày theo chuẩn hành chính – văn phòng Việt Nam.
+Thông tin báo cáo:
+- Thông tin nhân viên: Họ và tên: Nguyễn Văn An - Chức vụ: Nhân viên Marketing - Phòng ban: Marketing - Công ty: Trung tâm Tin Học Sao Việt
+- Thời gian báo cáo: Ngày 30/05/2026
+- Nội dung công việc đã thực hiện: Thiết kế 03 bài đăng Facebook khóa Excel; Viết bài Python cơ bản; Hỗ trợ tuyển sinh; Cập nhật CRM.
+- Kết quả đạt được: Hoàn thành 100% bài đăng; Được duyệt; Cập nhật đủ 50 khách hàng.
+- Khó khăn / vướng mắc: Thiếu hình ảnh phục vụ thiết kế; Một số thông tin khách hàng chưa đầy đủ.
+- Kế hoạch ngày tiếp theo: Hoàn thiện banner; Viết bài Canva; Tiếp tục cập nhật CRM.
+Yêu cầu trình bày: Tiêu đề rõ ràng, bố cục chuyên nghiệp, chia đủ 5 mục hành chính, có phần Người lập báo cáo, định dạng để sao chép trực tiếp sang Microsoft Word.</pre>
+              </div>
+            </div>
+
+            <!-- Cột Phải: Mock Báo Cáo Word 5 Khối -->
+            <div class="mock-word-container gsap-stagger">
+              <div style="text-align: center; border-bottom: 2px solid #0f172a; padding-bottom: 10px; margin-bottom: 14px;">
+                <h3 style="font-size: 1.25rem; font-weight: 800; text-transform: uppercase; margin: 0;">BÁO CÁO CÔNG VIỆC HẰNG NGÀY</h3>
+                <div style="font-size: 0.88rem; font-style: italic; color: #475569; margin-top: 4px;">Ngày báo cáo: 30/05/2026 | Đơn vị: Trung tâm Tin Học Sao Việt</div>
+              </div>
+
+              <div style="font-size: 0.88rem; line-height: 1.6;">
+                <p><strong>I. THÔNG TIN CHUNG:</strong> Họ tên: Nguyễn Văn An | Chức vụ: Chuyên viên Marketing | Phòng ban: Marketing</p>
+                
+                <p style="margin-top: 8px;"><strong>II. NỘI DUNG CÔNG VIỆC ĐÃ THỰC HIỆN:</strong></p>
+                <ul style="margin-left: 20px;">
+                  <li>Thiết kế hoàn chỉnh 03 bài đăng Facebook quảng bá khóa học Excel văn phòng.</li>
+                  <li>Biên tập nội dung bài viết chuyên đề "Lộ trình tự học Python cơ bản cho người mới".</li>
+                  <li>Hỗ trợ bộ phận Tuyển sinh giải đáp và tư vấn lộ trình học tập cho học viên mới.</li>
+                  <li>Nhập liệu và cập nhật dữ liệu khách hàng tiềm năng lên hệ thống CRM.</li>
+                </ul>
+
+                <p style="margin-top: 8px;"><strong>III. KẾT QUẢ ĐẠT ĐƯỢC:</strong></p>
+                <ul style="margin-left: 20px;">
+                  <li>Đạt 100% tiến độ bài đăng; nội dung được Trưởng bộ phận phê duyệt không cần sửa.</li>
+                  <li>Cập nhật thành công thông tin đầy đủ của <strong>50 khách hàng mới</strong> trên hệ thống CRM.</li>
+                </ul>
+
+                <p style="margin-top: 8px;"><strong>IV. KHÓ KHĂN / VƯỚNG MẮC:</strong></p>
+                <ul style="margin-left: 20px; color: #b91c1c;">
+                  <li>Kho tư liệu hình ảnh chất lượng cao phục vụ thiết kế còn hạn chế.</li>
+                  <li>Một số liên hệ khách hàng chưa cung cấp đủ số điện thoại cá nhân.</li>
+                </ul>
+
+                <p style="margin-top: 8px;"><strong>V. KẾ HOẠCH NGÀY TIẾP THEO:</strong> Hoàn thiện bộ banner Canva, tiếp tục làm sạch dữ liệu CRM.</p>
+                
+                <div style="display:flex; justify-content:flex-end; margin-top: 18px; text-align:center;">
+                  <div>
+                    <strong>NGƯỜI LẬP BÁO CÁO</strong><br>
+                    <span style="font-style:italic;">(Ký và ghi rõ họ tên)</span><br><br>
+                    <strong>Nguyễn Văn An</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 7: THỰC CHIẾN 3 & TỔNG KẾT (BÀI 1 MỞ RỘNG) ================= -->
+      <section class="slide-page" data-slide="7" id="slide-7">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge"><i class="fa-solid fa-file-contract"></i> Giáo Trình Mở Rộng — Bài 1 (Trang 4 - 5) & Tổng Kết</span>
+            <h2 class="slide-title">Vũ Khí 3: Hợp Đồng Lao Động & Xuất File Word (.docx)</h2>
+            <p class="slide-subtitle">Master Prompt đỉnh cao đóng vai HR 15 năm kinh nghiệm: Đầy đủ căn cứ pháp lý và xuất link tải file Word.</p>
+          </div>
+
+          <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+            <!-- Cột Trái: Master Prompt HĐLĐ -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-gavel"></i> Master Prompt Hợp Đồng Lao Động</span>
+                <button class="action-btn copy-prompt-btn" data-target="promptContractCode">
+                  <i class="fa-solid fa-copy"></i> Sao chép
+                </button>
+              </div>
+              <div class="code-preview" style="background:#0f172a; color:#e2e8f0; padding:1rem; border-radius:8px; margin-top:0.5rem; max-height:280px; overflow-y:auto;">
+                <pre id="promptContractCode" style="margin:0; font-family:var(--font-mono); font-size:0.78rem; white-space:pre-wrap; line-height:1.5;">
+Bạn là chuyên gia Hành chính Nhân sự cấp cao với hơn 15 năm kinh nghiệm, am hiểu Bộ luật Lao động Việt Nam hiện hành, các quy định về BHXH, BHYT, BHTN, thuế TNCN.
+Nhiệm vụ của bạn là soạn thảo một Hợp đồng Lao động hoàn chỉnh, chuyên nghiệp, đúng chuẩn pháp lý Việt Nam.
+Thông tin thực tế:
+- Người sử dụng LĐ: Công ty TNHH Thương Mại ABC
+- Người lao động: Trần Thị Mai - Vị trí: Nhân viên Bán hàng
+- Loại hợp đồng: Xác định thời hạn 12 tháng
+- Lương cơ bản: 9.000.000 VNĐ/tháng
+Yêu cầu nội dung: Đầy đủ 14 điều khoản thực tế (Thời giờ làm việc, Nghỉ ngơi, Lương thưởng, BHXH, Quyền & Nghĩa vụ, Bảo mật, Chấm dứt...).
+Yêu cầu xuất file: Tạo file Microsoft Word (.docx), khổ giấy A4, font Times New Roman cỡ 13, căn lề chuẩn văn bản hành chính Việt Nam, tiêu đề in hoa cỡ 18 căn giữa, có Header tên công ty, Footer số trang, bảng chữ ký cuối văn bản và cung cấp link tải file Word hoàn chỉnh.</pre>
+              </div>
+            </div>
+
+            <!-- Cột Phải: Tổng Kết 3 Chân Lý & Thử Thách Về Nhà -->
+            <div class="glass-card truth-card gsap-stagger">
+              <div class="card-icon blue-glow"><i class="fa-solid fa-trophy"></i></div>
+              <h3>3 Chân Lý Khắc Cốt Ghi Tâm Buổi 02</h3>
+              <ul style="margin: 8px 0 12px 18px; font-size: 0.9rem; color: #334155; line-height: 1.6;">
+                <li><strong>1. Bạn là Quản lý, AI là Thực tập sinh:</strong> Không bao giờ hỏi đáp vu vơ; ra lệnh có mục tiêu, dữ liệu và định dạng.</li>
+                <li><strong>2. Quy trình kiểm soát 4 bước:</strong> Luôn khóa xác nhận trước khi AI viết và dùng "Câu hỏi ngược" để phản biện bản thảo.</li>
+                <li><strong>3. Chuẩn hóa thể thức hành chính:</strong> Văn bản doanh nghiệp phải có số liệu đo lường định lượng và sẵn sàng xuất file Word (.docx).</li>
+              </ul>
+
+              <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <strong style="color:var(--accent-primary);"><i class="fa-solid fa-house-laptop"></i> Thử Thách Thực Chiến Về Nhà:</strong>
+                  <button class="action-btn copy-prompt-btn" data-target="homeworkCode" style="padding:4px 10px; font-size:0.75rem;">
+                    <i class="fa-solid fa-copy"></i> Copy đề bài
+                  </button>
+                </div>
+                <p id="homeworkCode" style="font-size:0.83rem; color:#1e40af; margin-top:6px; line-height:1.5;">
+                  Chọn 1 tài liệu thực tế tại chính phòng ban của bạn (Email đề xuất tăng ngân sách, Báo cáo công việc tuần, hoặc Hợp đồng dịch vụ). Áp dụng kỹ thuật: "Phân vai chuyên gia + Quy trình kiểm soát 4 bước + Phản biện lỗ hổng" để tạo ra văn bản hoàn thiện và nộp bài tập.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 8: BÀI TẬP THỰC CHIẾN - 5 TÌNH HUỐNG DOANH NGHIỆP ================= -->
+      <section class="slide-page" data-slide="8" id="slide-8">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge"><i class="fa-solid fa-graduation-cap"></i> BÀI TẬP THỰC CHIẾN TỔNG HỢP (BUỔI 02)</span>
+            <h2 class="slide-title">5 Bài Tập Tình Huống Doanh Nghiệp Thực Tế</h2>
+            <p class="slide-subtitle">Vận dụng toàn diện Tư duy Quản lý (Bài 5, 6 CB) & Bộ 3 Vũ khí Văn bản (Bài 1, 2, 3 MR) để xử lý 5 bài toán công sở hóc búa.</p>
+          </div>
+
+          <!-- THANH CHỌN TÌNH HUỐNG (5 TABS) -->
+          <div class="exercise-nav gsap-fade">
+            <button class="exercise-tab-btn active" data-tab="exPane1">
+              <i class="fa-solid fa-headset"></i> Tình Huống 1: CSKH Khiếu Nại
+            </button>
+            <button class="exercise-tab-btn" data-tab="exPane2">
+              <i class="fa-solid fa-chart-pie"></i> Tình Huống 2: Đề Án Chi Phí Q4
+            </button>
+            <button class="exercise-tab-btn" data-tab="exPane3">
+              <i class="fa-solid fa-shield-virus"></i> Tình Huống 3: Phản Biện Quy Chế KPI
+            </button>
+            <button class="exercise-tab-btn" data-tab="exPane4">
+              <i class="fa-solid fa-video"></i> Tình Huống 4: Báo Cáo Sự Cố Webinar
+            </button>
+            <button class="exercise-tab-btn" data-tab="exPane5">
+              <i class="fa-solid fa-handshake"></i> Tình Huống 5: Hợp Đồng Agency Ads
+            </button>
+          </div>
+
+          <!-- NỘI DUNG TỪNG TÌNH HUỐNG -->
+          <!-- PANE 1 -->
+          <div class="exercise-pane active" id="exPane1">
+            <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+              <div class="exercise-meta-box">
+                <div class="exercise-badge-title">
+                  <i class="fa-solid fa-bullseye"></i> Tình Huống 1: Khủng Hoảng Khiếu Nại Khách VIP
+                </div>
+                <div style="font-size:0.92rem; color:#334155; line-height:1.6;">
+                  <strong>Bối cảnh thực tế:</strong> Bạn là Trưởng nhóm CSKH. Đơn quà tặng sinh nhật ngày 10/10 của một khách hàng VIP bị giao trễ 3 ngày. Khách hàng bức xúc tột cùng, đòi hoàn tiền và dọa đăng bài tẩy chay.<br><br>
+                  <strong>Mục tiêu giao việc:</strong> Giao việc cho AI xây dựng kịch bản gọi điện thoại xin lỗi chân thành và bảng đề xuất các phương án đền bù thỏa đáng để giữ chân khách hàng.
+                </div>
+                <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px; font-size:0.85rem; color:#1e40af;">
+                  <i class="fa-solid fa-lightbulb"></i> <strong>Công thức chuẩn:</strong> [Vai trò CSKH] + [Bối cảnh sự cố cụ thể] + [Kịch bản 3 bước & Bảng đền bù].
+                </div>
+              </div>
+
+              <div class="case-study-card">
+                <div class="case-header">
+                  <span class="case-tag tag-primary"><i class="fa-solid fa-terminal"></i> Prompt Chuẩn Doanh Nghiệp (Copy 1-Chạm)</span>
+                  <button class="action-btn copy-prompt-btn" data-target="promptEx1Code">
+                    <i class="fa-solid fa-copy"></i> Sao chép
+                  </button>
+                </div>
+                <div class="code-preview" style="background:#0f172a; color:#e2e8f0; padding:1.2rem; border-radius:8px; margin-top:0.5rem; max-height:280px; overflow-y:auto;">
+                  <pre id="promptEx1Code" style="margin:0; font-family:var(--font-mono); font-size:0.90rem; white-space:pre-wrap; line-height:1.65;">
+Đóng vai Trưởng nhóm CSKH, hãy xử lý sự cố giao trễ đơn quà sinh nhật 3 ngày của khách VIP:
+
+1. Soạn kịch bản gọi điện thoại xin lỗi chân thành (thể hiện sự đồng cảm, nhận trách nhiệm rõ ràng và giải thích nguyên nhân ngắn gọn).
+2. Đề xuất bảng phương án đền bù thỏa đáng (voucher giảm giá, quà tặng bù đắp, miễn phí vận chuyển cho các đơn sau).
+
+Yêu cầu: Văn phong khéo léo, ưu tiên làm dịu bức xúc và giữ chân khách hàng, định dạng bảng rõ ràng.</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANE 2 -->
+          <div class="exercise-pane" id="exPane2">
+            <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+              <div class="exercise-meta-box">
+                <div class="exercise-badge-title">
+                  <i class="fa-solid fa-bullseye"></i> Tình Huống 2: Đề Án Cắt Giảm Chi Phí Q4 (Khóa Xác Nhận)
+                </div>
+                <div style="font-size:0.92rem; color:#334155; line-height:1.6;">
+                  <strong>Bối cảnh thực tế:</strong> Ban Giám đốc yêu cầu bạn xây dựng Đề án cắt giảm 15% chi phí vận hành (OPEX) Quý 4. Điều kiện ràng buộc tiên quyết: Tuyệt đối không giảm lương và không sa thải nhân sự.<br><br>
+                  <strong>Mục tiêu giao việc:</strong> Áp dụng kỹ thuật Khóa xác nhận để AI tóm tắt các nhóm chi phí tiềm năng và dàn ý đề án, DỪNG LẠI chờ bạn duyệt rồi mới triển khai chi tiết.
+                </div>
+                <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px; font-size:0.85rem; color:#1e40af;">
+                  <i class="fa-solid fa-lightbulb"></i> <strong>Công thức chuẩn:</strong> [Mục tiêu bài toán] + [Ràng buộc không được phạm] + [Lệnh khóa xác nhận 2 bước].
+                </div>
+              </div>
+
+              <div class="case-study-card">
+                <div class="case-header">
+                  <span class="case-tag tag-primary"><i class="fa-solid fa-terminal"></i> Prompt Chuẩn Doanh Nghiệp (Copy 1-Chạm)</span>
+                  <button class="action-btn copy-prompt-btn" data-target="promptEx2Code">
+                    <i class="fa-solid fa-copy"></i> Sao chép
+                  </button>
+                </div>
+                <div class="code-preview" style="background:#0f172a; color:#e2e8f0; padding:1.2rem; border-radius:8px; margin-top:0.5rem; max-height:280px; overflow-y:auto;">
+                  <pre id="promptEx2Code" style="margin:0; font-family:var(--font-mono); font-size:0.90rem; white-space:pre-wrap; line-height:1.65;">
+Tôi cần xây dựng Đề án cắt giảm 15% chi phí vận hành (OPEX) Quý 4.
+Ràng buộc quan trọng: Tuyệt đối không sa thải nhân viên và không cắt giảm lương thưởng.
+
+Quy tắc thực hiện:
+- Bước 1: Hãy tóm tắt lại các nhóm chi phí tiềm năng có thể tối ưu và dàn ý chính của đề án.
+- Bước 2: DỪNG LẠI và chờ tôi xác nhận duyệt dàn ý thì mới bắt đầu viết nội dung chi tiết.</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANE 3 -->
+          <div class="exercise-pane" id="exPane3">
+            <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+              <div class="exercise-meta-box">
+                <div class="exercise-badge-title">
+                  <i class="fa-solid fa-bullseye"></i> Tình Huống 3: Phản Biện Quy Chế Thưởng Nóng (Tìm Kẽ Hở)
+                </div>
+                <div style="font-size:0.92rem; color:#334155; line-height:1.6;">
+                  <strong>Bối cảnh thực tế:</strong> Khối Kinh doanh dự thảo quy chế: <em>"Nhân viên đạt doanh số trên 200 triệu/tháng sẽ được thưởng nóng 10% doanh thu thuần, thanh toán ngay vào ngày 5 tháng sau"</em>.<br><br>
+                  <strong>Mục tiêu giao việc:</strong> Ép AI đóng vai Kiểm soát nội bộ thực hiện phản biện ngược, chỉ ra các kẽ hở gian lận và đề xuất điều khoản bảo vệ tài chính doanh nghiệp.
+                </div>
+                <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px; font-size:0.85rem; color:#1e40af;">
+                  <i class="fa-solid fa-lightbulb"></i> <strong>Công thức chuẩn:</strong> [Vai trò Kiểm soát] + [Dự thảo quy chế] + [Yêu cầu vạch 3 kẽ hở & viết 3 điều khoản bịt lỗ hổng].
+                </div>
+              </div>
+
+              <div class="case-study-card">
+                <div class="case-header">
+                  <span class="case-tag tag-primary"><i class="fa-solid fa-terminal"></i> Prompt Chuẩn Doanh Nghiệp (Copy 1-Chạm)</span>
+                  <button class="action-btn copy-prompt-btn" data-target="promptEx3Code">
+                    <i class="fa-solid fa-copy"></i> Sao chép
+                  </button>
+                </div>
+                <div class="code-preview" style="background:#0f172a; color:#e2e8f0; padding:1.2rem; border-radius:8px; margin-top:0.5rem; max-height:280px; overflow-y:auto;">
+                  <pre id="promptEx3Code" style="margin:0; font-family:var(--font-mono); font-size:0.90rem; white-space:pre-wrap; line-height:1.65;">
+Đóng vai trò Kiểm soát nội bộ, hãy thẩm định dự thảo quy chế thưởng sau:
+"Nhân viên đạt doanh số trên 200 triệu/tháng sẽ được thưởng nóng ngay 10% doanh thu thuần vào ngày 5 tháng sau."
+
+Nhiệm vụ phản biện:
+1. Chỉ ra 3 kẽ hở hoặc rủi ro trục lợi lớn nhất (hợp đồng ảo hủy đơn sau nhận thưởng, nợ xấu, ghi nhận doanh thu non).
+2. Đề xuất 3 điều khoản bổ sung cụ thể để bịt kín các rủi ro trên trước khi trình Ban Giám Đốc.</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANE 4 -->
+          <div class="exercise-pane" id="exPane4">
+            <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+              <div class="exercise-meta-box">
+                <div class="exercise-badge-title">
+                  <i class="fa-solid fa-bullseye"></i> Tình Huống 4: Email Báo Cáo Sự Cố Webinar
+                </div>
+                <div style="font-size:0.92rem; color:#334155; line-height:1.6;">
+                  <strong>Bối cảnh thực tế:</strong> Bạn chủ trì Webinar bán hàng: Chi phí 5.000.000đ, 120 khách tham dự, chốt được 28 học viên (doanh thu 56.000.000đ). Nhưng 10 phút đầu bị rè micro khiến 15 người thoát ra sớm.<br><br>
+                  <strong>Mục tiêu giao việc:</strong> Soạn email báo cáo trung thực, phân tách rõ ràng Kết quả định lượng - Sự cố phát sinh - Giải pháp khắc phục để gửi Giám đốc.
+                </div>
+                <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px; font-size:0.85rem; color:#1e40af;">
+                  <i class="fa-solid fa-lightbulb"></i> <strong>Công thức chuẩn:</strong> [Vai trò Marketing] + [Số liệu định lượng & Sự cố] + [Cấu trúc 3 phần chuẩn email công sở].
+                </div>
+              </div>
+
+              <div class="case-study-card">
+                <div class="case-header">
+                  <span class="case-tag tag-primary"><i class="fa-solid fa-terminal"></i> Prompt Chuẩn Doanh Nghiệp (Copy 1-Chạm)</span>
+                  <button class="action-btn copy-prompt-btn" data-target="promptEx4Code">
+                    <i class="fa-solid fa-copy"></i> Sao chép
+                  </button>
+                </div>
+                <div class="code-preview" style="background:#0f172a; color:#e2e8f0; padding:1.2rem; border-radius:8px; margin-top:0.5rem; max-height:280px; overflow-y:auto;">
+                  <pre id="promptEx4Code" style="margin:0; font-family:var(--font-mono); font-size:0.90rem; white-space:pre-wrap; line-height:1.65;">
+Đóng vai Trưởng nhóm Marketing, hãy soạn email báo cáo kết quả Webinar gửi Giám đốc:
+- Dữ liệu thực tế: Chi phí 5.000.000đ | Người tham dự: 120 | Chốt đơn khóa học: 28 (Doanh thu: 56.000.000đ).
+- Sự cố kỹ thuật: 10 phút đầu bị rè micro khiến 15 người rời phòng sớm.
+- Hành động xử lý: Đã gửi video recap kèm voucher ưu đãi 15%, chuyển đổi thêm được 4 khách hàng.
+
+Yêu cầu: Tiêu đề email chuẩn quy chuẩn, văn phong công sở trang trọng, tách bạch rõ Kết quả - Sự cố - Giải pháp.</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANE 5 -->
+          <div class="exercise-pane" id="exPane5">
+            <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+              <div class="exercise-meta-box">
+                <div class="exercise-badge-title">
+                  <i class="fa-solid fa-bullseye"></i> Tình Huống 5: Hợp Đồng Thuê Agency Chạy Ads
+                </div>
+                <div style="font-size:0.92rem; color:#334155; line-height:1.6;">
+                  <strong>Bối cảnh thực tế:</strong> Công ty TNHH Bán Lẻ Nova thuê Agency X chạy quảng cáo trong 6 tháng, ngân sách phí dịch vụ 30 triệu/tháng. Yêu cầu bảo mật tuyệt đối tệp khách hàng và cam kết chỉ số CPA.<br><br>
+                  <strong>Mục tiêu giao việc:</strong> Yêu cầu AI soạn thảo bản hợp đồng dịch vụ chuẩn thể thức pháp lý Việt Nam, có bảng điều khoản và chữ ký đầy đủ để xuất sang Microsoft Word.
+                </div>
+                <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px; font-size:0.85rem; color:#1e40af;">
+                  <i class="fa-solid fa-lightbulb"></i> <strong>Công thức chuẩn:</strong> [Vai trò Pháp chế] + [Thông tin 2 bên & Thỏa thuận kinh tế] + [Điều khoản bảo mật & Xuất Word].
+                </div>
+              </div>
+
+              <div class="case-study-card">
+                <div class="case-header">
+                  <span class="case-tag tag-primary"><i class="fa-solid fa-terminal"></i> Prompt Chuẩn Doanh Nghiệp (Copy 1-Chạm)</span>
+                  <button class="action-btn copy-prompt-btn" data-target="promptEx5Code">
+                    <i class="fa-solid fa-copy"></i> Sao chép
+                  </button>
+                </div>
+                <div class="code-preview" style="background:#0f172a; color:#e2e8f0; padding:1.2rem; border-radius:8px; margin-top:0.5rem; max-height:280px; overflow-y:auto;">
+                  <pre id="promptEx5Code" style="margin:0; font-family:var(--font-mono); font-size:0.90rem; white-space:pre-wrap; line-height:1.65;">
+Đóng vai Chuyên viên Pháp chế, hãy soạn Hợp đồng dịch vụ Marketing & Quảng cáo:
+- Bên A: Công ty TNHH Bán Lẻ Nova (Bên thuê).
+- Bên B: Công ty Truyền Thông Agency X (Bên thực hiện).
+- Thời hạn hợp đồng: 06 tháng | Phí dịch vụ: 30.000.000 VNĐ/tháng.
+- Điều khoản bắt buộc: Cam kết chỉ số chi phí trên đơn hàng (CPA) và Bảo mật tuyệt đối tệp dữ liệu khách hàng.
+
+Yêu cầu: Soạn đầy đủ các điều khoản pháp lý, bảng thông tin 2 bên và chữ ký để copy hoàn chỉnh sang Microsoft Word.</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- SPEAKER NOTES TELEPROMPTER DRAWER (PHÍM S) -->
+    <aside class="speaker-drawer" id="speakerDrawer" aria-label="Kịch bản giảng viên">
+      <div class="drawer-header">
+        <div class="drawer-title">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <span>Kịch Bản Sư Phạm Giảng Viên (Buổi 02)</span>
+        </div>
+        <div class="drawer-actions">
+          <span class="drawer-slide-tag" id="drawerSlideTag">Slide 1 / 8</span>
+          <button id="closeDrawerBtn" class="close-drawer-btn" title="Đóng ngăn kéo (Phím S)"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>
+      <div class="drawer-content" id="drawerContent">
+        <!-- Render dynamically via JavaScript -->
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- SCRIPT -->
+  <script src="buoi2.js?v=20261011_2215"></script>
+</body>
+</html>

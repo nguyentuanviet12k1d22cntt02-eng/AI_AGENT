@@ -353,6 +353,10 @@ body.light-theme {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
   position: relative;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
@@ -366,6 +370,18 @@ body.light-theme {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.8rem;
+}
+
+.grid-3-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.grid-6-col {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.25rem;
 }
 
 /* ==========================================================================
@@ -2951,4 +2967,417 @@ body.light-theme {
   .slide-title {
     font-size: 1.8rem;
   }
+}
+
+
+/* ==========================================================================
+   SESSION SWITCHER & BUOI 2 EXTENSIONS
+   ========================================================================== */
+.session-switcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 3px;
+  border-radius: 999px;
+  margin-left: 12px;
+}
+
+.session-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748b;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.session-btn:hover {
+  color: var(--accent-primary);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.session-btn.active {
+  background: #ffffff;
+  color: var(--accent-primary);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.session-btn .dot-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #94a3b8;
+}
+
+.session-btn.active .dot-indicator {
+  background: #2563eb;
+}
+
+/* 4-Step Pipeline Steps */
+.pipeline-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.pipeline-card {
+  background: #ffffff;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  position: relative;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.pipeline-card:hover {
+  transform: translateY(-4px);
+  border-color: #93c5fd;
+  box-shadow: var(--shadow-hover);
+}
+
+.step-num-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  margin-bottom: 0.75rem;
+  background: #eff6ff;
+  color: var(--accent-primary);
+  border: 1px solid #bfdbfe;
+}
+
+.pipeline-card.active-step .step-num-badge {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+.pipeline-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.pipeline-desc {
+  font-size: 0.86rem;
+  color: #64748b;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.pipeline-tag {
+  margin-top: 1rem;
+  padding: 4px 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Mock Email UI Card */
+.mock-email-container {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  font-family: var(--font-main);
+}
+
+.mock-email-header {
+  background: #f8fafc;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mock-email-row {
+  display: flex;
+  font-size: 0.86rem;
+  gap: 8px;
+}
+
+.mock-label {
+  color: #64748b;
+  font-weight: 600;
+  min-width: 65px;
+}
+
+.mock-val {
+  color: #0f172a;
+  font-weight: 500;
+}
+
+.mock-email-body {
+  padding: 1.5rem;
+  font-size: 0.92rem;
+  color: #334155;
+  line-height: 1.65;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.mock-email-body h4 {
+  color: #1e293b;
+  margin: 1rem 0 0.5rem 0;
+  font-size: 0.98rem;
+}
+
+/* Mock Word Document Card */
+.mock-word-container {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  padding: 2rem;
+  font-family: 'Times New Roman', Times, serif;
+  color: #1e293b;
+  position: relative;
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.mock-word-container::before {
+  content: 'TÀI LIỆU MICROSOFT WORD (.DOCX) - KHỔ A4';
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.08em;
+}
+
+/* Badge KPI */
+.badge-kpi {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-kpi.amber {
+  background: #fffbeb;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+/* ==========================================================================
+   BUOI 2 SPECIALIZED CARDS & GRIDS
+   ========================================================================== */
+.rule-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.25rem;
+  margin-top: 0.8rem;
+}
+
+.rule-card {
+  background: #ffffff;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.rule-card:hover {
+  transform: translateY(-3px);
+  border-color: #93c5fd;
+  box-shadow: var(--shadow-hover);
+}
+
+.rule-card.top-row {
+  grid-column: span 2;
+}
+
+.rule-card.bottom-row {
+  grid-column: span 3;
+}
+
+.rule-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.rule-badge {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--accent-primary);
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.rule-card h4 {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.35;
+}
+
+.rule-card p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  flex-grow: 1;
+}
+
+.rule-card .status-tag {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+/* 6 Evals Grid (Slide 3) */
+.eval-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 0.8rem;
+}
+
+.eval-card {
+  background: #ffffff;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
+}
+
+.eval-card:hover {
+  transform: translateY(-3px);
+  border-color: #93c5fd;
+  box-shadow: var(--shadow-hover);
+}
+
+.eval-card.featured-card {
+  border: 2px solid #fda4af;
+  background: linear-gradient(180deg, #fff1f2 0%, #ffffff 100%);
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.08);
+}
+
+.eval-card h4 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.eval-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* ==========================================================================
+   SLIDE 8: 5 EXERCISE SITUATIONS
+   ========================================================================== */
+.exercise-nav {
+  display: flex;
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 6px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-card);
+  overflow-x: auto;
+  margin-bottom: 1.25rem;
+}
+
+.exercise-tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: none;
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.exercise-tab-btn:hover {
+  color: var(--accent-primary);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.exercise-tab-btn.active {
+  background: #ffffff;
+  color: var(--accent-primary);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.exercise-pane {
+  display: none;
+}
+
+.exercise-pane.active {
+  display: block;
+}
+
+.exercise-meta-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.exercise-badge-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--accent-indigo);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
