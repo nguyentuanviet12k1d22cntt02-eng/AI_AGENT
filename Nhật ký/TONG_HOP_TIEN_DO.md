@@ -16,4 +16,6 @@ Bảng lưu vết nhanh các mốc công việc đã hoàn thành trong dự án
 | **08** | 2026-10-11 23:02 | Tối giản hóa 5 Prompt bài tập thành khẩu ngữ tự nhiên (2-4 dòng, gõ 10 giây) & thêm công thức 1 dòng | ✅ Hoàn thành | [2026-10-11_toi_gian_hoa_prompt_khau_ngu_10s.md](file:///d:/AI/AI_AGENT/Nh%E1%BA%ADt%20k%C3%BD/2026/10/2026-10-11_toi_gian_hoa_prompt_khau_ngu_10s.md) |
 | **09** | 2026-10-11 23:12 | Chuẩn hóa bộ 5 Prompt bài tập đạt chuẩn vừa vặn (5-8 dòng) & chuyên nghiệp theo thể thức công sở | ✅ Hoàn thành | [2026-10-11_chuan_hoa_prompt_vua_van_chuyen_nghiep.md](file:///d:/AI/AI_AGENT/Nh%E1%BA%ADt%20k%C3%BD/2026/10/2026-10-11_chuan_hoa_prompt_vua_van_chuyen_nghiep.md) |
 | **10** | 2026-10-12 19:05 | Đóng gói toàn bộ tính năng Buổi 2, quy tắc AGENTS và nhật ký dự án đẩy lên GitHub (main) | ✅ Hoàn thành | [2026-10-12_dong_bo_va_day_du_an_len_github.md](file:///d:/AI/AI_AGENT/Nh%E1%BA%ADt%20k%C3%BD/2026/10/2026-10-12_dong_bo_va_day_du_an_len_github.md) |
+| **11** | 2026-10-12 19:12 | Khắc phục triệt để lỗi mất giao diện CSS khối Session Switcher Buổi 1 & 2 bằng Critical CSS | ✅ Hoàn thành | [2026-10-12_fix_css_session_switcher_buoi_1.md](file:///d:/AI/AI_AGENT/Nh%E1%BA%ADt%20k%C3%BD/2026/10/2026-10-12_fix_css_session_switcher_buoi_1.md) |
+
 
