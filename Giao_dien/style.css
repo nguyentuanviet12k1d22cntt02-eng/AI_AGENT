@@ -415,8 +415,13 @@ body.light-theme {
 
 .grid-2-col {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.8rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.5rem;
+}
+
+.grid-2-col > * {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .grid-3-col {
@@ -4107,6 +4112,9 @@ body.light-theme {
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -4215,4 +4223,412 @@ body.light-theme {
 .copy-data-btn:hover {
   background: #0d9488;
   transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   SLIDE 8: MASTER DATASET HUB & PROMPT TERMINAL SUITE
+   ========================================================================== */
+.excel-card-hub {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 65%, #bbf7d0 100%);
+  border: 1.5px solid #86efac;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 10px 0 14px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.08);
+  min-width: 0;
+}
+
+.excel-card-hub .excel-badge-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 10px rgba(22, 163, 74, 0.3);
+  flex-shrink: 0;
+}
+
+.excel-card-hub .excel-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.excel-card-hub .excel-filename {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #14532d;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.excel-card-hub .excel-meta-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.72rem;
+  color: #166534;
+}
+
+.excel-card-hub .excel-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(134, 239, 172, 0.8);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.excel-btn-download {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  color: #ffffff !important;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 9px 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(22, 163, 74, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.excel-btn-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(22, 163, 74, 0.35);
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+}
+
+.data-hub-container {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-top: 6px;
+}
+
+.data-hub-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #eff6ff;
+  border-bottom: 1px solid #dbeafe;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.data-hub-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #1d4ed8;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.data-hub-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.data-hub-actions a,
+.data-hub-actions button {
+  font-size: 0.72rem;
+  padding: 4px 9px;
+  border-radius: 6px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-csv-download {
+  background: #2563eb;
+  color: #ffffff !important;
+}
+
+.btn-csv-download:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.btn-csv-copy {
+  background: #0f766e;
+  color: #ffffff;
+}
+
+.btn-csv-copy:hover {
+  background: #0d9488;
+  transform: translateY(-1px);
+}
+
+.data-preview-table-wrapper {
+  overflow-x: auto;
+  max-height: 185px;
+  background: #ffffff;
+  min-width: 0;
+}
+
+.data-preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.73rem;
+  text-align: left;
+}
+
+.data-preview-table th {
+  background: #f1f5f9;
+  color: #475569;
+  font-weight: 800;
+  padding: 7px 9px;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.data-preview-table td {
+  padding: 6px 9px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  white-space: nowrap;
+}
+
+.data-preview-table tr:hover {
+  background: #f8fafc;
+}
+
+.badge-channel {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+
+.badge-shopee { background: #ffedd5; color: #c2410c; }
+.badge-tiktok { background: #e0f2fe; color: #0369a1; }
+.badge-web    { background: #ede9fe; color: #6d28d9; }
+.badge-store  { background: #fef3c7; color: #b45309; }
+.badge-risk   { background: #fee2e2; color: #b91c1c; font-weight: 800; }
+.badge-safe   { background: #dcfce7; color: #15803d; font-weight: 700; }
+
+.prompt-terminal {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-top: 0.5rem;
+}
+
+.prompt-terminal-topbar {
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.terminal-window-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.terminal-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.terminal-dot.dot-red { background: #ef4444; }
+.terminal-dot.dot-yellow { background: #f59e0b; }
+.terminal-dot.dot-green { background: #10b981; }
+
+.terminal-filename {
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  color: #94a3b8;
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.terminal-tag-spec {
+  font-size: 0.68rem;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.prompt-terminal-body {
+  padding: 12px 14px;
+  background: #0b132b;
+  max-height: 380px;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-width: 0;
+}
+
+.prompt-terminal-body pre {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-width: 0;
+}
+
+.prompt-terminal-body::-webkit-scrollbar {
+  width: 6px;
+}
+.prompt-terminal-body::-webkit-scrollbar-track {
+  background: #0b132b;
+}
+.prompt-terminal-body::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+.prompt-terminal-body::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+.prompt-action-bar {
+  background: #1e293b;
+  border-top: 1px solid #334155;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.prompt-stats-info {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.btn-copy-terminal {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-copy-terminal:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.4);
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+}
+
+.workflow-steps-box {
+  background: linear-gradient(135deg, #eff6ff 0%, #f0fdfa 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.workflow-steps-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #1e40af;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.workflow-step-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 2px;
+}
+
+@media (max-width: 640px) {
+  .workflow-step-items {
+    grid-template-columns: 1fr;
+  }
+}
+
+.workflow-step-pill {
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  padding: 5px 7px;
+  border-radius: 6px;
+  font-size: 0.71rem;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.workflow-step-num {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
