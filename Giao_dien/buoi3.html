@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học AI & Agent - Buổi 3: Google NotebookLM & Xử Lý Đa Phương Tiện</title>
+  <meta name="description" content="Bài giảng tương tác Buổi 3: Ứng dụng Google NotebookLM trong văn phòng - Từ tổng hợp văn bản đến xuất bản Podcast, Sơ đồ tư duy, Video mô tả và Infographic đồ họa thông tin.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- GSAP 3 CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Stylesheet (with cache-busting version) -->
+  <link rel="stylesheet" href="style.css?v=20261014_1615">
+
+  <style>
+    /* Critical CSS for Session Switcher (Bảo đảm luôn hiển thị đẹp tức thì không phụ thuộc cache) */
+    .session-switcher {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      background: #f1f5f9 !important;
+      border: 1px solid #e2e8f0 !important;
+      padding: 3px !important;
+      border-radius: 999px !important;
+      margin-left: 12px !important;
+      vertical-align: middle !important;
+    }
+    .session-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      padding: 5px 14px !important;
+      border-radius: 999px !important;
+      font-size: 0.78rem !important;
+      font-weight: 700 !important;
+      color: #64748b !important;
+      text-decoration: none !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      line-height: 1.2 !important;
+    }
+    .session-btn:hover {
+      color: #2563eb !important;
+      background: rgba(255, 255, 255, 0.6) !important;
+    }
+    .session-btn.active {
+      background: #ffffff !important;
+      color: #2563eb !important;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+    }
+    .session-btn .dot-indicator {
+      width: 6px !important;
+      height: 6px !important;
+      border-radius: 50% !important;
+      background: #94a3b8 !important;
+      display: inline-block !important;
+    }
+    .session-btn.active .dot-indicator {
+      background: #2563eb !important;
+    }
+
+    /* Lightbox Modal */
+    .image-lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .image-lightbox.active {
+      display: flex;
+      opacity: 1;
+    }
+    .lightbox-content {
+      position: relative;
+      max-width: 92vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 82vh;
+      border-radius: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .lightbox-caption {
+      margin-top: 12px;
+      color: #f8fafc;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: rgba(15, 23, 42, 0.75);
+      padding: 6px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .lightbox-close-btn {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: background 0.2s ease;
+    }
+    .lightbox-close-btn:hover {
+      background: rgba(239, 68, 68, 0.9);
+    }
+  </style>
+</head>
+<body class="light-theme">
+  <!-- 3D FLOATING MESH BACKGROUND -->
+  <div class="mesh-bg-container" aria-hidden="true">
+    <div class="mesh-orb orb-1"></div>
+    <div class="mesh-orb orb-2"></div>
+    <div class="mesh-orb orb-3"></div>
+    <div class="mesh-grid-pattern"></div>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-nav">
+      <div class="nav-left">
+        <div class="brand-badge">
+          <span class="pulsing-dot"></span>
+          <span class="brand-text">AI & AGENT WORKSHOP</span>
+        </div>
+        
+        <!-- BỘ CHUYỂN BUỔI HỌC (SESSION SWITCHER) -->
+        <div class="session-switcher">
+          <a href="index.html" class="session-btn" title="Chuyển sang Buổi 1: Giải Mã Mô Hình Hoạt Động Của AI">
+            <span class="dot-indicator"></span> Buổi 1
+          </a>
+          <a href="buoi2.html" class="session-btn" title="Chuyển sang Buổi 2: Tư Duy Quản Lý & Khởi Tạo Văn Bản">
+            <span class="dot-indicator"></span> Buổi 2
+          </a>
+          <a href="buoi3.html" class="session-btn active" title="Đang ở Buổi 3: Google NotebookLM & Xử Lý Đa Phương Tiện">
+            <span class="dot-indicator"></span> Buổi 3
+          </a>
+        </div>
+
+        <div class="session-info">
+          <span class="session-tag" style="background:#0284c7; color:#fff;">BUỔI 03</span>
+          <span class="session-title">Google NotebookLM: Tổng Hợp Văn Bản Đến Xuất Bản Đa Phương Tiện</span>
+        </div>
+      </div>
+
+      <div class="nav-center">
+        <div class="slide-indicator">
+          <button id="prevBtn" class="nav-btn" title="Slide trước (Phím ←)"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="slide-pills" id="slidePillsContainer">
+            <!-- Render dynamically via JavaScript -->
+          </div>
+          <button id="nextBtn" class="nav-btn" title="Slide tiếp (Phím →)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <button id="speakerNotesToggle" class="action-btn" title="Bật/Tắt Kịch bản Giảng viên (Phím S)">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <span>Kịch bản Giảng viên</span>
+        </button>
+        <button id="fullscreenToggle" class="action-btn icon-only" title="Toàn màn hình (Phím F)">
+          <i class="fa-solid fa-expand"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN SLIDE STAGE WITH 3D PERSPECTIVE (ĐỒNG NHẤT VỚI BUỔI 1 & BUỔI 2) -->
+    <main class="presentation-stage" id="presentationStage">
+      
+      <!-- ======================================================================
+           SLIDE 1: MỞ ĐẦU & NGUYÊN LÝ SOURCE GROUNDING NOTEBOOKLM
+           ====================================================================== -->
+      <section class="slide-page active" data-slide="1" id="slide-1">
+        <div class="slide-content hero-slide">
+          <div class="hero-header gsap-fade">
+            <div class="glow-pill"><i class="fa-solid fa-atom"></i> Khóa Học AI & AI AGENT — Buổi 03</div>
+            <h1 class="hero-title">
+              Google NotebookLM Trong Văn Phòng:<br>
+              <span class="text-gradient">Từ Đọc Hiểu Tài Liệu Đến Xuất Bản Đa Phương Tiện</span>
+            </h1>
+            <p class="hero-subtitle">
+              Chuyển dịch từ việc chat hỏi đáp bịa đặt (Hallucination) sang cỗ máy AI neo dữ liệu nguồn 100% (Source Grounded), 
+              tự động xuất bản <strong>Podcast Âm thanh</strong>, <strong>Sơ đồ tư duy</strong>, <strong>Video thuyết trình</strong> và <strong>Infographic đồ họa thông tin</strong>.
+            </p>
+          </div>
+
+          <div class="grid-2-col hero-cards">
+            <!-- Thẻ 1: AI Chat Truyền Thống -->
+            <div class="glass-card misconception-card gsap-stagger">
+              <div class="card-icon red-glow"><i class="fa-solid fa-triangle-exclamation"></i></div>
+              <h3>AI Chat Truyền Thống (ChatGPT / Gemini)</h3>
+              <p class="card-desc">
+                Mô hình mở lấy tri thức từ toàn cõi internet, không nắm rõ văn bản nội bộ công ty bạn. 
+                Khi gặp bài toán phức tạp, AI dễ mắc hiện tượng <strong>Ảo giác (Hallucination)</strong>, bịa số liệu nghe rất xuôi tai nhưng sai luật và không có nguồn đối chứng.
+              </p>
+              <div class="status-tag tag-danger"><i class="fa-solid fa-xmark"></i> Nguy hiểm khi thẩm định văn bản</div>
+            </div>
+
+            <!-- Thẻ 2: Google NotebookLM Source Grounded -->
+            <div class="glass-card truth-card gsap-stagger">
+              <div class="card-icon blue-glow"><i class="fa-solid fa-shield-halved"></i></div>
+              <h3>Google NotebookLM (Source Grounded)</h3>
+              <p class="card-desc">
+                Mô hình <strong>RAG cá nhân hóa</strong> khóa chặt vào tài liệu bạn nạp vào (PDF, Docs, Slide, Web, YouTube). 
+                Mọi câu trả lời đều có trích dẫn số trang <code>[1]</code>, <code>[2]</code>, triệt tiêu 100% bịa đặt và xuất bản trọn bộ 5 định dạng đa phương tiện.
+              </p>
+              <div class="status-tag tag-success"><i class="fa-solid fa-check"></i> Căn cứ 100% vào tài liệu nguồn</div>
+            </div>
+          </div>
+
+          <!-- LỘ TRÌNH 6 BÀI HỌC CHƯƠNG 2 -->
+          <div class="case-study-card gsap-fade" style="margin-top: 1.5rem;">
+            <div class="case-header">
+              <span class="case-tag tag-primary"><i class="fa-solid fa-layer-group"></i> Lộ Trình 6 Module Thực Chiến (Giáo Trình Mở Rộng Trang 13 - 25)</span>
+              <span class="status-tag tag-success"><i class="fa-solid fa-bolt"></i> Tích Hợp Ảnh Slide Gốc 100%</span>
+            </div>
+            <div class="grid-2-col" style="grid-template-columns: repeat(6, 1fr); gap: 10px; margin-top: 0.8rem;">
+              <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px 8px; text-align:center;">
+                <strong style="font-size:0.85rem; color:#1d4ed8; display:block;">Bài 05</strong>
+                <span style="font-size:0.75rem; color:#475569;">7 Vùng giao diện</span>
+              </div>
+              <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px 8px; text-align:center;">
+                <strong style="font-size:0.85rem; color:#15803d; display:block;">Bài 06</strong>
+                <span style="font-size:0.75rem; color:#475569;">Tóm tắt văn bản</span>
+              </div>
+              <div style="background:#faf5ff; border:1px solid #e9d5ff; border-radius:8px; padding:10px 8px; text-align:center;">
+                <strong style="font-size:0.85rem; color:#7e22ce; display:block;">Bài 07</strong>
+                <span style="font-size:0.75rem; color:#475569;">Podcast âm thanh</span>
+              </div>
+              <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; padding:10px 8px; text-align:center;">
+                <strong style="font-size:0.85rem; color:#c2410c; display:block;">Bài 08</strong>
+                <span style="font-size:0.75rem; color:#475569;">Sơ đồ tư duy</span>
+              </div>
+              <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:8px; padding:10px 8px; text-align:center;">
+                <strong style="font-size:0.85rem; color:#b91c1c; display:block;">Bài 09</strong>
+                <span style="font-size:0.75rem; color:#475569;">Video mô tả</span>
+              </div>
+              <div style="background:#f0fdfa; border:1px solid #99f6e4; border-radius:8px; padding:10px 8px; text-align:center;">
+                <strong style="font-size:0.85rem; color:#0f766e; display:block;">Bài 10</strong>
+                <span style="font-size:0.75rem; color:#475569;">Infographic</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 2: [BÀI 5] LÀM QUEN NOTEBOOKLM & GIẢI MÃ 7 VÙNG GIAO DIỆN
+           ====================================================================== -->
+      <section class="slide-page" data-slide="2" id="slide-2">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge"><i class="fa-solid fa-compass"></i> Giáo Trình Mở Rộng — Bài 5 (Trang 13 - 15)</span>
+            <h2 class="slide-title">Làm Quen Với NotebookLM & Giải Mã 7 Vùng Giao Diện</h2>
+            <p class="slide-subtitle">Hiểu rõ bản chất công cụ ghi chú thông minh của Google và làm chủ toàn bộ không gian làm việc chuyên nghiệp.</p>
+          </div>
+
+          <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+            <!-- Cột trái: Hướng dẫn nhanh & 7 phân vùng -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-circle-question"></i> Bản Chất & Cách Truy Cập</span>
+              </div>
+              <p style="font-size:0.9rem; color:#334155; line-height:1.55; margin-top:0.5rem;">
+                NotebookLM là công cụ ghi chú thông minh tích hợp trí tuệ nhân tạo (AI) giúp bạn <strong>đọc – hiểu – tóm tắt – phân tích tài liệu</strong> nhanh chóng và chính xác.
+              </p>
+              <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px 14px; margin-top:0.75rem; font-size:0.85rem; color:#1e40af;">
+                <i class="fa-solid fa-link"></i> <strong>Cách truy cập:</strong> Mở trình duyệt vào <code>https://notebooklm.google.com/</code> và đăng nhập tài khoản Google.
+              </div>
+
+              <div class="case-header" style="margin-top:1.25rem;">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-map"></i> 7 Khu Vực Làm Việc Chuẩn Trên Màn Hình</span>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px; margin-top:0.6rem;">
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:6px; font-size:0.8rem; font-weight:600; color:#1e293b;"><strong style="color:#2563eb;">1.</strong> Thêm nguồn dữ liệu</div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:6px; font-size:0.8rem; font-weight:600; color:#1e293b;"><strong style="color:#2563eb;">2.</strong> Danh sách nguồn đã tải</div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:6px; font-size:0.8rem; font-weight:600; color:#1e293b;"><strong style="color:#2563eb;">3.</strong> Khu vực trò chuyện chat</div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:6px; font-size:0.8rem; font-weight:600; color:#1e293b;"><strong style="color:#2563eb;">4.</strong> Studio: Tạo Video, Audio</div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:6px; font-size:0.8rem; font-weight:600; color:#1e293b;"><strong style="color:#2563eb;">5.</strong> Sản phẩm đã tạo (Notes)</div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:6px; font-size:0.8rem; font-weight:600; color:#1e293b;"><strong style="color:#2563eb;">6.</strong> Tài khoản & Phân quyền</div>
+                <div style="grid-column: span 2; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:6px; font-size:0.8rem; font-weight:600; color:#1e293b;"><strong style="color:#2563eb;">7.</strong> Chia sẻ & Cài đặt: Mời cộng tác đồng nghiệp</div>
+              </div>
+            </div>
+
+            <!-- Cột phải: Hình ảnh slide gốc giáo trình -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-neutral"><i class="fa-solid fa-book-open"></i> Slide Gốc Giáo Trình: Trang 15/57</span>
+                <span class="status-tag tag-primary"><i class="fa-solid fa-magnifying-glass-plus"></i> Bấm ảnh để phóng to</span>
+              </div>
+              <div class="case-img-col clickable-preview" data-caption="Giáo trình Mở rộng - Trang 15/57: Giao diện làm việc và làm quen phần mềm" style="margin-top:0.6rem; cursor:pointer;">
+                <div class="case-img-container" style="position:relative; border-radius:8px; overflow:hidden; border:1px solid #cbd5e1; box-shadow:var(--shadow-sm);">
+                  <img src="assets/buoi3/slide_p15.png" alt="Slide 15 - Giao diện NotebookLM 7 khu vực" style="width:100%; display:block;">
+                  <div class="img-overlay-hint" style="position:absolute; bottom:8px; right:8px; background:rgba(15,23,42,0.8); color:#fff; font-size:0.75rem; padding:4px 10px; border-radius:999px;"><i class="fa-solid fa-expand"></i> Phóng to slide gốc</div>
+                </div>
+              </div>
+
+              <div class="grid-2-col" style="gap:10px; margin-top:10px;">
+                <div class="clickable-preview" data-caption="Chi tiết màn hình NotebookLM: 7 vùng làm việc chức năng" style="cursor:pointer;">
+                  <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#f8fafc;">
+                    <img src="assets/buoi3/ui_p15_img1.png" alt="Ảnh chụp giao diện NotebookLM" style="width:100%; height:110px; object-fit:cover; display:block;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#475569; padding:5px 8px; background:#fff; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between;">
+                      <span>Ảnh giao diện gốc</span><i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="clickable-preview" data-caption="Giáo trình Mở rộng - Trang 14/57: Giới thiệu NotebookLM là gì và cách truy cập" style="cursor:pointer;">
+                  <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#f8fafc;">
+                    <img src="assets/buoi3/slide_p14.png" alt="Slide 14 - Giới thiệu NotebookLM" style="width:100%; height:110px; object-fit:cover; display:block;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#475569; padding:5px 8px; background:#fff; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between;">
+                      <span>Slide Trang 14/57</span><i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 3: [BÀI 6] ỨNG DỤNG AI TÓM TẮT VĂN BẢN DÀI
+           ====================================================================== -->
+      <section class="slide-page" data-slide="3" id="slide-3">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge"><i class="fa-solid fa-file-lines"></i> Giáo Trình Mở Rộng — Bài 6 (Trang 16 - 17)</span>
+            <h2 class="slide-title">Ứng Dụng AI Tóm Tắt Văn Bản Dài & Bóc Tách Cốt Lõi</h2>
+            <p class="slide-subtitle">Loại bỏ thông tin rác và nội dung lặp lại; chuyển đổi báo cáo hàng chục trang thành bản tóm lược phân cấp chuyên nghiệp.</p>
+          </div>
+
+          <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+            <!-- Cột trái: Quy trình & Prompt mẫu -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-list-check"></i> Quy Trình 6 Bước Tóm Tắt Nhanh</span>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px; margin-top:0.6rem;">
+                <div style="background:#f8fafc; border-left:3px solid #2563eb; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B1:</strong> Truy cập NotebookLM</div>
+                <div style="background:#f8fafc; border-left:3px solid #2563eb; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B2:</strong> Tạo sổ ghi chú mới</div>
+                <div style="background:#f8fafc; border-left:3px solid #2563eb; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B3:</strong> Chuẩn bị nội dung</div>
+                <div style="background:#f8fafc; border-left:3px solid #2563eb; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B4:</strong> Dán văn bản đã sao chép</div>
+                <div style="background:#f8fafc; border-left:3px solid #2563eb; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B5:</strong> Nhấn nút "Chèn"</div>
+                <div style="background:#f8fafc; border-left:3px solid #2563eb; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B6:</strong> Viết Prompt tóm tắt</div>
+              </div>
+
+              <div class="case-header" style="margin-top:1.25rem;">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-terminal"></i> Câu Lệnh Mẫu Chuẩn (Giáo Trình Trang 17)</span>
+                <button class="action-btn copy-prompt-btn" data-target="promptBai6">
+                  <i class="fa-solid fa-copy"></i> Sao chép Prompt
+                </button>
+              </div>
+              <div class="code-preview" style="background:#0f172a; color:#f8fafc; padding:1rem; border-radius:8px; margin-top:0.5rem;">
+                <pre id="promptBai6" style="margin:0; font-family:var(--font-mono); font-size:0.85rem; white-space:pre-wrap; line-height:1.6;">Tóm tắt ngắn gọn, súc tích, dễ hiểu. Loại bỏ nội dung lặp lại hoặc ít quan trọng. 
+
+Trình bày theo cấu trúc rõ ràng với tiêu đề và các mục lớn. Sử dụng danh sách bullet hoặc đánh số khi cần. 
+
+Đảm bảo người đọc chỉ cần xem bản tóm tắt vẫn hiểu được nội dung cốt lõi của tài liệu.</pre>
+              </div>
+              <div style="margin-top: 8px; font-size: 0.8rem; color: #64748b;">
+                <i class="fa-solid fa-lightbulb" style="color:#eab308;"></i> <strong>Bí quyết công sở:</strong> Yêu cầu chia 3 phần: (1) Tóm lược điều hành 1 đoạn, (2) Điểm nhấn mấu chốt, (3) Danh sách việc cần làm.
+              </div>
+            </div>
+
+            <!-- Cột phải: Ảnh slide gốc -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-neutral"><i class="fa-solid fa-book-open"></i> Slide Gốc Giáo Trình: Trang 17/57</span>
+                <span class="status-tag tag-primary"><i class="fa-solid fa-magnifying-glass-plus"></i> Bấm ảnh để phóng to</span>
+              </div>
+              <div class="case-img-col clickable-preview" data-caption="Giáo trình Mở rộng - Trang 17/57: Câu lệnh mẫu và giao diện tóm tắt văn bản" style="margin-top:0.6rem; cursor:pointer;">
+                <div class="case-img-container" style="position:relative; border-radius:8px; overflow:hidden; border:1px solid #cbd5e1; box-shadow:var(--shadow-sm);">
+                  <img src="assets/buoi3/slide_p17.png" alt="Slide 17 - Tóm tắt văn bản NotebookLM" style="width:100%; display:block;">
+                  <div class="img-overlay-hint" style="position:absolute; bottom:8px; right:8px; background:rgba(15,23,42,0.8); color:#fff; font-size:0.75rem; padding:4px 10px; border-radius:999px;"><i class="fa-solid fa-expand"></i> Phóng to slide gốc</div>
+                </div>
+              </div>
+
+              <div class="grid-2-col" style="gap:10px; margin-top:10px;">
+                <div class="clickable-preview" data-caption="Màn hình giao diện tóm tắt văn bản trên NotebookLM" style="cursor:pointer;">
+                  <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#f8fafc;">
+                    <img src="assets/buoi3/ui_p17_img1.png" alt="Giao diện tóm tắt" style="width:100%; height:110px; object-fit:cover; display:block;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#475569; padding:5px 8px; background:#fff; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between;">
+                      <span>Ảnh chụp tóm tắt</span><i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="clickable-preview" data-caption="Giáo trình Mở rộng - Trang 16/57: Mục đích bài học & 6 bước tóm tắt văn bản" style="cursor:pointer;">
+                  <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#f8fafc;">
+                    <img src="assets/buoi3/slide_p16.png" alt="Slide 16 - Bài 6 Tóm tắt văn bản" style="width:100%; height:110px; object-fit:cover; display:block;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#475569; padding:5px 8px; background:#fff; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between;">
+                      <span>Slide Trang 16/57</span><i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 4: [BÀI 7] TẠO PODCAST ÂM THANH ĐÔI (AUDIO OVERVIEW)
+           ====================================================================== -->
+      <section class="slide-page" data-slide="4" id="slide-4">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge"><i class="fa-solid fa-podcast"></i> Giáo Trình Mở Rộng — Bài 7 (Trang 18 - 19)</span>
+            <h2 class="slide-title">Ứng Dụng AI Tạo Podcast Âm Thanh Đối Thoại (Audio Overview)</h2>
+            <p class="slide-subtitle">Biến tài liệu văn bản thành cuộc thảo luận radio tự nhiên giữa 2 chuyên gia AI, hỗ trợ nghe lướt báo cáo mọi lúc mọi nơi.</p>
+          </div>
+
+          <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+            <!-- Cột trái: Thao tác & Prompt -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-microphone-lines"></i> Thao Tác Nhanh Tại Phân Khu "Studio"</span>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px; margin-top:0.6rem;">
+                <div style="background:#f8fafc; border-left:3px solid #9333ea; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B1:</strong> Mở Notebook tài liệu</div>
+                <div style="background:#f8fafc; border-left:3px solid #9333ea; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B2:</strong> Tìm khu vực <strong>Studio</strong></div>
+                <div style="background:#f8fafc; border-left:3px solid #9333ea; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B3:</strong> Chọn Tổng quan âm thanh</div>
+                <div style="background:#f8fafc; border-left:3px solid #9333ea; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B4:</strong> Bấm nút "Tùy chỉnh"</div>
+                <div style="grid-column: span 2; background:#f8fafc; border-left:3px solid #9333ea; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B5:</strong> Dán Prompt đàm thoại tiếng Việt &rarr; Bấm Tạo</div>
+              </div>
+
+              <div class="case-header" style="margin-top:1.25rem;">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-terminal"></i> Câu Lệnh Mẫu Chuẩn (Giáo Trình Trang 19)</span>
+                <button class="action-btn copy-prompt-btn" data-target="promptBai7">
+                  <i class="fa-solid fa-copy"></i> Sao chép Prompt
+                </button>
+              </div>
+              <div class="code-preview" style="background:#0f172a; color:#f8fafc; padding:1rem; border-radius:8px; margin-top:0.5rem;">
+                <pre id="promptBai7" style="margin:0; font-family:var(--font-mono); font-size:0.85rem; white-space:pre-wrap; line-height:1.6;">Hãy tạo một podcast âm thanh bằng tiếng Việt dựa trên tài liệu được cung cấp.
+
+Yêu cầu:
+- Tóm tắt các ý chính một cách dễ hiểu.
+- Giải thích các khái niệm quan trọng bằng ngôn ngữ đơn giản.
+- Đưa ra ví dụ thực tế khi phù hợp.
+- Trình bày dưới dạng cuộc trò chuyện tự nhiên giữa hai người dẫn chương trình.
+- Giọng điệu thân thiện, chuyên nghiệp và hấp dẫn.
+- Kết thúc bằng phần tổng kết ngắn gọn các nội dung quan trọng.</pre>
+              </div>
+            </div>
+
+            <!-- Cột phải: Ảnh slide gốc -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-neutral"><i class="fa-solid fa-book-open"></i> Slide Gốc Giáo Trình: Trang 19/57</span>
+                <span class="status-tag tag-primary"><i class="fa-solid fa-magnifying-glass-plus"></i> Bấm ảnh để phóng to</span>
+              </div>
+              <div class="case-img-col clickable-preview" data-caption="Giáo trình Mở rộng - Trang 19/57: Câu lệnh mẫu tạo Podcast âm thanh" style="margin-top:0.6rem; cursor:pointer;">
+                <div class="case-img-container" style="position:relative; border-radius:8px; overflow:hidden; border:1px solid #cbd5e1; box-shadow:var(--shadow-sm);">
+                  <img src="assets/buoi3/slide_p19.png" alt="Slide 19 - Tạo Podcast NotebookLM" style="width:100%; display:block;">
+                  <div class="img-overlay-hint" style="position:absolute; bottom:8px; right:8px; background:rgba(15,23,42,0.8); color:#fff; font-size:0.75rem; padding:4px 10px; border-radius:999px;"><i class="fa-solid fa-expand"></i> Phóng to slide gốc</div>
+                </div>
+              </div>
+
+              <div class="grid-2-col" style="gap:10px; margin-top:10px;">
+                <div class="clickable-preview" data-caption="Giao diện tùy chỉnh Podcast âm thanh tại khu vực Studio" style="cursor:pointer;">
+                  <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#f8fafc;">
+                    <img src="assets/buoi3/ui_p19_img1.png" alt="Giao diện tùy chỉnh Podcast" style="width:100%; height:110px; object-fit:cover; display:block;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#475569; padding:5px 8px; background:#fff; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between;">
+                      <span>Hộp thoại Tùy chỉnh</span><i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="clickable-preview" data-caption="Giáo trình Mở rộng - Trang 18/57: Mục đích và quy trình tạo Podcast âm thanh" style="cursor:pointer;">
+                  <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#f8fafc;">
+                    <img src="assets/buoi3/slide_p18.png" alt="Slide 18 - Bài 7 Tạo Podcast" style="width:100%; height:110px; object-fit:cover; display:block;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#475569; padding:5px 8px; background:#fff; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between;">
+                      <span>Slide Trang 18/57</span><i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 5: [BÀI 8] TẠO SƠ ĐỒ TƯ DUY (MIND MAP)
+           ====================================================================== -->
+      <section class="slide-page" data-slide="5" id="slide-5">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge"><i class="fa-solid fa-diagram-project"></i> Giáo Trình Mở Rộng — Bài 8 (Trang 20 - 21)</span>
+            <h2 class="slide-title">Ứng Dụng AI Tạo Sơ Đồ Tư Duy Hệ Thống Tri Thức</h2>
+            <p class="slide-subtitle">Trực quan hóa tài liệu phức tạp thành cây sơ đồ tư duy logic với các nhánh cấp 1, cấp 2 và từ khóa cô đọng.</p>
+          </div>
+
+          <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+            <!-- Cột trái: Thao tác & Prompt -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-sitemap"></i> Thao Tác Nhanh Tạo Mind Map</span>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px; margin-top:0.6rem;">
+                <div style="background:#f8fafc; border-left:3px solid #ea580c; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B1:</strong> Nạp tài liệu vào sổ</div>
+                <div style="background:#f8fafc; border-left:3px solid #ea580c; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B2:</strong> Tìm khu vực <strong>Studio</strong></div>
+                <div style="background:#f8fafc; border-left:3px solid #ea580c; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B3:</strong> Chọn Bản đồ tư duy</div>
+                <div style="background:#f8fafc; border-left:3px solid #ea580c; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B4:</strong> Nhập chỉ dẫn cấu trúc</div>
+                <div style="grid-column: span 2; background:#f8fafc; border-left:3px solid #ea580c; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B5:</strong> AI sinh cây phân nhánh logic có thể thu phóng và chia sẻ</div>
+              </div>
+
+              <div class="case-header" style="margin-top:1.25rem;">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-terminal"></i> Câu Lệnh Mẫu Chuẩn (Giáo Trình Trang 21)</span>
+                <button class="action-btn copy-prompt-btn" data-target="promptBai8">
+                  <i class="fa-solid fa-copy"></i> Sao chép Prompt
+                </button>
+              </div>
+              <div class="code-preview" style="background:#0f172a; color:#f8fafc; padding:1rem; border-radius:8px; margin-top:0.5rem;">
+                <pre id="promptBai8" style="margin:0; font-family:var(--font-mono); font-size:0.85rem; white-space:pre-wrap; line-height:1.6;">Tạo sơ đồ tư duy bằng tiếng Việt dựa trên tài liệu được cung cấp.
+
+Yêu cầu:
+- Xác định chủ đề trung tâm.
+- Phân chia thành các nhánh chính và nhánh phụ rõ ràng.
+- Tóm tắt nội dung bằng từ khóa ngắn gọn.
+- Làm nổi bật các khái niệm, số liệu và kết luận quan trọng.
+- Sắp xếp theo cấu trúc logic, dễ học và dễ ghi nhớ.</pre>
+              </div>
+            </div>
+
+            <!-- Cột phải: Ảnh slide gốc -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-neutral"><i class="fa-solid fa-book-open"></i> Slide Gốc Giáo Trình: Trang 21/57</span>
+                <span class="status-tag tag-primary"><i class="fa-solid fa-magnifying-glass-plus"></i> Bấm ảnh để phóng to</span>
+              </div>
+              <div class="case-img-col clickable-preview" data-caption="Giáo trình Mở rộng - Trang 21/57: Câu lệnh mẫu tạo Sơ đồ tư duy" style="margin-top:0.6rem; cursor:pointer;">
+                <div class="case-img-container" style="position:relative; border-radius:8px; overflow:hidden; border:1px solid #cbd5e1; box-shadow:var(--shadow-sm);">
+                  <img src="assets/buoi3/slide_p21.png" alt="Slide 21 - Tạo sơ đồ tư duy" style="width:100%; display:block;">
+                  <div class="img-overlay-hint" style="position:absolute; bottom:8px; right:8px; background:rgba(15,23,42,0.8); color:#fff; font-size:0.75rem; padding:4px 10px; border-radius:999px;"><i class="fa-solid fa-expand"></i> Phóng to slide gốc</div>
+                </div>
+              </div>
+
+              <div class="grid-2-col" style="gap:10px; margin-top:10px;">
+                <div class="clickable-preview" data-caption="Giao diện sơ đồ tư duy trực quan trên màn hình" style="cursor:pointer;">
+                  <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#f8fafc;">
+                    <img src="assets/buoi3/ui_p21_img1.png" alt="Giao diện sơ đồ tư duy" style="width:100%; height:110px; object-fit:cover; display:block;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#475569; padding:5px 8px; background:#fff; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between;">
+                      <span>Ảnh Mind Map trực quan</span><i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="clickable-preview" data-caption="Giáo trình Mở rộng - Trang 20/57: Mục đích và quy trình tạo sơ đồ tư duy" style="cursor:pointer;">
+                  <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#f8fafc;">
+                    <img src="assets/buoi3/slide_p20.png" alt="Slide 20 - Bài 8 Sơ đồ tư duy" style="width:100%; height:110px; object-fit:cover; display:block;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#475569; padding:5px 8px; background:#fff; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between;">
+                      <span>Slide Trang 20/57</span><i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 6: [BÀI 9] TẠO VIDEO MÔ TẢ TỔNG QUAN (VIDEO OVERVIEW)
+           (BÁM SÁT HÌNH ẢNH NGƯỜI DÙNG CUNG CẤP TỪ SLIDE 23/57)
+           ====================================================================== -->
+      <section class="slide-page" data-slide="6" id="slide-6">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge" style="background:#fee2e2; color:#b91c1c;"><i class="fa-solid fa-video"></i> Trọng Tâm: Giáo Trình Mở Rộng — Bài 9 (Trang 22 - 23)</span>
+            <h2 class="slide-title">Ứng Dụng AI Tạo Video Mô Tả Tổng Quan (Video Overview)</h2>
+            <p class="slide-subtitle">Tính năng đột phá: Tự động tổng hợp slide thuyết trình, hình ảnh minh họa và giọng đọc thuyết minh chuyên nghiệp từ tài liệu văn bản.</p>
+          </div>
+
+          <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+            <!-- Cột trái: Thao tác hộp thoại & Prompt chuẩn slide 23 -->
+            <div class="case-study-card gsap-stagger" style="border-top:3px solid #dc2626;">
+              <div class="case-header">
+                <span class="case-tag tag-danger"><i class="fa-solid fa-clapperboard"></i> Thao Tác Chi Tiết Hộp Thoại Tùy Chỉnh Video</span>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px; margin-top:0.6rem;">
+                <div style="background:#fef2f2; border-left:3px solid #dc2626; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B1:</strong> Vào phân khu <strong>Studio</strong></div>
+                <div style="background:#fef2f2; border-left:3px solid #dc2626; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B2:</strong> Chọn Tổng quan bằng video</div>
+                <div style="background:#fef2f2; border-left:3px solid #dc2626; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B3:</strong> Mở hộp thoại "Tùy chỉnh"</div>
+                <div style="background:#fef2f2; border-left:3px solid #dc2626; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B4:</strong> Chọn phong cách (Tùy chỉnh...)</div>
+                <div style="grid-column: span 2; background:#fef2f2; border-left:3px solid #dc2626; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B5:</strong> Dán bộ chỉ dẫn: "Máy chủ AI nên tập trung vào điều gì?" &rarr; Nhấn <strong>"Tạo"</strong></div>
+              </div>
+
+              <div class="case-header" style="margin-top:1.25rem;">
+                <span class="case-tag tag-danger"><i class="fa-solid fa-star"></i> Câu Lệnh Mẫu Chuẩn (Giáo Trình Trang 23/57)</span>
+                <button class="action-btn copy-prompt-btn" data-target="promptBai9" style="background:#dc2626; color:#fff;">
+                  <i class="fa-solid fa-copy"></i> Sao chép Prompt
+                </button>
+              </div>
+              <div class="code-preview" style="background:#0f172a; color:#f8fafc; padding:1rem; border-radius:8px; margin-top:0.5rem; border-left:3px solid #dc2626;">
+                <pre id="promptBai9" style="margin:0; font-family:var(--font-mono); font-size:0.85rem; white-space:pre-wrap; line-height:1.6;">Tạo video tổng quan bằng tiếng Việt dựa trên tài liệu được cung cấp.
+
+Yêu cầu:
+* Tóm tắt các nội dung quan trọng nhất.
+* Trình bày theo cấu trúc rõ ràng, dễ theo dõi.
+* Sử dụng hình ảnh minh họa phù hợp với nội dung.
+* Nhấn mạnh các số liệu, khái niệm và kết luận chính.
+* Giọng thuyết minh chuyên nghiệp, dễ hiểu.
+* Kết thúc bằng phần tổng kết ngắn gọn.</pre>
+              </div>
+              <div style="margin-top: 8px; font-size: 0.8rem; color: #dc2626; font-weight:600;">
+                <i class="fa-solid fa-circle-check"></i> Đây chính là câu lệnh xuất hiện trên hộp thoại minh họa Trang 23/57 bạn đã gửi!
+              </div>
+            </div>
+
+            <!-- Cột phải: Ảnh slide gốc trang 23/57 -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-danger"><i class="fa-solid fa-book-open"></i> Slide Gốc Giáo Trình: Trang 23/57</span>
+                <span class="status-tag tag-primary"><i class="fa-solid fa-magnifying-glass-plus"></i> Bấm ảnh để phóng to</span>
+              </div>
+              <div class="case-img-col clickable-preview" data-caption="Giáo trình Mở rộng - Trang 23/57: Hộp thoại tùy chỉnh Video Overview và nút Tạo" style="margin-top:0.6rem; cursor:pointer;">
+                <div class="case-img-container" style="position:relative; border-radius:8px; overflow:hidden; border:2px solid #f87171; box-shadow:0 10px 25px -5px rgba(220,38,38,0.2);">
+                  <img src="assets/buoi3/slide_p23.png" alt="Slide 23 - Tùy chỉnh video tổng quan NotebookLM" style="width:100%; display:block;">
+                  <div class="img-overlay-hint" style="position:absolute; bottom:8px; right:8px; background:rgba(220,38,38,0.9); color:#fff; font-size:0.75rem; padding:4px 10px; border-radius:999px;"><i class="fa-solid fa-expand"></i> Phóng to slide gốc Trang 23</div>
+                </div>
+              </div>
+
+              <div class="grid-2-col" style="gap:10px; margin-top:10px;">
+                <div class="clickable-preview" data-caption="Hộp thoại tùy chỉnh Video Overview với nút Tạo màu xanh" style="cursor:pointer;">
+                  <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#f8fafc;">
+                    <img src="assets/buoi3/ui_p23_img2.png" alt="Hộp thoại tùy chỉnh Video" style="width:100%; height:110px; object-fit:cover; display:block;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#475569; padding:5px 8px; background:#fff; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between;">
+                      <span>Hộp thoại Tùy chỉnh</span><i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="clickable-preview" data-caption="Phân khu Studio với tính năng Tổng quan bằng video" style="cursor:pointer;">
+                  <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#f8fafc;">
+                    <img src="assets/buoi3/ui_p23_img1.png" alt="Phân khu Studio" style="width:100%; height:110px; object-fit:cover; display:block;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#475569; padding:5px 8px; background:#fff; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between;">
+                      <span>Phân khu Studio</span><i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 7: [BÀI 10] TẠO ĐỒ HỌA THÔNG TIN (INFOGRAPHIC) & HÌNH ẢNH MÔ TẢ
+           ====================================================================== -->
+      <section class="slide-page" data-slide="7" id="slide-7">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge"><i class="fa-solid fa-chart-simple"></i> Giáo Trình Mở Rộng — Bài 10 (Trang 24 - 25)</span>
+            <h2 class="slide-title">Ứng Dụng AI Tạo Hình Ảnh Mô Tả & Bản Đồ Họa Thông Tin (Infographic)</h2>
+            <p class="slide-subtitle">Chuyển hóa dữ liệu và quy trình thành hình ảnh minh họa ấn tượng phục vụ truyền thông nội bộ và slide thuyết trình.</p>
+          </div>
+
+          <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+            <!-- Cột trái: Thao tác & Prompt -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-palette"></i> Thao Tác Nhanh Tạo Infographic</span>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px; margin-top:0.6rem;">
+                <div style="background:#f8fafc; border-left:3px solid #0d9488; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B1:</strong> Chuẩn bị số liệu/quy trình</div>
+                <div style="background:#f8fafc; border-left:3px solid #0d9488; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B2:</strong> Tìm khu vực <strong>Studio</strong></div>
+                <div style="background:#f8fafc; border-left:3px solid #0d9488; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B3:</strong> Chọn Bản đồ họa thông tin</div>
+                <div style="background:#f8fafc; border-left:3px solid #0d9488; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B4:</strong> Tùy chỉnh bố cục trực quan</div>
+                <div style="grid-column: span 2; background:#f8fafc; border-left:3px solid #0d9488; padding:6px 10px; border-radius:0 6px 6px 0; font-size:0.8rem; font-weight:600;"><strong>B5:</strong> Nhấn Tạo để AI xuất bản ấn phẩm infographic chất lượng cao</div>
+              </div>
+
+              <div class="case-header" style="margin-top:1.25rem;">
+                <span class="case-tag tag-primary"><i class="fa-solid fa-terminal"></i> Câu Lệnh Mẫu Chuẩn (Giáo Trình Trang 25)</span>
+                <button class="action-btn copy-prompt-btn" data-target="promptBai10">
+                  <i class="fa-solid fa-copy"></i> Sao chép Prompt
+                </button>
+              </div>
+              <div class="code-preview" style="background:#0f172a; color:#f8fafc; padding:1rem; border-radius:8px; margin-top:0.5rem;">
+                <pre id="promptBai10" style="margin:0; font-family:var(--font-mono); font-size:0.85rem; white-space:pre-wrap; line-height:1.6;">Tạo hình ảnh minh họa bằng tiếng Việt dựa trên tài liệu được cung cấp.
+
+Yêu cầu:
+- Thể hiện chính xác nội dung và ý tưởng chính.
+- Làm nổi bật các khái niệm quan trọng.
+- Sử dụng phong cách trực quan, dễ hiểu.
+- Bố cục rõ ràng, chuyên nghiệp.
+- Hình ảnh phù hợp với đối tượng người xem và mục đích của tài liệu.</pre>
+              </div>
+            </div>
+
+            <!-- Cột phải: Ảnh slide gốc -->
+            <div class="case-study-card gsap-stagger">
+              <div class="case-header">
+                <span class="case-tag tag-neutral"><i class="fa-solid fa-book-open"></i> Slide Gốc Giáo Trình: Trang 25/57</span>
+                <span class="status-tag tag-primary"><i class="fa-solid fa-magnifying-glass-plus"></i> Bấm ảnh để phóng to</span>
+              </div>
+              <div class="case-img-col clickable-preview" data-caption="Giáo trình Mở rộng - Trang 25/57: Câu lệnh mẫu tạo hình ảnh mô tả nội dung" style="margin-top:0.6rem; cursor:pointer;">
+                <div class="case-img-container" style="position:relative; border-radius:8px; overflow:hidden; border:1px solid #cbd5e1; box-shadow:var(--shadow-sm);">
+                  <img src="assets/buoi3/slide_p25.png" alt="Slide 25 - Tạo hình ảnh mô tả" style="width:100%; display:block;">
+                  <div class="img-overlay-hint" style="position:absolute; bottom:8px; right:8px; background:rgba(15,23,42,0.8); color:#fff; font-size:0.75rem; padding:4px 10px; border-radius:999px;"><i class="fa-solid fa-expand"></i> Phóng to slide gốc</div>
+                </div>
+              </div>
+
+              <div class="grid-2-col" style="gap:10px; margin-top:10px;">
+                <div class="clickable-preview" data-caption="Giao diện bản đồ họa thông tin trực quan" style="cursor:pointer;">
+                  <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#f8fafc;">
+                    <img src="assets/buoi3/ui_p25_img1.png" alt="Giao diện bản đồ họa thông tin" style="width:100%; height:110px; object-fit:cover; display:block;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#475569; padding:5px 8px; background:#fff; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between;">
+                      <span>Ảnh Infographic</span><i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="clickable-preview" data-caption="Giáo trình Mở rộng - Trang 24/57: Mục đích và quy trình tạo hình ảnh mô tả" style="cursor:pointer;">
+                  <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#f8fafc;">
+                    <img src="assets/buoi3/slide_p24.png" alt="Slide 24 - Bài 10 Tạo hình ảnh" style="width:100%; height:110px; object-fit:cover; display:block;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#475569; padding:5px 8px; background:#fff; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between;">
+                      <span>Slide Trang 24/57</span><i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 8: [THỰC HÀNH TÌNH HUỐNG] BỘ 3 BÀI TẬP DOANH NGHIỆP THỰC CHIẾN
+           (BÀI 6: TÓM TẮT | BÀI 9: VIDEO | BÀI 10: INFOGRAPHIC)
+           ====================================================================== -->
+      <section class="slide-page" data-slide="8" id="slide-8">
+        <div class="slide-content">
+          <div class="slide-header gsap-fade">
+            <span class="slide-badge" style="background:#fef3c7; color:#b45309;"><i class="fa-solid fa-trophy"></i> Bài Tập Thực Chiến Tình Huống (Buổi 03)</span>
+            <h2 class="slide-title">Bộ 4 Bài Tập Tình Huống Doanh Nghiệp (Bài 6, 9, 10 & AI Agent Slide)</h2>
+            <p class="slide-subtitle">Vận dụng NotebookLM và AI Agent vào 4 kịch bản công sở thực tế. Mỗi bài tập đều có sẵn nguồn dữ liệu mẫu để bấm copy hoặc tải file CSV nạp cho AI thực thi ngay lập tức!</p>
+          </div>
+
+          <!-- THANH CHỌN TÌNH HUỐNG (4 TABS) -->
+          <div class="exercise-nav gsap-fade">
+            <button class="exercise-tab-btn active" data-tab="exPane1">
+              <i class="fa-solid fa-file-contract"></i> Tình Huống 1 (Bài 6): Tóm Tắt Báo Cáo Chiến Lược
+            </button>
+            <button class="exercise-tab-btn" data-tab="exPane2">
+              <i class="fa-solid fa-video"></i> Tình Huống 2 (Bài 9): Video Chính Sách Nhân Sự
+            </button>
+            <button class="exercise-tab-btn" data-tab="exPane3">
+              <i class="fa-solid fa-chart-pie"></i> Tình Huống 3 (Bài 10): Infographic Onboarding
+            </button>
+            <button class="exercise-tab-btn" data-tab="exPane4" style="background:rgba(37,99,235,0.08); color:#1d4ed8;">
+              <i class="fa-solid fa-robot"></i> Tình Huống 4 (AI Agent): Trực Quan Hóa Dữ Liệu Tạo Slide
+            </button>
+          </div>
+
+          <!-- PANE 1: TÌNH HUỐNG BÀI 6 -->
+          <div class="exercise-pane active" id="exPane1">
+            <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+              <!-- Cột trái: Bối cảnh & Dữ liệu mẫu -->
+              <div class="case-study-card">
+                <div class="case-header">
+                  <span class="case-tag tag-primary"><i class="fa-solid fa-briefcase"></i> Bối Cảnh Thực Tế Doanh Nghiệp</span>
+                </div>
+                <h4 style="font-size:1.05rem; font-weight:800; color:var(--text-main); margin-top:0.4rem;">
+                  Thẩm Định Đề Án Tái Cấu Trúc Kinh Doanh & Chuyển Đổi Số Q3 Cho Ban Tổng Giám Đốc
+                </h4>
+                <p style="font-size:0.88rem; color:#475569; line-height:1.5; margin-top:0.3rem;">
+                  Tổng Giám Đốc chuẩn bị họp Hội đồng Quản trị trong 15 phút tới và nhận được bản đề án dài gần 30 trang. Bạn cần nạp tài liệu vào NotebookLM và trích xuất một bản <strong>Executive Summary 1 trang A4</strong> bóc tách rõ: 3 điểm nghẽn nghiêm trọng, 4 chỉ số tài chính trọng yếu và bảng phân công hành động (Action Items) có Deadline cụ thể.
+                </p>
+
+                <!-- KHỐI DỮ LIỆU NGUỒN MẪU -->
+                <div style="background:#f8fafc; border:1px dashed #cbd5e1; border-radius:8px; padding:12px; margin-top:0.75rem;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:0.8rem; font-weight:800; color:#0f766e; text-transform:uppercase;"><i class="fa-solid fa-database"></i> Dữ Liệu Nguồn Mẫu (Nạp Vào NotebookLM)</span>
+                    <button class="copy-data-btn" data-target="dataEx1" style="background:#0f766e; color:#fff; border:none; padding:4px 10px; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">
+                      <i class="fa-solid fa-copy"></i> Sao chép Dữ liệu
+                    </button>
+                  </div>
+                  <pre id="dataEx1" style="margin:0; font-family:var(--font-mono); font-size:0.78rem; background:#fff; border:1px solid #e2e8f0; padding:10px; border-radius:6px; max-height:140px; overflow-y:auto; line-height:1.5; white-space:pre-wrap; color:#334155;">ĐỀ ÁN TÁI CẤU TRÚC KINH DOANH & CHUYỂN ĐỔI SỐ DOANH NGHIỆP - QUÝ 3/2026
+Đơn vị lập: Ban Chiến lược & Chuyển đổi số nội bộ
+
+1. ĐÁNH GIÁ THỰC TRẠNG HIỆN HÀNH:
+- Doanh thu 6 tháng đầu năm đạt 42.5 tỷ VNĐ (đạt 78% kế hoạch), tuy nhiên lợi nhuận ròng sụt giảm 14% so với cùng kỳ do chi phí vận hành thủ công tăng cao.
+- 3 Điểm nghẽn nghiêm trọng:
+  + Điểm nghẽn 1: 65% thời gian của nhân viên khối văn phòng bị tiêu hao vào nhập liệu Excel và tổng hợp báo cáo giấy tờ thủ công.
+  + Điểm nghẽn 2: Tỷ lệ khách hàng rời bỏ dịch vụ (Churn rate) tăng lên 8.2% do thời gian phản hồi khiếu nại trung bình mất 48 giờ (mục tiêu là dưới 4 giờ).
+  + Điểm nghẽn 3: Dữ liệu giữa phòng Kinh doanh, Kế toán và Kho vận bị phân mảnh, dẫn đến tình trạng sai lệch tồn kho thực tế lên tới 12%.
+
+2. MỤC TIÊU TÀI CHÍNH VÀ KPI TRỌNG YẾU QUÝ 3:
+- Chỉ số 1: Cắt giảm tối thiểu 30% chi phí vận hành thủ công thông qua việc ứng dụng tự động hóa AI và Agent quy trình.
+- Chỉ số 2: Rút ngắn thời gian xử lý khiếu nại khách hàng từ 48 giờ xuống còn tối đa 2 giờ (tỷ lệ giải quyết tự động đạt 70%).
+- Chỉ số 3: Tăng doanh thu bán hàng Q3 lên 28 tỷ VNĐ (tăng trưởng 18% so với Q2).
+- Chỉ số 4: Kiểm soát tỷ lệ sai lệch tồn kho kho vận dưới ngưỡng 1.5%.
+
+3. KẾ HOẠCH HÀNH ĐỘNG CỤ THỂ (ACTION PLAN):
+- Hạng mục A: Triển khai thí điểm giải pháp AI Assistant hỗ trợ chăm sóc khách hàng 24/7 (Phụ trách: Anh Hoàng - Trưởng phòng CSKH, Deadline: 30/10/2026).
+- Hạng mục B: Chuẩn hóa hệ thống dữ liệu tập trung ERP kết nối tự động với Kế toán và Kho (Phụ trách: Chị Mai - Giám đốc Công nghệ, Deadline: 15/11/2026).
+- Hạng mục C: Đào tạo kỹ năng ứng dụng AI trong văn phòng cho 150 nhân sự toàn công ty (Phụ trách: Anh Tuấn - Trưởng ban Đào tạo HR, Deadline: 05/11/2026).</pre>
+                </div>
+              </div>
+
+              <!-- Cột phải: Prompt thực chiến -->
+              <div class="case-study-card">
+                <div class="case-header">
+                  <span class="case-tag tag-primary"><i class="fa-solid fa-terminal"></i> Prompt Thực Hành Tóm Tắt Doanh Nghiệp</span>
+                  <button class="action-btn copy-prompt-btn" data-target="promptEx1">
+                    <i class="fa-solid fa-copy"></i> Sao chép Prompt
+                  </button>
+                </div>
+                <div class="code-preview" style="background:#0f172a; color:#f8fafc; padding:1rem; border-radius:8px; margin-top:0.5rem;">
+                  <pre id="promptEx1" style="margin:0; font-family:var(--font-mono); font-size:0.83rem; white-space:pre-wrap; line-height:1.6;">Dựa trên tài liệu Đề án Tái cấu trúc Q3 vừa được nạp vào, hãy đóng vai trò là Trợ lý Chiến lược của Tổng Giám Đốc.
+
+Hãy lập một bản TÓM TẮT ĐIỀU HÀNH (EXECUTIVE SUMMARY) ngắn gọn, súc tích và sắc bén theo đúng cấu trúc sau:
+
+1. ĐÁNH GIÁ 3 ĐIỂM NGHẼN CỐT LÕI (Dạng gạch đầu dòng có phân tích tác động trực tiếp).
+2. BẢNG TỔNG HỢP 4 CHỈ SỐ KPI TÀI CHÍNH TRỌNG YẾU (Bao gồm: Chỉ số, Mục tiêu số liệu và Thời hạn).
+3. MA TRẬN HÀNH ĐỘNG ƯU TIÊN CAO (Action Matrix dưới dạng bảng: STT | Hạng mục công việc | Người phụ trách (PIC) | Hạn chót (Deadline)).
+
+Yêu cầu: Số liệu phải bám sát 100% tài liệu nguồn, không suy diễn thêm số liệu ngoài. Giọng văn dứt khoát, chuyên nghiệp phục vụ cấp lãnh đạo.</pre>
+                </div>
+                <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:10px; margin-top:10px; font-size:0.8rem; color:#15803d;">
+                  <strong><i class="fa-solid fa-check"></i> Tiêu chuẩn đầu ra:</strong> Trích xuất đúng 3 điểm nghẽn, bảng Action Matrix có PIC và Deadline, mọi luận điểm đều có gắn số trích dẫn nguồn <code>[1]</code> của NotebookLM.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANE 2: TÌNH HUỐNG BÀI 9 (VIDEO OVERVIEW - ĐÚNG ẢNH P23 NGƯỜI DÙNG CUNG CẤP) -->
+          <div class="exercise-pane" id="exPane2">
+            <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+              <!-- Cột trái: Bối cảnh & Dữ liệu mẫu -->
+              <div class="case-study-card" style="border-top:3px solid #dc2626;">
+                <div class="case-header">
+                  <span class="case-tag tag-danger"><i class="fa-solid fa-clapperboard"></i> Bối Cảnh Thực Tế Doanh Nghiệp</span>
+                </div>
+                <h4 style="font-size:1.05rem; font-weight:800; color:var(--text-main); margin-top:0.4rem;">
+                  Xuất Bản Video Thuyết Trình Sinh Động Về "Chính Sách Nhân Sự & Thưởng KPI 2026"
+                </h4>
+                <p style="font-size:0.88rem; color:#475569; line-height:1.5; margin-top:0.3rem;">
+                  Phòng Nhân sự vừa ban hành bộ quy chế đãi ngộ mới dài 40 trang. Do nhân viên các chi nhánh ngại đọc văn bản dài, Giám đốc Nhân sự yêu cầu bạn dùng tính năng <strong>Tổng quan bằng video (Video Overview)</strong> trong NotebookLM để tạo một video thuyết minh 3 phút ngắn gọn, hình ảnh sinh động, truyền cảm hứng để phát tại cuộc họp toàn công ty (Town Hall Meeting).
+                </p>
+
+                <!-- KHỐI DỮ LIỆU NGUỒN MẪU -->
+                <div style="background:#fef2f2; border:1px dashed #fca5a5; border-radius:8px; padding:12px; margin-top:0.75rem;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:0.8rem; font-weight:800; color:#b91c1c; text-transform:uppercase;"><i class="fa-solid fa-database"></i> Dữ Liệu Nguồn: Chính Sách Phúc Lợi 2026</span>
+                    <button class="copy-data-btn" data-target="dataEx2" style="background:#dc2626; color:#fff; border:none; padding:4px 10px; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">
+                      <i class="fa-solid fa-copy"></i> Sao chép Dữ liệu
+                    </button>
+                  </div>
+                  <pre id="dataEx2" style="margin:0; font-family:var(--font-mono); font-size:0.78rem; background:#fff; border:1px solid #fecaca; padding:10px; border-radius:6px; max-height:140px; overflow-y:auto; line-height:1.5; white-space:pre-wrap; color:#334155;">CHÍNH SÁCH ĐÃI NGỘ, PHÚC LỢI VÀ THƯỞNG HIỆU QUẢ CÔNG VIỆC NĂM 2026
+Ban hành bởi: Khối Quản trị Nguồn Nhân lực Toàn quốc
+
+1. CHÍNH SÁCH LƯƠNG & ĐIỀU CHỈNH ĐỊNH KỲ:
+- Toàn bộ nhân viên chính thức được xét tăng lương định kỳ 2 lần/năm (vào tháng 06 và tháng 12) dựa trên kết quả đánh giá OKR/KPI đạt từ mức Hoàn thành tốt trở lên.
+- Mức tăng lương trung bình từ 8% đến 25% tùy theo thành tích cống hiến vượt trội.
+
+2. GÓI BẢO HIỂM SỨC KHỎE CAO CẤP (HEALTHCARE BENEFIT):
+- Cấp thẻ bảo hiểm sức khỏe quốc tế hạn mức 250 triệu VNĐ/năm cho nhân sự làm việc từ 12 tháng trở lên, chi trả toàn diện viện phí tại các bệnh viện tư nhân và quốc tế.
+- Khám sức khỏe định kỳ VIP hàng năm tại bệnh viện quốc tế đối tác vào tháng 4.
+
+3. QUY CHẾ THƯỞNG KPI & DỰ ÁN ĐẶC BIỆT:
+- Thưởng tháng 13 cam kết 100% cho mọi nhân viên gắn bó đủ 12 tháng.
+- Thưởng hiệu quả kinh doanh cuối năm (Thưởng tháng 14, 15, 16) căn cứ trên lợi nhuận toàn tập đoàn.
+- Giải thưởng "Ngôi sao sáng kiến AI": Thưởng nóng 10 - 50 triệu VNĐ cho cá nhân hoặc nhóm ứng dụng AI tiết kiệm được từ 100 giờ làm việc/tháng cho đơn vị.
+
+4. CÂN BẰNG CÔNG VIỆC & CUỘC SỐNG (WORK-LIFE BALANCE):
+- Chế độ làm việc linh hoạt (Hybrid Work): 2 ngày làm việc từ xa (Work From Home) mỗi tuần.
+- Phụ cấp ăn trưa 1.200.000 VNĐ/tháng và trợ cấp thiết bị công nghệ 500.000 VNĐ/tháng.
+- Nghỉ phép 15 ngày/năm (tăng thêm 1 ngày sau mỗi 2 năm cống hiến liên tục).</pre>
+                </div>
+              </div>
+
+              <!-- Cột phải: Prompt thực chiến -->
+              <div class="case-study-card" style="border-top:3px solid #dc2626;">
+                <div class="case-header">
+                  <span class="case-tag tag-danger"><i class="fa-solid fa-video"></i> Prompt Tùy Chỉnh Video Overview (Slide 23/57)</span>
+                  <button class="action-btn copy-prompt-btn" data-target="promptEx2" style="background:#dc2626; color:#fff;">
+                    <i class="fa-solid fa-copy"></i> Sao chép Prompt
+                  </button>
+                </div>
+                <div class="code-preview" style="background:#0f172a; color:#f8fafc; padding:1rem; border-radius:8px; margin-top:0.5rem; border-left:3px solid #dc2626;">
+                  <pre id="promptEx2" style="margin:0; font-family:var(--font-mono); font-size:0.83rem; white-space:pre-wrap; line-height:1.6;">Tạo video tổng quan bằng tiếng Việt dựa trên tài liệu Chính sách Phúc lợi 2026 được cung cấp.
+
+Yêu cầu:
+* Tóm tắt các nội dung quan trọng nhất: Lương thưởng 2 lần/năm, Gói bảo hiểm sức khỏe VIP 250 triệu, Thưởng sáng kiến AI, và Chế độ Hybrid 2 ngày/tuần.
+* Trình bày theo cấu trúc rõ ràng, dễ theo dõi, mạch lạc từng quyền lợi.
+* Sử dụng hình ảnh minh họa phù hợp với môi trường công sở hiện đại và năng động.
+* Nhấn mạnh các số liệu, hạn mức tiền thưởng và điều kiện hưởng chính sách.
+* Giọng thuyết minh chuyên nghiệp, truyền cảm hứng, thân thiện và dễ hiểu.
+* Kết thúc bằng phần tổng kết ngắn gọn khích lệ tinh thần cống hiến của nhân sự.</pre>
+                </div>
+                <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:6px; padding:10px; margin-top:10px; font-size:0.8rem; color:#b91c1c;">
+                  <strong><i class="fa-solid fa-arrow-right"></i> Thao tác:</strong> Vào Studio &rarr; Bấm "Tổng quan bằng video" &rarr; Chọn "Tùy chỉnh" &rarr; Dán prompt trên vào ô "Máy chủ AI nên tập trung vào điều gì?" &rarr; Nhấn "Tạo".
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANE 3: TÌNH HUỐNG BÀI 10 (INFOGRAPHIC) -->
+          <div class="exercise-pane" id="exPane3">
+            <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+              <!-- Cột trái: Bối cảnh & Dữ liệu mẫu -->
+              <div class="case-study-card" style="border-top:3px solid #0d9488;">
+                <div class="case-header">
+                  <span class="case-tag tag-primary" style="background:#ccfbf1; color:#0f766e;"><i class="fa-solid fa-palette"></i> Bối Cảnh Thực Tế Doanh Nghiệp</span>
+                </div>
+                <h4 style="font-size:1.05rem; font-weight:800; color:var(--text-main); margin-top:0.4rem;">
+                  Thiết Kế Bản Đồ Họa Thông Tin (Infographic) "Quy Trình Onboarding 7 Ngày Nhân Sự Mới"
+                </h4>
+                <p style="font-size:0.88rem; color:#475569; line-height:1.5; margin-top:0.3rem;">
+                  Nhân viên mới thường cảm thấy bỡ ngỡ và choáng ngợp trong tuần đầu tiên đi làm. Bộ phận Đào tạo & Truyền thông nội bộ cần một ấn phẩm trực quan dạng <strong>Bản đồ họa thông tin (Infographic)</strong> tóm lược lộ trình 7 ngày rõ ràng để gửi kèm email chúc mừng ngày đầu tiên và in dán tại bảng tin các phòng ban.
+                </p>
+
+                <!-- KHỐI DỮ LIỆU NGUỒN MẪU -->
+                <div style="background:#f0fdfa; border:1px dashed #99f6e4; border-radius:8px; padding:12px; margin-top:0.75rem;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:0.8rem; font-weight:800; color:#0f766e; text-transform:uppercase;"><i class="fa-solid fa-database"></i> Dữ Liệu Nguồn: Quy Trình Onboarding 7 Ngày</span>
+                    <button class="copy-data-btn" data-target="dataEx3" style="background:#0f766e; color:#fff; border:none; padding:4px 10px; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">
+                      <i class="fa-solid fa-copy"></i> Sao chép Dữ liệu
+                    </button>
+                  </div>
+                  <pre id="dataEx3" style="margin:0; font-family:var(--font-mono); font-size:0.78rem; background:#fff; border:1px solid #99f6e4; padding:10px; border-radius:6px; max-height:140px; overflow-y:auto; line-height:1.5; white-space:pre-wrap; color:#334155;">QUY TRÌNH HỘI NHẬP & ONBOARDING 7 NGÀY CHO NHÂN SỰ MỚI
+Áp dụng: Toàn bộ cán bộ nhân viên mới gia nhập công ty
+
+GIAI ĐOẠN 1: NGÀY ĐẦU TIÊN (DAY 1) - CHÀO ĐÓN & HÒA NHẬP
+- 08:30: Đón tiếp tại Lễ tân, nhận Bộ quà chào mừng (Welcome Kit: Thẻ nhân viên, Áo đồng phục, Sổ tay văn hóa).
+- 09:30: Bàn giao vị trí làm việc, kích hoạt tài khoản Email công ty, Slack và phần mềm chuyên môn.
+- 11:30: Ăn trưa thân mật cùng Trưởng phòng và Người hướng dẫn (Mentor 1-on-1).
+- 14:00: Tham gia buổi giới thiệu Văn hóa doanh nghiệp & Các quy chế bảo mật thông tin nội bộ.
+
+GIAI ĐOẠN 2: NGÀY 2 VÀ 3 (DAY 2-3) - ĐÀO TẠO CÔNG CỤ VÀ QUY TRÌNH
+- Làm quen với các công cụ số: Phần mềm quản lý dự án Jira, Hệ thống ERP nội bộ, và Bộ công cụ AI văn phòng.
+- Đọc tài liệu bàn giao công việc và tìm hiểu các đầu mối liên hệ (SOPs) của phòng ban.
+
+GIAI ĐOẠN 3: NGÀY 4 VÀ 5 (DAY 4-5) - THỰC CHIẾN CÙNG MENTOR
+- Bắt tay vào xử lý nhiệm vụ thực tế đầu tiên dưới sự kèm cặp sát sao của Mentor.
+- Tham gia cuộc họp giao ban tuần của đội nhóm để nắm nhịp điệu công việc.
+
+GIAI ĐOẠN 4: NGÀY THỨ 7 (DAY 7) - CHECK-IN & THIẾT LẬP MỤC TIÊU THỬ VIỆC
+- Buổi trò chuyện 30 phút cùng Quản lý trực tiếp (Check-in 1 tuần đầu): Giải đáp các vướng mắc phát sinh.
+- Ký kết Kế hoạch Mục tiêu 60 ngày thử việc (Probation Objectives).</pre>
+                </div>
+              </div>
+
+              <!-- Cột phải: Prompt thực chiến -->
+              <div class="case-study-card" style="border-top:3px solid #0d9488;">
+                <div class="case-header">
+                  <span class="case-tag tag-primary" style="background:#ccfbf1; color:#0f766e;"><i class="fa-solid fa-chart-line"></i> Prompt Thực Hành Infographic (Bài 10)</span>
+                  <button class="action-btn copy-prompt-btn" data-target="promptEx3" style="background:#0f766e; color:#fff;">
+                    <i class="fa-solid fa-copy"></i> Sao chép Prompt
+                  </button>
+                </div>
+                <div class="code-preview" style="background:#0f172a; color:#f8fafc; padding:1rem; border-radius:8px; margin-top:0.5rem; border-left:3px solid #0d9488;">
+                  <pre id="promptEx3" style="margin:0; font-family:var(--font-mono); font-size:0.83rem; white-space:pre-wrap; line-height:1.6;">Tạo hình ảnh minh họa đồ họa thông tin (Infographic) bằng tiếng Việt dựa trên tài liệu Quy trình Onboarding 7 ngày được cung cấp.
+
+Yêu cầu:
+- Thể hiện chính xác tiến trình hội nhập gồm 4 giai đoạn rõ ràng: 
+  + Giai đoạn 1 (Ngày 1): Chào đón & Hòa nhập
+  + Giai đoạn 2 (Ngày 2-3): Đào tạo Công cụ & Quy trình
+  + Giai đoạn 3 (Ngày 4-5): Thực chiến cùng Mentor
+  + Giai đoạn 4 (Ngày 7): Check-in & Mục tiêu Thử việc
+- Phong cách thiết kế: Đồ họa thông tin hiện đại (Modern Infographic), trực quan, năng động, gam màu tươi sáng, dễ nhớ.
+- Bố cục phân tầng dạng dòng thời gian (Timeline Roadmap) từ trên xuống dưới hoặc từ trái qua phải.
+- Làm nổi bật các mốc thời gian và biểu tượng trực quan tương ứng với từng mốc.</pre>
+                </div>
+                <div style="background:#f0fdfa; border:1px solid #99f6e4; border-radius:6px; padding:10px; margin-top:10px; font-size:0.8rem; color:#0f766e;">
+                  <strong><i class="fa-solid fa-check"></i> Tiêu chuẩn đầu ra:</strong> Bố cục timeline 4 giai đoạn rành mạch, ngôn ngữ tiếng Việt hiển thị chính xác, hình ảnh minh họa phù hợp phong cách công sở hiện đại.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANE 4: TÌNH HUỐNG 4 - THỬ THÁCH MASTER AI AGENT TẠO SLIDE TRỰC QUAN HÓA DỮ LIỆU -->
+          <div class="exercise-pane" id="exPane4">
+            <div class="grid-2-col" style="gap: 1.5rem; align-items: start;">
+              <!-- Cột trái: Bối cảnh & Dữ liệu CSV giả lập -->
+              <div class="case-study-card" style="border-top:3px solid #2563eb;">
+                <div class="case-header">
+                  <span class="case-tag tag-primary"><i class="fa-solid fa-robot"></i> ĐỀ BÀI THỰC CHIẾN MASTER AI AGENT</span>
+                  <div style="display:inline-flex; gap:6px; flex-wrap:wrap;">
+                    <a href="assets/Bao_Cao_Kinh_Doanh_Chi_Tiet_2026.xlsx" download="Bao_Cao_Kinh_Doanh_Chi_Tiet_2026.xlsx" class="action-btn" style="background:#16a34a; color:#fff; text-decoration:none; font-size:0.75rem; padding:5px 12px; border-radius:6px; display:inline-flex; align-items:center; gap:6px;">
+                      <i class="fa-solid fa-file-excel"></i> Tải File Excel (750 Dòng)
+                    </a>
+                    <a href="assets/du_lieu_kinh_doanh_da_kenh_2026.csv" download="du_lieu_kinh_doanh_da_kenh_2026.csv" class="action-btn" style="background:#2563eb; color:#fff; text-decoration:none; font-size:0.75rem; padding:5px 12px; border-radius:6px; display:inline-flex; align-items:center; gap:6px;">
+                      <i class="fa-solid fa-file-csv"></i> Tải CSV Tóm Tắt
+                    </a>
+                  </div>
+                </div>
+                <h4 style="font-size:1.05rem; font-weight:800; color:var(--text-main); margin-top:0.4rem;">
+                  Phân Tích Dữ Liệu Kinh Doanh 9 Tháng & Tự Động Thiết Kế Bộ Slide Báo Cáo Chiến Lược
+                </h4>
+                <p style="font-size:0.88rem; color:#475569; line-height:1.5; margin-top:0.3rem;">
+                  Bạn đóng vai trò là <strong>Chuyên viên Phân tích Dữ liệu (Lead Data Analyst)</strong>. Ban Giám Đốc chuẩn bị họp Hội đồng Quản trị để chốt kế hoạch Quý 4. Bạn cần giao việc cho <strong>AI Agent</strong>: Đọc tệp số liệu đa kênh 9 tháng (750 dòng giao dịch thực tế), tự động tính toán phát hiện nghịch lý <em>"Doanh thu TikTok Shop tăng vọt nhưng tỷ lệ hoàn hủy chạm mốc 13.4% và CSAT tụt dốc"</em>, sau đó chuyển hóa toàn bộ phân tích thành <strong>Bộ Slide Trình Chiếu Trực Quan Hóa Dữ Liệu 4 Trang</strong> chuyên nghiệp.
+                </p>
+
+                <!-- THẺ ĐÍNH KÈM TỆP EXCEL NỔI BẬT -->
+                <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid #86efac; border-radius: 10px; padding: 14px 16px; margin: 12px 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.1);">
+                  <div style="display: flex; align-items: center; gap: 14px;">
+                    <div style="width: 50px; height: 50px; border-radius: 10px; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 4px 8px rgba(22, 163, 74, 0.3); flex-shrink: 0;">
+                      <i class="fa-solid fa-file-excel"></i>
+                    </div>
+                    <div>
+                      <div style="font-size: 0.95rem; font-weight: 800; color: #14532d;">Bao_Cao_Kinh_Doanh_Chi_Tiet_2026.xlsx</div>
+                      <div style="font-size: 0.78rem; color: #166534; margin-top: 2px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <span><i class="fa-solid fa-database"></i> 750 Đơn hàng thực tế</span> • 
+                        <span><i class="fa-solid fa-weight-hanging"></i> 72.25 KB</span> • 
+                        <span><i class="fa-solid fa-calendar-days"></i> 9 Tháng (T1 - T9/2026)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="assets/Bao_Cao_Kinh_Doanh_Chi_Tiet_2026.xlsx" download="Bao_Cao_Kinh_Doanh_Chi_Tiet_2026.xlsx" class="action-btn" style="background: #16a34a; color: #fff; text-decoration: none; font-size: 0.85rem; font-weight: 800; padding: 10px 18px; border-radius: 8px; box-shadow: 0 4px 10px rgba(22, 163, 74, 0.25); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; transition: all 0.2s ease;">
+                    <i class="fa-solid fa-download"></i> TẢI XUỐNG FILE EXCEL
+                  </a>
+                </div>
+
+                <!-- KHỐI DỮ LIỆU NGUỒN CSV GIẢ LẬP -->
+                <div style="background:#eff6ff; border:1px dashed #93c5fd; border-radius:8px; padding:12px; margin-top:0.75rem;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:0.8rem; font-weight:800; color:#1d4ed8; text-transform:uppercase;"><i class="fa-solid fa-table"></i> Bảng Dữ Liệu CSV Đa Kênh (9 Tháng Đầu Năm 2026)</span>
+                    <button class="copy-data-btn" data-target="dataEx4" style="background:#2563eb;">
+                      <i class="fa-solid fa-copy"></i> Sao chép Toàn Bộ CSV
+                    </button>
+                  </div>
+                  <pre id="dataEx4" style="margin:0; font-family:var(--font-mono); font-size:0.75rem; background:#fff; border:1px solid #bfdbfe; padding:10px; border-radius:6px; max-height:160px; overflow-y:auto; line-height:1.5; white-space:pre-wrap; color:#1e293b;">Thang,Kenh_Ban_Hang,Doanh_Thu_Trieu_VND,Chi_Phi_Ads_Trieu_VND,Don_Hang_Thanh_Cong,Ty_Le_Hoan_Huy_Percent,Gia_Tri_Don_TB_K_VND,CSAT_Rating
+T1,Shopee,850,120,3400,4.2,250,4.7
+T1,TikTok Shop,620,150,3100,8.5,200,4.4
+T1,Website Direct,410,60,1170,2.1,350,4.8
+T1,Showroom,520,40,650,1.2,800,4.9
+T2,Shopee,920,130,3680,4.0,250,4.7
+T2,TikTok Shop,780,190,3900,9.1,200,4.3
+T2,Website Direct,430,65,1220,2.0,352,4.8
+T2,Showroom,490,40,610,1.1,803,4.9
+T3,Shopee,1100,160,4400,4.5,250,4.6
+T3,TikTok Shop,1050,260,5250,10.2,200,4.2
+T3,Website Direct,480,70,1330,2.2,360,4.8
+T3,Showroom,580,45,710,1.0,816,4.9
+T4,Shopee,1020,150,4080,4.3,250,4.7
+T4,TikTok Shop,980,240,4900,9.8,200,4.3
+T4,Website Direct,510,75,1380,2.1,369,4.8
+T4,Showroom,610,45,740,1.2,824,4.9
+T5,Shopee,1250,180,5000,4.6,250,4.6
+T5,TikTok Shop,1350,340,6750,11.5,200,4.1
+T5,Website Direct,550,80,1450,1.9,379,4.8
+T5,Showroom,640,50,770,1.0,831,4.9
+T6,Shopee,1400,210,5600,4.8,250,4.6
+T6,TikTok Shop,1600,420,8000,12.1,200,4.0
+T6,Website Direct,590,85,1510,1.8,390,4.9
+T6,Showroom,670,50,800,0.9,837,4.9
+T7,Shopee,1320,195,5280,4.4,250,4.7
+T7,TikTok Shop,1450,380,7250,11.2,200,4.2
+T7,Website Direct,620,90,1550,1.7,400,4.9
+T7,Showroom,690,50,810,0.9,851,4.9
+T8,Shopee,1480,220,5920,4.7,250,4.6
+T8,TikTok Shop,1750,460,8750,12.8,200,4.0
+T8,Website Direct,660,95,1610,1.6,409,4.9
+T8,Showroom,720,55,830,0.8,867,4.9
+T9,Shopee,1650,240,6600,4.5,250,4.7
+T9,TikTok Shop,2100,550,10500,13.4,200,3.9
+T9,Website Direct,710,100,1690,1.5,420,4.9
+T9,Showroom,760,55,870,0.8,873,5.0</pre>
+                </div>
+              </div>
+
+              <!-- Cột phải: Master Prompt điều phối AI Agent -->
+              <div class="case-study-card" style="border-top:3px solid #2563eb;">
+                <div class="case-header">
+                  <span class="case-tag tag-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> MASTER PROMPT ĐIỀU PHỐI AI AGENT TẠO SLIDE</span>
+                  <button class="action-btn copy-prompt-btn" data-target="promptEx4" style="background:#2563eb; color:#fff;">
+                    <i class="fa-solid fa-copy"></i> Sao chép Master Prompt
+                  </button>
+                </div>
+                <div class="code-preview" style="background:#0f172a; color:#f8fafc; padding:1rem; border-radius:8px; margin-top:0.5rem; border-left:3px solid #2563eb;">
+                  <pre id="promptEx4" style="margin:0; font-family:var(--font-mono); font-size:0.8rem; white-space:pre-wrap; line-height:1.6;">Bạn là một AI Agent chuyên gia về Phân tích Dữ liệu và Thiết kế Trình Chiếu Chiến Lược (Data Visualization & Strategic Deck Designer).
+
+Tôi cung cấp cho bạn tệp dữ liệu CSV kết quả kinh doanh 9 tháng năm 2026 của 4 kênh bán lẻ (Shopee, TikTok Shop, Website Direct, Showroom).
+
+Nhiệm vụ của bạn: Hãy phân tích số liệu và tự động khởi tạo BỘ SLIDE BÁO CÁO TRỰC QUAN HÓA DỮ LIỆU gồm 4 SLIDE theo đúng cấu trúc sau:
+
+SLIDE 1: TỔNG QUAN ĐIỀU HÀNH & KẾT QUẢ KINH DOANH 9 THÁNG (EXECUTIVE SUMMARY)
+- KPI Cards: Tổng Doanh thu toàn công ty, Tăng trưởng so với T1, Tỷ suất lợi nhuận trung bình.
+- Biểu đồ đề xuất: Stacked Bar Chart thể hiện cơ cấu đóng góp doanh thu của 4 kênh qua từng tháng.
+- 1 Câu nhận định chiến lược đắt giá nhất.
+
+SLIDE 2: SO SÁNH HIỆU QUẢ CÁC KÊNH & ĐO LƯỜNG ROAS QUẢNG CÁO
+- Bảng Ma trận so sánh: Kênh | Doanh thu T9 | Chi phí Ads | Hệ số ROAS (Doanh thu / Chi phí Ads) | Giá trị đơn trung bình (AOV).
+- Phân tích: Đâu là kênh "Cỗ máy tiền mặt" (Cash Cow) và đâu là kênh "Ngôi sao tăng trưởng"?
+
+SLIDE 3: CẢNH BÁO NGUY CƠ: ĐIỂM NGHẼN HOÀN HỦY & SỤT GIẢM CSAT TRÊN TIKTOK SHOP
+- Biểu đồ đề xuất: Biểu đồ đường kết hợp (Dual-axis Line Chart) chỉ rõ: Khi đơn hàng TikTok tăng từ 3.100 lên 10.500 đơn &rarr; Tỷ lệ hoàn hủy vọt từ 8.5% lên 13.4% và CSAT tụt dốc từ 4.4 xuống 3.9.
+- Phân tích nguyên nhân cốt lõi (Giao hàng trễ, tư vấn quá tải).
+
+SLIDE 4: ĐỀ XUẤT HÀNH ĐỘNG CHIẾN LƯỢC QUÝ 4 (ACTIONABLE STRATEGY)
+- 3 Đòn bẩy tối ưu: (1) Khống chế tỷ lệ hoàn TikTok &lt; 7%, (2) Tăng 30% ngân sách cho Website & Showroom (biên lợi nhuận cao), (3) Ứng dụng AI Agent chăm sóc khách hàng tự động.
+- Lộ trình thực hiện dạng Timeline 60 ngày.
+
+Yêu cầu định dạng đầu ra:
+- Cung cấp dưới dạng dàn ý slide chi tiết (Markdown Slide format) kèm mã gợi ý prompt sẵn sàng dán vào Gamma App hoặc trình tạo slide HTML/PPTX.
+- Mọi số liệu phải chính xác 100% từ bảng CSV được cung cấp.</pre>
+                </div>
+                <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:6px; padding:10px; margin-top:10px; font-size:0.8rem; color:#1e40af;">
+                  <strong><i class="fa-solid fa-graduation-cap"></i> Học viên thực hiện:</strong>
+                  <br>1. Nhấn nút <strong>"Sao chép Toàn Bộ CSV"</strong> (hoặc tải file).
+                  <br>2. Nhấn nút <strong>"Sao chép Master Prompt"</strong>.
+                  <br>3. Dán vào ChatGPT / Gemini / Claude / Gamma App để chiêm ngưỡng AI Agent phân tích và tự sinh slide trực quan hóa dữ liệu tức thì!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- KỊCH BẢN GIẢNG VIÊN (SPEAKER TELEPROMPTER DRAWER) -->
+    <aside class="speaker-drawer" id="speakerDrawer">
+      <div class="drawer-header">
+        <div class="drawer-title-area">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <h3>KỊCH BẢN GIẢNG VIÊN (TELEPROMPTER)</h3>
+          <span class="drawer-slide-tag" id="drawerSlideTag">SLIDE 01 / 08</span>
+        </div>
+        <button id="closeDrawerBtn" class="close-drawer-btn" title="Đóng (Phím S hoặc Esc)"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="drawer-body" id="drawerContent">
+        <!-- Render dynamically via JavaScript -->
+      </div>
+    </aside>
+
+    <!-- LIGHTBOX MODAL PHÓNG TO ẢNH SLIDE & UI -->
+    <div id="imageLightbox" class="image-lightbox" aria-hidden="true">
+      <div class="lightbox-content">
+        <button id="lightboxCloseBtn" class="lightbox-close-btn" title="Đóng phóng to (Esc)"><i class="fa-solid fa-xmark"></i></button>
+        <img id="lightboxImg" src="" alt="Ảnh phóng to chi tiết">
+        <div id="lightboxCaption" class="lightbox-caption">Chi tiết slide giáo trình</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SCRIPT LOGIC BUỔI 03 -->
+  <script src="buoi3.js?v=20261014_1615"></script>
+</body>
+</html>
