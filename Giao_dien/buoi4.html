@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học AI & Agent - Buổi 4: Tự Động Hóa Google Sheets Với Google Cloud API & Biểu Đồ 3D</title>
+  <meta name="description" content="Bài giảng tương tác Buổi 4: Tự động hóa Google Sheets bằng AI Agent kết hợp Google Cloud API (Google Sheets API & Google Drive API), Service Account bảo mật và trực quan hóa Dashboard Kho 3D theo thời gian thực.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- GSAP 3 CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=20261016_1800">
+
+  <style>
+    /* Critical CSS for Session Switcher */
+    .session-switcher {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      background: #f1f5f9 !important;
+      border: 1px solid #e2e8f0 !important;
+      padding: 3px !important;
+      border-radius: 999px !important;
+      margin-left: 12px !important;
+      vertical-align: middle !important;
+    }
+    .session-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      padding: 5px 14px !important;
+      border-radius: 999px !important;
+      font-size: 0.78rem !important;
+      font-weight: 700 !important;
+      color: #64748b !important;
+      text-decoration: none !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      line-height: 1.2 !important;
+    }
+    .session-btn:hover {
+      color: #7c3aed !important;
+      background: rgba(255, 255, 255, 0.8) !important;
+    }
+    .session-btn.active {
+      background: #ffffff !important;
+      color: #7c3aed !important;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+    }
+    .session-btn .dot-indicator {
+      width: 6px !important;
+      height: 6px !important;
+      border-radius: 50% !important;
+      background: #94a3b8 !important;
+      display: inline-block !important;
+    }
+    .session-btn.active .dot-indicator {
+      background: #7c3aed !important;
+    }
+
+    /* Lightbox Modal */
+    .image-lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(12px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .image-lightbox.active {
+      display: flex;
+      opacity: 1;
+    }
+    .lightbox-content {
+      position: relative;
+      max-width: 94vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 82vh;
+      border-radius: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #ffffff;
+    }
+    .lightbox-caption {
+      margin-top: 12px;
+      color: #f8fafc;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 6px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .lightbox-close-btn {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: background 0.2s ease;
+    }
+    .lightbox-close-btn:hover {
+      background: rgba(239, 68, 68, 0.9);
+    }
+
+    /* BUỔI 4 SPECIFIC STYLES: ARCHITECTURE DIAGRAM & VIDEO PLAYER */
+    .architecture-banner-card {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      border: 1px solid #312e81;
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      color: #f8fafc;
+      margin-top: 1.25rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.3);
+    }
+    .architecture-banner-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .arch-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .arch-title-group h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+    }
+    .arch-title-group p {
+      font-size: 0.84rem;
+      color: #cbd5e1;
+      margin: 4px 0 0 0;
+    }
+    .btn-zoom-diagram {
+      background: rgba(139, 92, 246, 0.25);
+      border: 1px solid #8b5cf6;
+      color: #e0e7ff;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-zoom-diagram:hover {
+      background: #8b5cf6;
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    /* KHUNG HIỂN THỊ HÌNH ẢNH SƠ ĐỒ KIẾN TRÚC TRỰC TIẾP TRÊN SLIDE 1 */
+    .architecture-visual-preview {
+      background: #ffffff;
+      border: 2px solid #8b5cf6;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin: 1.25rem 0 1rem 0;
+      box-shadow: 0 12px 30px -8px rgba(124, 58, 237, 0.35), 0 4px 12px rgba(15, 23, 42, 0.08);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .architecture-visual-preview:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.5);
+      border-color: #a78bfa;
+    }
+    .arch-img-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .arch-tag-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #6d28d9;
+      letter-spacing: 0.3px;
+    }
+    .zoom-hint-badge {
+      background: rgba(139, 92, 246, 0.15);
+      color: #6d28d9;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .arch-img-frame {
+      background: #ffffff;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .arch-img-frame img {
+      width: 100%;
+      max-height: 480px;
+      object-fit: contain;
+      border-radius: 8px;
+      transition: transform 0.25s ease;
+      display: block;
+    }
+    .architecture-visual-preview:hover .arch-img-frame img {
+      transform: scale(1.01);
+    }
+    .arch-img-footer-bar {
+      padding: 10px 16px;
+      background: #0f172a;
+      border-top: 1px solid #1e293b;
+      overflow-x: auto;
+    }
+    .arch-flow-pills {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .flow-pill {
+      background: #1e293b;
+      color: #f1f5f9;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid #334155;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .flow-arrow {
+      color: #a78bfa;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    /* Diagram Interactive Nodes Grid */
+    .arch-nodes-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 1rem;
+      position: relative;
+    }
+    .arch-node {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .arch-node:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #8b5cf6;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    .arch-node-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      width: fit-content;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .node-gcp { background: #fee2e2; color: #991b1b; }
+    .node-sa { background: #fef3c7; color: #92400e; }
+    .node-agent { background: #ede9fe; color: #6d28d9; }
+    .node-sheets { background: #dcfce7; color: #166534; }
+    .arch-node h4 {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+    .arch-node p {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    /* Video Masterclass Slide 6 Layout */
+    .video-masterclass-layout {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 1.25rem;
+      margin-top: 1rem;
+      align-items: stretch;
+    }
+    .video-player-container {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.4);
+    }
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      background: #000;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .video-controls-bar {
+      padding: 0.85rem 1rem;
+      background: #1e293b;
+      border-top: 1px solid #334155;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #e2e8f0;
+      font-size: 0.84rem;
+    }
+    .video-meta-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .video-badge-tag {
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .video-title-text {
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* Video Chapters Playlist */
+    .video-chapters-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+    }
+    .chapters-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-card);
+      margin-bottom: 0.75rem;
+    }
+    .chapters-header h3 {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+    }
+    .chapters-scroll-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 420px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .chapter-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      border: 1px solid var(--border-card);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      width: 100%;
+    }
+    .chapter-item:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      transform: translateX(3px);
+    }
+    .chapter-item.active {
+      background: #ede9fe;
+      border-color: #8b5cf6;
+      box-shadow: 0 1px 3px rgba(139, 92, 246, 0.2);
+    }
+    .chapter-time {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #6d28d9;
+      background: #ffffff;
+      padding: 3px 6px;
+      border-radius: 4px;
+      border: 1px solid #ddd6fe;
+      flex-shrink: 0;
+    }
+    .chapter-item.active .chapter-time {
+      background: #6d28d9;
+      color: #ffffff;
+      border-color: #6d28d9;
+    }
+    .chapter-desc {
+      font-size: 0.82rem;
+      color: var(--text-main);
+      font-weight: 600;
+      line-height: 1.35;
+      flex-grow: 1;
+    }
+
+    /* Self-Debugging Flow (Slide 7) */
+    .debugging-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .debug-step-card {
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .debug-step-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+    .debug-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      width: fit-content;
+    }
+    .d-badge-error { background: #fee2e2; color: #b91c1c; }
+    .d-badge-reason { background: #ffedd5; color: #c2410c; }
+    .d-badge-heal { background: #ede9fe; color: #6d28d9; }
+    .d-badge-success { background: #dcfce7; color: #15803d; }
+    .debug-step-card h4 {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 0;
+    }
+    .debug-step-card p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin: 0;
+    }
+    .debug-code-box {
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 6px 8px;
+      border-radius: 4px;
+      border: 1px solid #334155;
+      overflow-x: auto;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 1024px) {
+      .video-masterclass-layout {
+        grid-template-columns: 1fr;
+      }
+      .arch-nodes-grid, .debugging-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 640px) {
+      .arch-nodes-grid, .debugging-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="light-theme">
+  <!-- 3D FLOATING MESH BACKGROUND -->
+  <div class="mesh-bg-container" aria-hidden="true">
+    <div class="mesh-orb orb-1"></div>
+    <div class="mesh-orb orb-2"></div>
+    <div class="mesh-orb orb-3"></div>
+    <div class="mesh-grid-pattern"></div>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-nav">
+      <div class="nav-left">
+        <div class="brand-badge">
+          <span class="pulsing-dot" style="background:#8b5cf6;"></span>
+          <span class="brand-text">AI & AGENT WORKSHOP</span>
+        </div>
+        
+        <!-- BỘ CHUYỂN BUỔI HỌC (SESSION SWITCHER ĐẦY ĐỦ 4 BUỔI) -->
+        <div class="session-switcher">
+          <a href="index.html" class="session-btn" title="Chuyển sang Buổi 1: Giải Mã Mô Hình Hoạt Động Của AI">
+            <span class="dot-indicator"></span> Buổi 1
+          </a>
+          <a href="buoi2.html" class="session-btn" title="Chuyển sang Buổi 2: Tư Duy Quản Lý & Khởi Tạo Văn Bản">
+            <span class="dot-indicator"></span> Buổi 2
+          </a>
+          <a href="buoi3.html" class="session-btn" title="Chuyển sang Buổi 3: Google NotebookLM & Xử Lý Đa Phương Tiện">
+            <span class="dot-indicator"></span> Buổi 3
+          </a>
+          <a href="buoi4.html" class="session-btn active" title="Đang ở Buổi 4: Tự Động Hóa Google Sheets Với Google Cloud API & Biểu Đồ 3D">
+            <span class="dot-indicator"></span> Buổi 4
+          </a>
+        </div>
+
+        <div class="session-info">
+          <span class="session-tag" style="background:linear-gradient(135deg, #7c3aed, #4f46e5); color:#fff;">BUỔI 04</span>
+          <span class="session-title">Google Cloud API & AI Agent: Báo Cáo Google Sheets 3D</span>
+        </div>
+      </div>
+
+      <div class="nav-center">
+        <div class="slide-indicator">
+          <button id="prevBtn" class="nav-btn" title="Slide trước (Phím ←)"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="slide-pills" id="slidePillsContainer">
+            <!-- Render dynamically via JavaScript -->
+          </div>
+          <button id="nextBtn" class="nav-btn" title="Slide tiếp (Phím →)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <button id="speakerNotesToggle" class="action-btn" title="Bật/Tắt Kịch bản Giảng viên (Phím S)">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <span>Kịch bản Giảng viên</span>
+        </button>
+        <button id="fullscreenToggle" class="action-btn icon-only" title="Toàn màn hình (Phím F)">
+          <i class="fa-solid fa-expand"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN SLIDE STAGE -->
+    <main class="presentation-stage" id="presentationStage">
+      
+      <!-- ======================================================================
+           SLIDE 1: MỞ ĐẦU & SƠ ĐỒ KIẾN TRÚC TÍCH HỢP (BLUEPRINT ARCHITECTURE)
+           ====================================================================== -->
+      <section class="slide-page active" data-slide="1" id="slide-1">
+        <div class="slide-content hero-slide">
+          <div class="hero-header gsap-fade">
+            <div class="glow-pill" style="border-color:#8b5cf6; color:#7c3aed;">
+              <i class="fa-solid fa-bolt-lightning"></i> Khóa Học AI & AI AGENT — Buổi 04
+            </div>
+            <h1 class="hero-title">
+              Tự Động Hóa Google Sheets Với AI Agent:<br>
+              <span class="text-gradient" style="background:linear-gradient(135deg, #7c3aed 0%, #2563eb 50%, #06b6d4 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+                Tích Hợp Google Cloud API & Trực Quan Hóa Báo Cáo 3D Real-time
+              </span>
+            </h1>
+            <p class="hero-subtitle">
+              Giải phóng hoàn toàn sức lao động văn phòng. Kết nối <strong>AI Agent</strong> trực tiếp với hệ sinh thái <strong>Google Cloud (Sheets & Drive API)</strong> thông qua <strong>Service Account JSON</strong>, tự động sinh bảng tính quản trị tồn kho và vẽ biểu đồ 3D sống động mà không cần gõ tay từng hàm tính.
+            </p>
+          </div>
+
+          <!-- SO SÁNH 2 CƠ CHẾ -->
+          <div class="grid-2-col hero-cards">
+            <div class="glass-card misconception-card gsap-stagger">
+              <div class="card-icon red-glow"><i class="fa-solid fa-hand"></i></div>
+              <h3>Thao Tác Thủ Công / Copy-Paste Cũ Kỹ</h3>
+              <p class="card-desc">
+                Nhân viên phải tự xuất file CSV, mở Google Sheets gõ từng hàm VLOOKUP, SUMIFS, tự căn chỉnh từng ô màu và mất hàng giờ đồng hồ vẽ biểu đồ. Khi dữ liệu thay đổi lại phải làm lại từ đầu, rất dễ sai sót và không có tính kết nối tự động.
+              </p>
+              <div class="status-tag tag-danger"><i class="fa-solid fa-clock"></i> Tốn thời gian & Dễ phát sinh sai số</div>
+            </div>
+
+            <div class="glass-card truth-card gsap-stagger" style="border-color:#c4b5fd;">
+              <div class="card-icon" style="background:rgba(124, 58, 237, 0.1); color:#7c3aed;"><i class="fa-solid fa-robot"></i></div>
+              <h3>AI Agent + Google Cloud Enterprise API</h3>
+              <p class="card-desc">
+                AI Agent sở hữu quyền truy cập lập trình qua khóa bí mật <code>credential.json</code>. Agent tự phân tích yêu cầu bằng ngôn ngữ tự nhiên, tự viết mã nguồn Python, tự gọi API chèn dữ liệu, tự thiết kế thẻ KPI và render biểu đồ thanh 3D, tròn 3D hoàn toàn tự động.
+              </p>
+              <div class="status-tag tag-success" style="background:#ede9fe; color:#6d28d9; border-color:#ddd6fe;">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Tự động hóa 100% & Báo cáo 3D đẳng cấp
+              </div>
+            </div>
+          </div>
+
+          <!-- SƠ ĐỒ KIẾN TRÚC TƯƠNG TÁC (TÁI HIỆN CHÍNH XÁC ẢNH IMAGE COPY.PNG) -->
+          <div class="architecture-banner-card gsap-fade">
+            <div class="arch-header">
+              <div class="arch-title-group">
+                <h3><i class="fa-solid fa-network-wired" style="color:#a78bfa;"></i> Sơ Đồ Kiến Trúc Tích Hợp 4 Khối (The Enterprise Integration Flow)</h3>
+                <p>Khám phá luồng bảo mật khép kín từ Google Cloud Platform, Khóa Service Account, Antigravity AI Agent đến Google Sheets</p>
+              </div>
+              <button class="btn-zoom-diagram" id="openDiagramModalBtn">
+                <i class="fa-solid fa-magnifying-glass-plus"></i> Phóng To Sơ Đồ Gốc
+              </button>
+            </div>
+
+            <!-- KHUNG TRÌNH CHIẾU HÌNH ẢNH SƠ ĐỒ KIẾN TRÚC GỐC (DIRECT IMAGE DISPLAY) -->
+            <div class="architecture-visual-preview" id="previewDiagramCard" title="Nhấp vào hình ảnh để phóng to toàn màn hình">
+              <div class="arch-img-header-bar">
+                <div class="arch-tag-live">
+                  <span class="pulsing-dot" style="background:#10b981; width:8px; height:8px; border-radius:50%; display:inline-block;"></span>
+                  <span>SƠ ĐỒ KIẾN TRÚC GỐC: GOOGLE CLOUD + SERVICE ACCOUNT + AI AGENT + SHEETS 3D</span>
+                </div>
+                <span class="zoom-hint-badge"><i class="fa-solid fa-magnifying-glass-plus"></i> Nhấp để phóng to</span>
+              </div>
+              <div class="arch-img-frame">
+                <img src="assets/so_do_kien_truc_buoi_4.png" alt="Sơ đồ kiến trúc tích hợp AI Agent Google Sheets 3D" id="mainDiagramImage">
+              </div>
+              <div class="arch-img-footer-bar">
+                <div class="arch-flow-pills">
+                  <span class="flow-pill"><i class="fa-brands fa-google" style="color:#ef4444;"></i> 1. Google Cloud Console (Sheets + Drive API)</span>
+                  <span class="flow-arrow">➔</span>
+                  <span class="flow-pill"><i class="fa-solid fa-key" style="color:#f59e0b;"></i> 2. Service Account JSON Key ({:} credential.json)</span>
+                  <span class="flow-arrow">➔</span>
+                  <span class="flow-pill"><i class="fa-solid fa-brain" style="color:#8b5cf6;"></i> 3. Antigravity AI Agent</span>
+                  <span class="flow-arrow">➔</span>
+                  <span class="flow-pill"><i class="fa-solid fa-table" style="color:#10b981;"></i> 4. Google Sheets 3D Báo Cáo</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="arch-nodes-grid">
+              <!-- Node 1: GCP -->
+              <div class="arch-node">
+                <span class="arch-node-badge node-gcp"><i class="fa-brands fa-google"></i> Khối 1: Google Cloud</span>
+                <h4>Google Cloud Console</h4>
+                <p>Kích hoạt 2 API nền tảng: <strong>Google Sheets API</strong> (đọc/ghi ô tính) & <strong>Google Drive API</strong> (quản lý tệp đám mây).</p>
+              </div>
+
+              <!-- Node 2: Service Account -->
+              <div class="arch-node">
+                <span class="arch-node-badge node-sa"><i class="fa-solid fa-key"></i> Khối 2: Chìa Khóa</span>
+                <h4>Service Account JSON</h4>
+                <p>Cấp phát danh tính máy tính (Service Account) cùng tệp khóa mã hóa bí mật <code>credential.json</code> để xác thực.</p>
+              </div>
+
+              <!-- Node 3: AI Agent -->
+              <div class="arch-node">
+                <span class="arch-node-badge node-agent"><i class="fa-solid fa-brain"></i> Khối 3: Bộ Não</span>
+                <h4>Antigravity AI Agent</h4>
+                <p>Đọc khóa chứng thực, nhận đề bài từ người dùng, sinh mã Python và tự sửa lỗi API (Self-debugging) tức thì.</p>
+              </div>
+
+              <!-- Node 4: Google Sheets -->
+              <div class="arch-node">
+                <span class="arch-node-badge node-sheets"><i class="fa-solid fa-table"></i> Khối 4: Thành Phẩm</span>
+                <h4>Google Sheets 3D</h4>
+                <p>Cấp quyền chỉnh sửa cho Service Account email ➔ Bảng Dashboard quản trị kho hàng cùng biểu đồ 3D xuất hiện trực tiếp.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- LỘ TRÌNH 4 BƯỚC HÀNH ĐỘNG -->
+          <div class="pipeline-container gsap-fade" style="margin-top: 1.5rem;">
+            <div class="pipeline-card active-step">
+              <span class="step-num-badge">01</span>
+              <div class="pipeline-title">Thiết Lập Google Cloud</div>
+              <div class="pipeline-desc">Bật Google Sheets API & Google Drive API trên Cloud Console.</div>
+              <div class="pipeline-tag"><i class="fa-solid fa-sliders"></i> Cấu hình dự án Hello</div>
+            </div>
+
+            <div class="pipeline-card">
+              <span class="step-num-badge">02</span>
+              <div class="pipeline-title">Tạo Service Account</div>
+              <div class="pipeline-desc">Tạo định danh dịch vụ và tải tệp khóa bí mật <code>credential.json</code>.</div>
+              <div class="pipeline-tag"><i class="fa-solid fa-shield-cat"></i> IAM & Phân quyền</div>
+            </div>
+
+            <div class="pipeline-card">
+              <span class="step-num-badge">03</span>
+              <div class="pipeline-title">Bắt Tay Google Drive</div>
+              <div class="pipeline-desc">Đồng bộ thư mục Desktop và cấp quyền Editor trên Google Sheets.</div>
+              <div class="pipeline-tag"><i class="fa-solid fa-handshake"></i> Security Handshake</div>
+            </div>
+
+            <div class="pipeline-card">
+              <span class="step-num-badge">04</span>
+              <div class="pipeline-title">Kích Hoạt AI Agent 3D</div>
+              <div class="pipeline-desc">Nhập prompt, AI Agent tự debug và xuất bản Dashboard Kho 3D hoàn chỉnh.</div>
+              <div class="pipeline-tag"><i class="fa-solid fa-chart-pie"></i> Visual Dashboard 3D</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 2: THIẾT LẬP GOOGLE CLOUD PLATFORM & KÍCH HOẠT 2 API
+           ====================================================================== -->
+      <section class="slide-page" data-slide="2" id="slide-2">
+        <div class="slide-content">
+          <div class="slide-header">
+            <span class="slide-category-tag tag-primary"><i class="fa-solid fa-cloud"></i> Module 01 — Thiết Lập Đám Mây</span>
+            <h2 class="slide-title">Kích Hoạt Cặp Đôi API Sức Mạnh: Google Sheets API & Google Drive API</h2>
+            <p class="slide-lead">
+              Để AI Agent có thể giao tiếp với hệ sinh thái tài liệu của Google, bước tiên quyết là đăng ký dịch vụ trên <strong>Google Cloud Console</strong>.
+            </p>
+          </div>
+
+          <div class="grid-2-col" style="gap: 1.5rem; margin-top: 1rem;">
+            <!-- Cột trái: Google Sheets API -->
+            <div class="glass-card" style="border-top: 4px solid #10b981;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                <div style="width:44px; height:44px; border-radius:10px; background:#dcfce7; color:#15803d; display:flex; align-items:center; justify-content:center; font-size:1.3rem;">
+                  <i class="fa-solid fa-table-cells"></i>
+                </div>
+                <div>
+                  <h3 style="margin:0; font-size:1.1rem; color:#0f172a;">Google Sheets API</h3>
+                  <span style="font-size:0.75rem; color:#059669; font-weight:700;">Dịch vụ đọc & ghi bảng tính doanh nghiệp</span>
+                </div>
+              </div>
+              <p style="font-size:0.88rem; color:#475569; line-height:1.6;">
+                API này cấp phép cho mã nguồn lập trình có thể:
+              </p>
+              <ul style="font-size:0.85rem; color:#334155; line-height:1.6; padding-left:1.2rem; margin-bottom:1rem;">
+                <li>Đọc toàn bộ ma trận dữ liệu hàng nghìn dòng trong vài mili-giây.</li>
+                <li>Ghi chèn dữ liệu, cập nhật ô tính và thiết lập công thức tính toán.</li>
+                <li>Tạo định dạng có điều kiện (Conditional Formatting), tô màu cảnh báo tồn kho.</li>
+                <li><strong>Render biểu đồ trực quan (Charts):</strong> Vẽ các biểu đồ 3D dạng thanh, cột và tròn tự động.</li>
+              </ul>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px; font-size:0.8rem; color:#64748b;">
+                <i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Thao tác trong video: Tìm kiếm <code>Google Sheets API</code> ➔ Bấm <strong>Enable</strong>.
+              </div>
+            </div>
+
+            <!-- Cột phải: Google Drive API -->
+            <div class="glass-card" style="border-top: 4px solid #3b82f6;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                <div style="width:44px; height:44px; border-radius:10px; background:#dbeafe; color:#1d4ed8; display:flex; align-items:center; justify-content:center; font-size:1.3rem;">
+                  <i class="fa-brands fa-google-drive"></i>
+                </div>
+                <div>
+                  <h3 style="margin:0; font-size:1.1rem; color:#0f172a;">Google Drive API</h3>
+                  <span style="font-size:0.75rem; color:#2563eb; font-weight:700;">Dịch vụ quản trị tệp tin & thư mục đám mây</span>
+                </div>
+              </div>
+              <p style="font-size:0.88rem; color:#475569; line-height:1.6;">
+                API này giữ vai trò "người gác cổng" hạ tầng lưu trữ:
+              </p>
+              <ul style="font-size:0.85rem; color:#334155; line-height:1.6; padding-left:1.2rem; margin-bottom:1rem;">
+                <li>Định vị chính xác vị trí tệp Google Sheet dựa theo tên tệp hoặc thư mục.</li>
+                <li>Phân quyền chia sẻ (Permissions API), kiểm tra quyền đọc/ghi của tài khoản dịch vụ.</li>
+                <li>Tự động tạo thư mục sao lưu và di chuyển tệp báo cáo vào đúng vị trí của phòng ban.</li>
+                <li>Hỗ trợ đồng bộ hóa tệp với ứng dụng Google Drive Desktop.</li>
+              </ul>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px; font-size:0.8rem; color:#64748b;">
+                <i class="fa-solid fa-circle-check" style="color:#3b82f6;"></i> Thao tác trong video: Tìm kiếm <code>Google Drive API</code> ➔ Bấm <strong>Enable</strong>.
+              </div>
+            </div>
+          </div>
+
+          <!-- QUY TRÌNH TẠO PROJECT HELLO -->
+          <div class="case-study-card" style="margin-top: 1.5rem;">
+            <div class="case-header">
+              <span class="case-tag tag-primary"><i class="fa-solid fa-folder-plus"></i> Quy Trình Khởi Tạo Dự Án Mới Trên Google Cloud (00:54 - 01:10)</span>
+            </div>
+            <div class="grid-2-col" style="grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 0.8rem;">
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px;">
+                <strong style="color:#2563eb; font-size:0.85rem;">Bước 1: Dropdown Dự Án</strong>
+                <p style="font-size:0.78rem; color:#64748b; margin:4px 0 0 0;">Bấm vào danh sách Project ở góc trên thanh công cụ Google Cloud.</p>
+              </div>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px;">
+                <strong style="color:#2563eb; font-size:0.85rem;">Bước 2: New Project</strong>
+                <p style="font-size:0.78rem; color:#64748b; margin:4px 0 0 0;">Chọn nút "New Project" để mở biểu mẫu cấu hình dự án mới.</p>
+              </div>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px;">
+                <strong style="color:#2563eb; font-size:0.85rem;">Bước 3: Đặt Tên Hello</strong>
+                <p style="font-size:0.78rem; color:#64748b; margin:4px 0 0 0;">Nhập Project Name là <code>Hello</code>, hệ thống tự sinh mã Project ID duy nhất.</p>
+              </div>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px;">
+                <strong style="color:#2563eb; font-size:0.85rem;">Bước 4: Bấm Create</strong>
+                <p style="font-size:0.78rem; color:#64748b; margin:4px 0 0 0;">Nhấn nút Create và chờ 5-10 giây để Google cấp phát tài nguyên đám mây.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 3: TẠO SERVICE ACCOUNT & QUẢN TRỊ KHÓA BẢO MẬT CREDENTIAL.JSON
+           ====================================================================== -->
+      <section class="slide-page" data-slide="3" id="slide-3">
+        <div class="slide-content">
+          <div class="slide-header">
+            <span class="slide-category-tag tag-primary"><i class="fa-solid fa-id-badge"></i> Module 02 — Danh Tính Số Cho AI</span>
+            <h2 class="slide-title">Khởi Tạo Service Account & Tải Tệp Khóa Bảo Mật <code>credential.json</code></h2>
+            <p class="slide-lead">
+              AI Agent không thể đăng nhập bằng tài khoản Gmail cá nhân kèm mã OTP. Chúng ta cần cấp cho Agent một <strong>Tài khoản dịch vụ (Service Account)</strong> độc lập hoạt động 24/7.
+            </p>
+          </div>
+
+          <div class="grid-2-col" style="margin-top: 1rem; gap: 1.5rem;">
+            <!-- Hướng dẫn chi tiết tạo Service Account -->
+            <div class="glass-card">
+              <h3 style="font-size:1.05rem; color:#0f172a; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-list-check" style="color:#8b5cf6;"></i> 4 Thao Tác Cốt Lõi Trên IAM & Admin
+              </h3>
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <div style="display:flex; gap:10px; align-items:flex-start;">
+                  <span style="background:#8b5cf6; color:#fff; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; flex-shrink:0;">1</span>
+                  <div style="font-size:0.85rem; color:#334155;">
+                    Mở menu điều hướng ➔ Chọn <strong>IAM and Admin</strong> ➔ Chuyển đến mục <strong>Service Accounts</strong>.
+                  </div>
+                </div>
+                <div style="display:flex; gap:10px; align-items:flex-start;">
+                  <span style="background:#8b5cf6; color:#fff; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; flex-shrink:0;">2</span>
+                  <div style="font-size:0.85rem; color:#334155;">
+                    Nhấn nút <strong>Create Service Account</strong>. Nhập tên tài khoản là <code>Tuanviet</code>. Hệ thống sẽ tự tạo email định danh dạng:
+                    <div style="font-family:var(--font-mono); font-size:0.78rem; background:#f1f5f9; padding:4px 8px; border-radius:4px; margin-top:4px; color:#1e293b; border:1px solid #cbd5e1;">
+                      tuanviet@hello-511807.iam.gserviceaccount.com
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex; gap:10px; align-items:flex-start;">
+                  <span style="background:#8b5cf6; color:#fff; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; flex-shrink:0;">3</span>
+                  <div style="font-size:0.85rem; color:#334155;">
+                    Bấm vào tài khoản vừa tạo ➔ Chuyển sang tab <strong>Keys</strong> ➔ Chọn <strong>Add Key</strong> ➔ Bấm <strong>Create new key</strong>.
+                  </div>
+                </div>
+                <div style="display:flex; gap:10px; align-items:flex-start;">
+                  <span style="background:#8b5cf6; color:#fff; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; flex-shrink:0;">4</span>
+                  <div style="font-size:0.85rem; color:#334155;">
+                    Chọn định dạng <strong>JSON</strong> rồi bấm <strong>Create</strong>. Tệp khóa bí mật sẽ tự động tải về máy tính của bạn.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cấu trúc tệp JSON & Cảnh báo an ninh -->
+            <div class="glass-card" style="background:#0f172a; border-color:#334155; color:#f8fafc;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h3 style="font-size:0.95rem; color:#38bdf8; margin:0; display:flex; align-items:center; gap:6px;">
+                  <i class="fa-solid fa-code"></i> Cấu Trúc Khóa Bí Mật credential.json
+                </h3>
+                <span style="background:#dc2626; color:#fff; font-size:0.7rem; font-weight:800; padding:2px 8px; border-radius:4px;">BẢO MẬT TUYỆT ĐỐI</span>
+              </div>
+              <pre style="margin:0; padding:10px 12px; background:#1e293b; border-radius:6px; font-family:var(--font-mono); font-size:0.75rem; color:#e2e8f0; line-height:1.5; border:1px solid #475569; overflow-x:auto;">{
+  "type": "service_account",
+  "project_id": "hello-511807",
+  "private_key_id": "9a7f4c2b810d...",
+  "private_key": "-----BEGIN RSA PRIVATE KEY-----\nMIIEpAIBAAKCAQEA0...",
+  "client_email": "tuanviet@hello-511807.iam.gserviceaccount.com",
+  "client_id": "108392817291827364512",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token"
+}</pre>
+              <div style="margin-top:12px; background:rgba(239, 68, 68, 0.15); border:1px solid #ef4444; border-radius:6px; padding:10px; font-size:0.8rem; color:#fca5a5; line-height:1.45;">
+                <strong><i class="fa-solid fa-triangle-exclamation"></i> LƯU Ý SỐNG CÒN:</strong> Tệp <code>credential.json</code> chứa private key có thể toàn quyền can thiệp vào đám mây của bạn. Tuyệt đối KHÔNG commit file này lên GitHub công khai. Phải thêm vào <code>.gitignore</code>!
+              </div>
+            </div>
+          </div>
+
+          <!-- LƯU TRỮ VÀ ĐỔI TÊN FILE TRÊN DESKTOP -->
+          <div class="case-study-card" style="margin-top: 1.5rem;">
+            <div class="case-header">
+              <span class="case-tag tag-primary"><i class="fa-solid fa-desktop"></i> Chuẩn Hóa Không Gian Làm Việc Tại Desktop/hello (02:36 - 03:59)</span>
+            </div>
+            <p style="font-size:0.86rem; color:#475569; margin-top:0.4rem; line-height:1.5;">
+              1. Tạo thư mục mang tên <code>hello</code> trên màn hình Desktop.<br>
+              2. Copy tệp khóa JSON vừa tải về từ thư mục Downloads vào <code>Desktop/hello</code> và đổi tên thành <code>credential.json</code>.<br>
+              3. Mở Notepad, dán email Service Account vừa copy vào và lưu thành tệp <code>ten mail.txt</code> để lưu vết.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 4: ĐỒNG BỘ GOOGLE DRIVE DESKTOP & CẤU TRÚC LAI HYBRID
+           ====================================================================== -->
+      <section class="slide-page" data-slide="4" id="slide-4">
+        <div class="slide-content">
+          <div class="slide-header">
+            <span class="slide-category-tag tag-primary"><i class="fa-solid fa-arrows-rotate"></i> Module 03 — Cầu Nối Đám Mây</span>
+            <h2 class="slide-title">Đồng Bộ Hóa Thư Mục Làm Việc Qua Google Drive for Desktop</h2>
+            <p class="slide-lead">
+              Mô hình <strong>Hybrid Local-Cloud</strong> giúp AI Agent chạy trên máy tính với hiệu năng tối đa, trong khi toàn bộ mã cấu hình và kết quả bảng tính luôn được sao lưu trực tuyến 24/7.
+            </p>
+          </div>
+
+          <div class="grid-2-col" style="margin-top: 1rem; gap: 1.5rem;">
+            <!-- Các bước thiết lập Google Drive Desktop -->
+            <div class="glass-card">
+              <h3 style="font-size:1.05rem; color:#0f172a; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-gear" style="color:#2563eb;"></i> 3 Bước Cài Đặt Đồng Bộ (04:14 - 05:21)
+              </h3>
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+                  <strong style="color:#2563eb; font-size:0.88rem;">1. Mở Cài Đặt Google Drive</strong>
+                  <p style="font-size:0.82rem; color:#64748b; margin:4px 0 0 0;">Nhấp vào biểu tượng Google Drive trên khay hệ thống Taskbar ➔ Chọn biểu tượng Bánh răng (Preferences).</p>
+                </div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+                  <strong style="color:#2563eb; font-size:0.88rem;">2. Chọn Thư Mục Desktop/hello</strong>
+                  <p style="font-size:0.82rem; color:#64748b; margin:4px 0 0 0;">Trong mục "Folders from your computer", nhấn Add folder ➔ Trỏ đến thư mục <code>hello</code> trên Desktop.</p>
+                </div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+                  <strong style="color:#2563eb; font-size:0.88rem;">3. Xác Nhận Đồng Bộ Lên Drive</strong>
+                  <p style="font-size:0.82rem; color:#64748b; margin:4px 0 0 0;">Tích chọn "Sync with Google Drive" ➔ Bấm Save. Dữ liệu sẽ tự động đồng bộ hóa 2 chiều liên tục.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lợi ích và kiểm tra trực tuyến -->
+            <div class="glass-card">
+              <h3 style="font-size:1.05rem; color:#0f172a; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-cloud-arrow-up" style="color:#10b981;"></i> Kiểm Tra Tại drive.google.com (05:40 - 06:45)
+              </h3>
+              <p style="font-size:0.88rem; color:#475569; line-height:1.6;">
+                Khi mở trình duyệt truy cập vào Google Drive, bạn sẽ thấy ngay thư mục <code>hello</code> xuất hiện trong mục <strong>Computers (Máy tính của tôi)</strong>:
+              </p>
+              <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:12px; margin-top:8px;">
+                <div style="font-size:0.82rem; color:#166534; font-weight:700; margin-bottom:6px;">Danh Sách Tệp Đã Được Bảo Vệ:</div>
+                <div style="font-size:0.8rem; color:#15803d; font-family:var(--font-mono);">
+                  📁 Computers / My Laptop / hello<br>
+                  ├── 📄 credential.json (Khóa xác thực bí mật)<br>
+                  └── 📝 ten mail.txt (Email Service Account định danh)
+                </div>
+              </div>
+              <div style="margin-top:12px; font-size:0.82rem; color:#64748b; line-height:1.5;">
+                <i class="fa-solid fa-shield-halved" style="color:#10b981;"></i> Lợi thế: Bất kỳ lúc nào bạn cần chạy AI Agent từ máy tính khác hoặc server đám mây, chỉ cần đồng bộ từ Google Drive về là sẵn sàng hoạt động.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 5: CƠ CHẾ PHÂN QUYỀN "SECURITY HANDSHAKE" TRÊN GOOGLE SHEETS
+           ====================================================================== -->
+      <section class="slide-page" data-slide="5" id="slide-5">
+        <div class="slide-content">
+          <div class="slide-header">
+            <span class="slide-category-tag tag-primary"><i class="fa-solid fa-handshake"></i> Module 04 — Bắt Tay Bảo Mật</span>
+            <h2 class="slide-title">Giải Mã Cái Bắt Tay Bảo Mật (Security Handshake) Cấp Quyền Bảng Tính</h2>
+            <p class="slide-lead">
+              Tại sao đã có file <code>credential.json</code> mà AI Agent vẫn có thể bị chặn truy cập? Hiểu đúng nguyên lý phân quyền trên Google Sheets để không bao giờ gặp lỗi <code>403 Forbidden</code>.
+            </p>
+          </div>
+
+          <div class="grid-2-col" style="margin-top: 1rem; gap: 1.5rem;">
+            <!-- Nguyên lý Security Handshake -->
+            <div class="glass-card">
+              <h3 style="font-size:1.05rem; color:#0f172a; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-unlock-keyhole" style="color:#c2410c;"></i> Nguyên Lý "Cái Bắt Tay Bảo Mật"
+              </h3>
+              <p style="font-size:0.86rem; color:#475569; line-height:1.6;">
+                Một file Google Sheet do bạn tạo ra thuộc về quyền sở hữu cá nhân của bạn. Service Account dù có API Key nhưng vẫn là một thực thể người dùng bên ngoài:
+              </p>
+              <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; padding:12px; margin:10px 0;">
+                <strong style="color:#9a3412; font-size:0.84rem; display:block; margin-bottom:4px;">
+                  <i class="fa-solid fa-triangle-exclamation"></i> Nguyên nhân lỗi 403 PERMISSION_DENIED:
+                </strong>
+                <span style="font-size:0.8rem; color:#c2410c;">
+                  Nếu bạn chưa chia sẻ file Sheet cho Service Account, Google Cloud sẽ từ chối mọi yêu cầu đọc/ghi để bảo vệ dữ liệu người dùng.
+                </span>
+              </div>
+              <p style="font-size:0.86rem; color:#334155; line-height:1.6;">
+                <strong>Giải pháp (07:50 - 08:13):</strong> Mở bảng tính Google Sheet mang tên <code>báo cáo</code> ➔ Bấm nút <strong>Chia sẻ (Share)</strong> ở góc phải ➔ Dán email của Service Account và chọn vai trò <strong>Người chỉnh sửa (Editor)</strong>.
+              </p>
+            </div>
+
+            <!-- Trích xuất Spreadsheet ID -->
+            <div class="glass-card">
+              <h3 style="font-size:1.05rem; color:#0f172a; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-link" style="color:#2563eb;"></i> Cách Trích Xuất Spreadsheet ID Cho AI
+              </h3>
+              <p style="font-size:0.86rem; color:#475569; line-height:1.6;">
+                Mỗi tệp Google Sheet sở hữu một định danh duy nhất (Spreadsheet ID) nằm ngay trên thanh địa chỉ URL:
+              </p>
+              <div style="background:#0f172a; padding:12px; border-radius:8px; border:1px solid #334155; margin:10px 0; font-family:var(--font-mono); font-size:0.75rem; word-break:break-all; color:#94a3b8; line-height:1.5;">
+                https://docs.google.com/spreadsheets/d/<span style="color:#38bdf8; font-weight:800; background:rgba(56, 189, 248, 0.2); padding:2px 4px; border-radius:3px;">1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms</span>/edit
+              </div>
+              <p style="font-size:0.82rem; color:#64748b; line-height:1.5;">
+                Phần bôi xanh chính là <code>SPREADSHEET_ID</code>. Bạn chỉ cần đưa đoạn mã này vào câu prompt hoặc file cấu hình, AI Agent sẽ tự động kết nối chính xác vào bảng tính mục tiêu.
+              </p>
+              <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:6px; padding:8px 12px; font-size:0.78rem; color:#1e40af; margin-top:8px;">
+                <i class="fa-solid fa-lightbulb"></i> Mẹo: Bạn cũng có thể thiết lập quyền "Bất kỳ ai có đường liên kết đều có thể chỉnh sửa" nếu làm việc trong môi trường thử nghiệm nội bộ.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 6: TRUNG TÂM VIDEO HƯỚNG DẪN THỰC HÀNH TƯƠNG TÁC (10:54)
+           ====================================================================== -->
+      <section class="slide-page" data-slide="6" id="slide-6">
+        <div class="slide-content">
+          <div class="slide-header">
+            <span class="slide-category-tag tag-primary"><i class="fa-solid fa-play-circle"></i> Video Masterclass — 10 Phút 54 Giây</span>
+            <h2 class="slide-title">Rạp Chiếu Video Thực Hành: Toàn Bộ Quy Trình Tích Hợp & Tạo Báo Cáo 3D</h2>
+            <p class="slide-lead">
+              Theo dõi trực tiếp từng thao tác trên màn hình với thuyết minh tiếng Việt, phụ đề thời gian thực và nhạc nền remix sôi động. Nhấp vào các mốc bên phải để tua nhanh tới nội dung cần học.
+            </p>
+          </div>
+
+          <!-- LAYOUT VIDEO VÀ CHAPTERS -->
+          <div class="video-masterclass-layout">
+            <!-- Cột trái: Trình phát video HTML5 -->
+            <div class="video-player-container">
+              <div class="video-wrapper">
+                <video id="courseVideoPlayer" controls preload="metadata" poster="assets/skill_video_poster.jpg">
+                  <source src="assets/Video_Huong_Dan_AI_Agent_Google_Sheets_3D_Fragrance_Remix.mp4" type="video/mp4">
+                  Trình duyệt của bạn không hỗ trợ thẻ video HTML5.
+                </video>
+              </div>
+              <div class="video-controls-bar">
+                <div class="video-meta-info">
+                  <span class="video-badge-tag"><i class="fa-solid fa-music"></i> Fragrance Remix</span>
+                  <span class="video-title-text">Hướng Dẫn Tích Hợp AI Agent Google Sheets 3D</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <button id="restartVideoBtn" class="action-btn icon-only" title="Phát lại từ đầu" style="height:32px; width:32px;">
+                    <i class="fa-solid fa-rotate-left"></i>
+                  </button>
+                  <a href="assets/Video_Huong_Dan_AI_Agent_Google_Sheets_3D_Fragrance_Remix.mp4" download="Video_Huong_Dan_AI_Agent_Google_Sheets_3D.mp4" class="action-btn" style="height:32px; padding:0 10px; font-size:0.75rem;">
+                    <i class="fa-solid fa-download"></i> Tải Video (~39.5 MB)
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cột phải: Danh mục Chapter tương tác -->
+            <div class="video-chapters-card">
+              <div class="chapters-header">
+                <h3><i class="fa-solid fa-list-ol" style="color:#7c3aed;"></i> Mục Lục Video (37 Phân Cảnh)</h3>
+                <span style="font-size:0.75rem; color:#64748b;">Nhấp để tua đến giây đó</span>
+              </div>
+              <div class="chapters-scroll-list" id="chaptersListContainer">
+                <!-- Chặng 1 -->
+                <button class="chapter-item" data-time="0">
+                  <span class="chapter-time">00:00</span>
+                  <span class="chapter-desc">Lời chào & Giới thiệu tổng quan quy trình</span>
+                </button>
+                <button class="chapter-item" data-time="9">
+                  <span class="chapter-time">00:09</span>
+                  <span class="chapter-desc">Truy cập Google Cloud Console & Tìm kiếm API</span>
+                </button>
+                <button class="chapter-item" data-time="26">
+                  <span class="chapter-time">00:26</span>
+                  <span class="chapter-desc">Bật Google Sheets API (Enable Service)</span>
+                </button>
+                <button class="chapter-item" data-time="41">
+                  <span class="chapter-time">00:41</span>
+                  <span class="chapter-desc">Bật Google Drive API cho dự án</span>
+                </button>
+                <button class="chapter-item" data-time="54">
+                  <span class="chapter-time">00:54</span>
+                  <span class="chapter-desc">Tạo Project mới mang tên Hello</span>
+                </button>
+
+                <!-- Chặng 2 -->
+                <button class="chapter-item" data-time="72">
+                  <span class="chapter-time">01:12</span>
+                  <span class="chapter-desc">Mở menu IAM & Admin thiết lập Service Account</span>
+                </button>
+                <button class="chapter-item" data-time="95">
+                  <span class="chapter-time">01:35</span>
+                  <span class="chapter-desc">Tạo Service Account tên Tuanviet</span>
+                </button>
+                <button class="chapter-item" data-time="124">
+                  <span class="chapter-time">02:04</span>
+                  <span class="chapter-desc">Vào tab Keys ➔ Create new key (Khóa bí mật)</span>
+                </button>
+                <button class="chapter-item" data-time="140">
+                  <span class="chapter-time">02:20</span>
+                  <span class="chapter-desc">Chọn định dạng JSON & Tải file về máy</span>
+                </button>
+
+                <!-- Chặng 3 -->
+                <button class="chapter-item" data-time="156">
+                  <span class="chapter-time">02:36</span>
+                  <span class="chapter-desc">Tạo thư mục hello trên màn hình Desktop</span>
+                </button>
+                <button class="chapter-item" data-time="174">
+                  <span class="chapter-time">02:54</span>
+                  <span class="chapter-desc">Đổi tên file khóa thành credential.json</span>
+                </button>
+                <button class="chapter-item" data-time="194">
+                  <span class="chapter-time">03:14</span>
+                  <span class="chapter-desc">Sao chép địa chỉ email của Service Account</span>
+                </button>
+                <button class="chapter-item" data-time="212">
+                  <span class="chapter-time">03:32</span>
+                  <span class="chapter-desc">Lưu email vào file ten mail.txt</span>
+                </button>
+                <button class="chapter-item" data-time="254">
+                  <span class="chapter-time">04:14</span>
+                  <span class="chapter-desc">Mở Google Drive Desktop thiết lập đồng bộ</span>
+                </button>
+                <button class="chapter-item" data-time="282">
+                  <span class="chapter-time">04:42</span>
+                  <span class="chapter-desc">Tích chọn thư mục hello trên Desktop sao lưu</span>
+                </button>
+                <button class="chapter-item" data-time="340">
+                  <span class="chapter-time">05:40</span>
+                  <span class="chapter-desc">Kiểm tra kết quả đồng bộ trên drive.google.com</span>
+                </button>
+
+                <!-- Chặng 4 -->
+                <button class="chapter-item" data-time="470">
+                  <span class="chapter-time">07:50</span>
+                  <span class="chapter-desc">Mở Google Sheets 'báo cáo' & Bấm Chia sẻ (Share)</span>
+                </button>
+                <button class="chapter-item" data-time="486">
+                  <span class="chapter-time">08:06</span>
+                  <span class="chapter-desc">Cấp quyền Editor cho email Service Account</span>
+                </button>
+
+                <!-- Chặng 5 -->
+                <button class="chapter-item" data-time="504">
+                  <span class="chapter-time">08:24</span>
+                  <span class="chapter-desc">Mở Antigravity IDE & Nhập Prompt yêu cầu báo cáo kho</span>
+                </button>
+                <button class="chapter-item" data-time="522">
+                  <span class="chapter-time">08:42</span>
+                  <span class="chapter-desc">AI Agent sinh mã Python gọi Google Sheets API</span>
+                </button>
+                <button class="chapter-item" data-time="542">
+                  <span class="chapter-time">09:02</span>
+                  <span class="chapter-desc">Bắt gặp lỗi Column chart không hỗ trợ 3D</span>
+                </button>
+                <button class="chapter-item" data-time="564">
+                  <span class="chapter-time">09:24</span>
+                  <span class="chapter-desc">AI Agent tự sửa lỗi: Đổi sang Bar 3D & Pie 3D</span>
+                </button>
+                <button class="chapter-item" data-time="586">
+                  <span class="chapter-time">09:46</span>
+                  <span class="chapter-desc">Chạy lại thành công: Xuất hiện Dashboard & Thẻ KPI</span>
+                </button>
+                <button class="chapter-item" data-time="610">
+                  <span class="chapter-time">10:10</span>
+                  <span class="chapter-desc">Biểu đồ 3D sống động xuất hiện theo thời gian thực</span>
+                </button>
+                <button class="chapter-item" data-time="634">
+                  <span class="chapter-time">10:34</span>
+                  <span class="chapter-desc">Hoàn thiện trang Sổ kho & Tổng kết thành công</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 7: VÒNG LẶP TỰ SỬA LỖI (SELF-DEBUGGING LOOP) CỦA AI AGENT
+           ====================================================================== -->
+      <section class="slide-page" data-slide="7" id="slide-7">
+        <div class="slide-content">
+          <div class="slide-header">
+            <span class="slide-category-tag tag-primary"><i class="fa-solid fa-shield-virus"></i> Case Study Kỹ Thuật</span>
+            <h2 class="slide-title">Vòng Lặp Tự Sửa Lỗi (Self-Debugging Loop) Của AI Agent Khi Gặp Lỗi 3D Chart</h2>
+            <p class="slide-lead">
+              Điểm vượt trội của AI Agent so với script code thông thường là khả năng <strong>tự phản biện (Reflection)</strong>, đọc thông báo lỗi từ Google API và tự động sửa mã nguồn mà không cần con người can thiệp.
+            </p>
+          </div>
+
+          <!-- SƠ ĐỒ 4 BƯỚC SELF-DEBUGGING TẠI PHÚT 09:02 -->
+          <div class="debugging-grid">
+            <!-- Bước 1: Phát hiện lỗi -->
+            <div class="debug-step-card">
+              <span class="debug-badge d-badge-error"><i class="fa-solid fa-bug"></i> Bước 1: Bắt Lỗi API</span>
+              <h4>Phát Hiện Ngoại Lệ</h4>
+              <p>AI Agent gửi yêu cầu tạo Column chart với thuộc tính <code>is3D: true</code>. Google Cloud trả về mã lỗi 400:</p>
+              <div class="debug-code-box">
+                googleapiclient.errors.HttpError: 400 Invalid argument: 3D is not supported for ColumnChart.
+              </div>
+            </div>
+
+            <!-- Bước 2: Phân tích nguyên nhân -->
+            <div class="debug-step-card">
+              <span class="debug-badge d-badge-reason"><i class="fa-solid fa-magnifying-glass"></i> Bước 2: Suy Luận</span>
+              <h4>Phân Tích Nguyên Nhân</h4>
+              <p>AI Agent lập tức tra cứu đặc tả kỹ thuật Google Sheets API và nhận diện quy chuẩn:</p>
+              <div class="debug-code-box">
+                Specification Rule: Chỉ có biểu đồ BarChart (thanh ngang) và PieChart (tròn) mới hỗ trợ cờ 'is3D'.
+              </div>
+            </div>
+
+            <!-- Bước 3: Tự động sửa code -->
+            <div class="debug-step-card">
+              <span class="debug-badge d-badge-heal"><i class="fa-solid fa-wrench"></i> Bước 3: Sửa Mã Nguồn</span>
+              <h4>Chuyển Đổi Sang 3D Hợp Lệ</h4>
+              <p>AI Agent viết lại hàm tạo biểu đồ, thay thế <code>COLUMN</code> bằng <code>BAR</code> 3D và bổ sung <code>PIE</code> 3D:</p>
+              <div class="debug-code-box">
+                chart_spec = {<br>
+                &nbsp;&nbsp;'barChart': {'is3D': True},<br>
+                &nbsp;&nbsp;'pieChart': {'is3D': True}<br>
+                }
+              </div>
+            </div>
+
+            <!-- Bước 4: Chạy lại thành công -->
+            <div class="debug-step-card">
+              <span class="debug-badge d-badge-success"><i class="fa-solid fa-circle-check"></i> Bước 4: Thành Phẩm</span>
+              <h4>Render Thành Công 100%</h4>
+              <p>AI Agent chạy lại script. Bảng tính lập tức hiển thị 2 biểu đồ 3D lộng lẫy cùng các thẻ KPI chỉ số kho hàng:</p>
+              <div class="debug-code-box" style="color:#86efac;">
+                SUCCESS: 2 Charts created.<br>
+                1. Biểu đồ thanh 3D Xuất-Nhập<br>
+                2. Biểu đồ tròn 3D Tỷ trọng ngành
+              </div>
+            </div>
+          </div>
+
+          <!-- BÀI HỌC KINH NGHIỆM CHO HỌC VIÊN -->
+          <div class="case-study-card" style="margin-top: 1.5rem;">
+            <div class="case-header">
+              <span class="case-tag tag-primary"><i class="fa-solid fa-graduation-cap"></i> Bài Học Tư Duy: Đừng Sợ Lỗi — Hãy Để AI Agent Tự Tối Ưu</span>
+            </div>
+            <p style="font-size:0.86rem; color:#475569; margin-top:0.4rem; line-height:1.55;">
+              Khi giao việc cho AI Agent làm việc với API của bên thứ ba (Google, Facebook, Shopee), việc xảy ra xung đột tham số là điều bình thường. Thay vì hoảng loạn, người dùng chỉ cần ra lệnh: <em>"Hãy đọc kỹ thông báo lỗi từ API, tra cứu lại tài liệu chính thức và tự sửa lại mã nguồn cho tôi"</em>. Agent sẽ tự giải quyết 99% vấn đề kỹ thuật!
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SLIDE 8: THỬ THÁCH THỰC HÀNH & BỘ PROMPT DOANH NGHIỆP THỰC CHIẾN
+           ====================================================================== -->
+      <section class="slide-page" data-slide="8" id="slide-8">
+        <div class="slide-content">
+          <div class="slide-header">
+            <span class="slide-category-tag tag-primary"><i class="fa-solid fa-trophy"></i> Thử Thách Master AI Agent</span>
+            <h2 class="slide-title">Xây Dựng Dashboard Quản Trị Kho 3D Đa Ngành Hàng (20 SKU)</h2>
+            <p class="slide-lead">
+              Áp dụng toàn bộ kiến thức Buổi 4: Sử dụng prompt chuẩn doanh nghiệp dưới đây để ra lệnh cho AI Agent tự động tạo lập toàn bộ sổ kho và biểu đồ 3D trên Google Sheets của bạn.
+            </p>
+          </div>
+
+          <div class="grid-2-col" style="margin-top: 1rem; gap: 1.5rem;">
+            <!-- Cột trái: Bộ Prompt chuẩn 1-click copy -->
+            <div class="glass-card">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h3 style="font-size:0.98rem; font-weight:800; color:#0f172a; margin:0; display:flex; align-items:center; gap:6px;">
+                  <i class="fa-solid fa-terminal" style="color:#7c3aed;"></i> Câu Lệnh Prompt Mẫu (1-Click Copy)
+                </h3>
+                <button class="btn-copy-prompt" id="copyPromptBuoi4Btn" title="Sao chép prompt vào bộ nhớ tạm">
+                  <i class="fa-solid fa-copy"></i> Sao chép Prompt
+                </button>
+              </div>
+              <p style="font-size:0.82rem; color:#64748b; margin-bottom:8px;">
+                Dán câu lệnh này vào cửa sổ chat của Antigravity Agent sau khi đã bỏ file <code>credential.json</code> vào thư mục dự án:
+              </p>
+              <div class="prompt-template-container">
+                <div class="prompt-template-header">
+                  <span><i class="fa-solid fa-code"></i> Prompt_Tao_Dashboard_Kho_3D.txt</span>
+                  <span style="color:#a78bfa;">Google Sheets API Automation</span>
+                </div>
+                <pre class="prompt-template-code" id="promptTextBuoi4">Bạn đóng vai trò là Senior Data Engineer & Business Analyst.
+Tôi đã để file khóa xác thực 'credential.json' trong thư mục làm việc và đã chia sẻ quyền Editor trên Google Sheets cho email của Service Account này.
+
+Nhiệm vụ của bạn:
+1. Đọc khóa 'credential.json' và kết nối đến Google Sheets của tôi (Spreadsheet ID: [DÁN_ID_CỦA_BẠN_VÀO_ĐÂY]).
+2. Tạo cấu trúc bảng tính chuyên nghiệp gồm 2 tab:
+   - Tab 1: 'Dashboard_Tong_Quan'
+     + 4 Thẻ KPI trên cùng: Tổng Mã Hàng (SKU), Tổng Giá Trị Tồn Kho (VND), Tỷ Lệ Xuất/Nhập (%), Cảnh Báo Tồn Kho Dưới Định Mức.
+     + 1 Biểu đồ thanh 3D (3D Bar Chart) so sánh biến động Xuất vs Nhập của 5 nhóm ngành hàng.
+     + 1 Biểu đồ tròn 3D (3D Pie Chart) trực quan hóa cơ cấu tỷ trọng giá trị tồn kho.
+   - Tab 2: 'So_Chi_Tiet_Kho'
+     + Bảng dữ liệu 20 SKU gồm: Mã SKU, Tên Sản Phẩm, Nhóm Ngành, Tồn Đầu, Nhập Trong Kỳ, Xuất Trong Kỳ, Tồn Cuối Kỳ, Đơn Giá, Thành Tiền Tồn, Trạng Thái.
+     + Tô màu có điều kiện (Conditional Formatting) màu đỏ nhạt cho các mặt hàng có tồn cuối < 15 đơn vị.
+3. Nếu gặp bất kỳ lỗi nào từ Google Sheets API (đặc biệt là thuộc tính 3D chart), hãy tự phân tích lỗi và sửa lại mã nguồn cho đến khi chạy thành công 100%.</pre>
+              </div>
+            </div>
+
+            <!-- Cột phải: Data Preview & Resource Hub -->
+            <div class="glass-card">
+              <h3 style="font-size:0.98rem; font-weight:800; color:#0f172a; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+                <i class="fa-solid fa-table-list" style="color:#2563eb;"></i> Dữ Liệu Tồn Kho Mẫu 5 Nhóm Ngành Hàng
+              </h3>
+              <div class="data-preview-table-wrapper" style="max-height:220px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:6px;">
+                <table class="data-preview-table">
+                  <thead>
+                    <tr>
+                      <th>Mã SKU</th>
+                      <th>Tên Sản Phẩm</th>
+                      <th>Nhóm Ngành</th>
+                      <th>Tồn Cuối</th>
+                      <th>Trạng Thái</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>SKU-001</code></td>
+                      <td>Tai nghe Bluetooth ANC</td>
+                      <td>Điện tử</td>
+                      <td>45</td>
+                      <td><span class="badge-channel badge-safe">Bình thường</span></td>
+                    </tr>
+                    <tr>
+                      <td><code>SKU-002</code></td>
+                      <td>Bàn phím cơ không dây</td>
+                      <td>Điện tử</td>
+                      <td><strong>8</strong></td>
+                      <td><span class="badge-channel badge-risk">Cảnh báo tồn</span></td>
+                    </tr>
+                    <tr>
+                      <td><code>SKU-003</code></td>
+                      <td>Sữa rửa mặt tràm trà</td>
+                      <td>Mỹ phẩm</td>
+                      <td>120</td>
+                      <td><span class="badge-channel badge-safe">Bình thường</span></td>
+                    </tr>
+                    <tr>
+                      <td><code>SKU-004</code></td>
+                      <td>Serum dưỡng ẩm B5</td>
+                      <td>Mỹ phẩm</td>
+                      <td><strong>12</strong></td>
+                      <td><span class="badge-channel badge-risk">Cảnh báo tồn</span></td>
+                    </tr>
+                    <tr>
+                      <td><code>SKU-005</code></td>
+                      <td>Cà phê hạt Robusta 1kg</td>
+                      <td>Thực phẩm</td>
+                      <td>85</td>
+                      <td><span class="badge-channel badge-safe">Bình thường</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- HỘP TẢI TÀI NGUYÊN MẪU -->
+              <div style="margin-top:14px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+                <div style="font-size:0.85rem; font-weight:700; color:#0f172a; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                  <i class="fa-solid fa-folder-open" style="color:#7c3aed;"></i> Bộ Tài Nguyên Thực Hành Đính Kèm:
+                </div>
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                  <div style="font-size:0.8rem; color:#475569;">
+                    • <strong>Tệp video hướng dẫn:</strong> <code>assets/Video_Huong_Dan_AI_Agent_Google_Sheets_3D_Fragrance_Remix.mp4</code>
+                  </div>
+                  <div style="font-size:0.8rem; color:#475569;">
+                    • <strong>Sơ đồ kiến trúc:</strong> <code>assets/so_do_kien_truc_buoi_4.png</code>
+                  </div>
+                  <div style="font-size:0.8rem; color:#475569;">
+                    • <strong>Phụ đề tiếng Việt:</strong> <code>assets/subtitles_buoi4.srt</code> (37 mốc chi tiết)
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- SPEAKER NOTES DRAWER (KỊCH BẢN GIẢNG VIÊN) -->
+    <aside class="speaker-drawer" id="speakerDrawer" aria-hidden="true">
+      <div class="drawer-header">
+        <div class="drawer-title-group">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <h3>Kịch Bản Giảng Viên & Mẹo Giảng Dạy</h3>
+          <span class="drawer-slide-tag" id="drawerSlideTag">Slide 1 / 8</span>
+        </div>
+        <button class="close-drawer-btn" id="closeDrawerBtn" title="Đóng ngăn kịch bản (Phím Esc)">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="drawer-content" id="drawerContent">
+        <!-- Render dynamically via JavaScript -->
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- LIGHTBOX MODAL PHÓNG TO SƠ ĐỒ GỐC -->
+  <div class="image-lightbox" id="diagramLightbox" aria-hidden="true">
+    <div class="lightbox-content">
+      <button class="lightbox-close-btn" id="closeLightboxBtn" title="Đóng xem ảnh (Esc)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <img src="assets/so_do_kien_truc_buoi_4.png" alt="Sơ đồ kiến trúc tích hợp AI Agent Google Sheets 3D" id="lightboxImg">
+      <div class="lightbox-caption">
+        <i class="fa-solid fa-diagram-project"></i> Sơ Đồ Kiến Trúc Tích Hợp: Google Cloud Platform ➔ Service Account JSON ➔ Antigravity AI Agent ➔ Google Sheets 3D
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script src="buoi4.js?v=20261016_1800"></script>
+</body>
+</html>
