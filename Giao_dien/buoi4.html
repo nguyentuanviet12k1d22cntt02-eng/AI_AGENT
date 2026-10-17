@@ -687,50 +687,34 @@
       align-items: center;
       gap: 8px;
     }
-    .cleanbox-ranges-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+    .sheets-mockup-wrapper {
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      position: relative;
     }
-    .protected-range-clean {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+    .sheets-mockup-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.25s ease;
     }
-    .range-item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .sheets-mockup-img:hover {
+      transform: scale(1.008);
     }
-    .range-col-tag {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: #1e293b;
-      background: #e2e8f0;
-      padding: 2px 8px;
+    .sheets-mockup-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 10px;
+      background: rgba(15, 23, 42, 0.75);
+      color: #ffffff;
+      font-size: 0.72rem;
+      padding: 3px 8px;
       border-radius: 4px;
-    }
-    .range-lock-status {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #b45309;
-    }
-    .protected-range-clean h5 {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #0f172a;
-      margin: 2px 0 0 0;
-    }
-    .protected-range-clean p {
-      font-size: 0.82rem;
-      color: #475569;
-      margin: 0;
-      line-height: 1.45;
+      backdrop-filter: blur(4px);
+      pointer-events: none;
     }
     .conflict-test-clean {
       background: #fffbeb;
@@ -1622,27 +1606,10 @@
                   <span style="font-size:0.75rem; color:#475569; font-weight:600;"><i class="fa-solid fa-shield-halved"></i> Data Protection</span>
                 </div>
 
-                <!-- 2 Vùng phân quyền độc lập trên Sheet 1 -->
-                <div class="cleanbox-ranges-grid">
-                  <!-- Vùng 1 -->
-                  <div class="protected-range-clean" style="border-left: 3px solid #dc2626;">
-                    <div class="range-item-header">
-                      <span class="range-col-tag">VÙNG BẢNG 1 (CỘT A ➔ F)</span>
-                      <span class="range-lock-status"><i class="fa-solid fa-lock"></i> Khóa dải ô</span>
-                    </div>
-                    <h5>Dữ Liệu Đơn Shopee</h5>
-                    <p>• <strong>Quyền sửa:</strong> Member A & Leader<br>• <strong>Member B:</strong> Chặn quyền sửa (Chỉ xem)</p>
-                  </div>
-
-                  <!-- Vùng 2 -->
-                  <div class="protected-range-clean" style="border-left: 3px solid #2563eb;">
-                    <div class="range-item-header">
-                      <span class="range-col-tag">VÙNG BẢNG 2 (CỘT H ➔ M)</span>
-                      <span class="range-lock-status"><i class="fa-solid fa-lock"></i> Khóa dải ô</span>
-                    </div>
-                    <h5>Dữ Liệu Đơn TikTok Shop</h5>
-                    <p>• <strong>Quyền sửa:</strong> Member B & Leader<br>• <strong>Member A:</strong> Chặn quyền sửa (Chỉ xem)</p>
-                  </div>
+                <!-- HÌNH ẢNH MÔ PHỎNG GOOGLE SHEETS PHÂN QUYỀN VÙNG THỰC TẾ -->
+                <div class="sheets-mockup-wrapper">
+                  <img src="assets/google_sheets_protected_ranges.png" alt="Mô phỏng Google Sheets Phân Quyền Vùng Protected Ranges" class="sheets-mockup-img">
+                  <div class="sheets-mockup-badge"><i class="fa-solid fa-shield-halved"></i> Google Sheets Data Governance • Protected Ranges</div>
                 </div>
 
                 <!-- Tình huống test bảo mật của bài tập -->
