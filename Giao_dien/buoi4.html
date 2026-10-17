@@ -565,8 +565,8 @@
     }
     .team-architecture-stage {
       display: grid;
-      grid-template-columns: 280px 1fr 310px;
-      gap: 16px;
+      grid-template-columns: 240px 1fr 230px 260px;
+      gap: 14px;
       align-items: stretch;
       background: #f8fafc;
       border: 1px solid #cbd5e1;
@@ -833,11 +833,84 @@
       margin-bottom: 0;
     }
 
-    @media (max-width: 1080px) {
+    /* Khối Trung Gian: Antigravity AI Agent Engine */
+    .team-agent-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .agent-clean-card {
+      background: #ffffff;
+      border: 1.5px solid #c4b5fd;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 2px 6px rgba(124, 58, 237, 0.08);
+      position: relative;
+    }
+    .agent-logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #ede9fe;
+      padding-bottom: 8px;
+    }
+    .agent-logo-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: contain;
+      border: 1px solid #ddd6fe;
+      background: #ffffff;
+      cursor: zoom-in;
+      box-shadow: 0 2px 4px rgba(124, 58, 237, 0.12);
+      transition: transform 0.2s ease;
+    }
+    .agent-logo-img:hover {
+      transform: scale(1.05);
+    }
+    .agent-flow-connector {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 2px;
+    }
+    .agent-flow-item {
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: #5b21b6;
+      background: #f5f3ff;
+      border: 1px solid #ddd6fe;
+      border-radius: 5px;
+      padding: 5px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.35;
+    }
+    .agent-spec-list {
+      font-size: 0.76rem;
+      color: #334155;
+      line-height: 1.45;
+      padding-left: 1.1rem;
+      margin: 2px 0 0 0;
+    }
+    .agent-spec-list li {
+      margin-bottom: 4px;
+    }
+    .agent-spec-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 1280px) {
       .team-architecture-stage {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
       }
-      .cleanbox-ranges-grid {
+    }
+    @media (max-width: 768px) {
+      .team-architecture-stage {
         grid-template-columns: 1fr;
       }
     }
@@ -1673,6 +1746,38 @@
                     <strong>Tab 2: [DASHBOARD_3D]</strong>
                   </div>
                   <span style="font-size:0.75rem; color:#15803d; font-weight:600;"><i class="fa-solid fa-lock"></i> Khóa toàn bộ: Chỉ Leader & AI Agent ghi số liệu</span>
+                </div>
+              </div>
+
+              <!-- CỘT GIỮA-PHẢI: ANTIGRAVITY AI AGENT (CẦU NỐI TỰ ĐỘNG HÓA & TRỰC QUAN HÓA) -->
+              <div class="team-agent-col">
+                <div class="agent-clean-card">
+                  <div class="agent-logo-group">
+                    <img src="assets/antigravity_logo.png" alt="Antigravity AI Agent Logo" class="agent-logo-img" onclick="window.zoomSheetImage('assets/antigravity_logo.png', 'Logo Nền Tảng Antigravity AI Agent')" title="Nhấp để xem logo phóng to">
+                    <div class="leader-title-text">
+                      <h4>ANTIGRAVITY <span class="member-badge" style="background:#f3e8ff; color:#6b21a8; border:1px solid #d8b4fe;">AI Core</span></h4>
+                      <span>Hạt Nhân Tự Động Hóa</span>
+                    </div>
+                  </div>
+                  <div class="agent-flow-connector">
+                    <div class="agent-flow-item">
+                      <i class="fa-solid fa-arrow-left" style="color:#7c3aed;"></i>
+                      <span><strong>Đọc Xuyên Vùng:</strong> Gom data Member A + B</span>
+                    </div>
+                    <div class="agent-flow-item">
+                      <i class="fa-solid fa-arrow-right" style="color:#2563eb;"></i>
+                      <span><strong>Nhận Chỉ Đạo:</strong> Key & Prompt từ Leader</span>
+                    </div>
+                    <div class="agent-flow-item">
+                      <i class="fa-solid fa-chart-pie" style="color:#16a34a;"></i>
+                      <span><strong>Vẽ Tự Động:</strong> Render Dashboard 3D</span>
+                    </div>
+                  </div>
+                  <ul class="agent-spec-list">
+                    <li>Dùng <strong>Service Account</strong> duy nhất do Leader cấp.</li>
+                    <li>Vượt qua rào cản phân quyền, đọc dữ liệu 2 bên an toàn.</li>
+                    <li>Tự động tổng hợp và vẽ biểu đồ 3D tại Tab 2.</li>
+                  </ul>
                 </div>
               </div>
 
