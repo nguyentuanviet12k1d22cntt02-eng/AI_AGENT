@@ -584,56 +584,81 @@
     }
     .member-role-card {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 12px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-      transition: border-color 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s ease;
     }
     .member-role-card:hover {
       border-color: #94a3b8;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
     }
-    .member-avatar-box {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #f1f5f9;
+    .member-photo-img {
+      width: 76px;
+      height: 76px;
+      border-radius: 8px;
+      object-fit: cover;
       border: 1px solid #cbd5e1;
-      color: #334155;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
       flex-shrink: 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .member-info {
+      flex: 1;
+      min-width: 0;
     }
     .member-info h4 {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: #0f172a;
-      margin: 0;
+      margin: 0 0 4px 0;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
     }
     .member-badge {
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 2px 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 6px;
       border-radius: 4px;
       font-family: inherit;
     }
-    .badge-shopee { background: #fee2e2; color: #991b1b; }
+    .badge-shopee { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
     .badge-tiktok { background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; }
-    .badge-leader { background: #e0e7ff; color: #3730a3; }
-    .member-info p {
-      font-size: 0.83rem;
-      color: #475569;
-      margin: 6px 0 0 0;
-      line-height: 1.45;
+    .badge-leader { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .member-perm-pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #15803d;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 3px;
+    }
+    .member-subtext {
+      font-size: 0.74rem;
+      color: #64748b;
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .leader-photo-img {
+      width: 76px;
+      height: 76px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid #c7d2fe;
+      flex-shrink: 0;
+      box-shadow: 0 2px 5px rgba(67, 56, 202, 0.12);
     }
 
     /* Khung Trung Tâm: Bảng Tính Google Sheets Phân Quyền Vùng */
@@ -1565,27 +1590,25 @@
             <!-- SƠ ĐỒ KIẾN TRÚC MÔ HÌNH HỆ THỐNG TEAM 3 NGƯỜI (TỐI GIẢN - DỄ NHÌN) -->
             <div class="team-architecture-stage">
               
-              <!-- CỘT TRÁI: 2 THÀNH VIÊN NGHIỆP VỤ (GOOGLE ACCOUNT BÌNH THƯỜNG) -->
+              <!-- CỘT TRÁI: 2 THÀNH VIÊN NGHIỆP VỤ (HÌNH ẢNH MINH HỌA TRỰC QUAN) -->
               <div class="team-members-col">
                 <!-- Member A -->
                 <div class="member-role-card">
-                  <div class="member-avatar-box">
-                    <i class="fa-solid fa-user"></i>
-                  </div>
+                  <img src="assets/member_a_shopee.jpg" alt="Member A Shopee Specialist" class="member-photo-img">
                   <div class="member-info">
                     <h4>Member A <span class="member-badge badge-shopee">Kênh Shopee</span></h4>
-                    <p>Tài khoản Google cá nhân. Được phân quyền <strong>CHỈ SỬA BẢNG 1</strong> (Cột A:F). Bị cấm chỉnh sửa Bảng 2.</p>
+                    <div class="member-perm-pill"><i class="fa-solid fa-circle-check"></i> Chỉ sửa Cột <strong>A ➔ F</strong></div>
+                    <div class="member-subtext"><i class="fa-solid fa-lock" style="color:#dc2626;"></i> Khóa Bảng 2 • Dùng Gmail</div>
                   </div>
                 </div>
 
                 <!-- Member B -->
                 <div class="member-role-card">
-                  <div class="member-avatar-box">
-                    <i class="fa-solid fa-user"></i>
-                  </div>
+                  <img src="assets/member_b_tiktok.jpg" alt="Member B TikTok Shop Specialist" class="member-photo-img">
                   <div class="member-info">
                     <h4>Member B <span class="member-badge badge-tiktok">TikTok Shop</span></h4>
-                    <p>Tài khoản Google cá nhân. Được phân quyền <strong>CHỈ SỬA BẢNG 2</strong> (Cột H:M). Bị cấm chỉnh sửa Bảng 1.</p>
+                    <div class="member-perm-pill"><i class="fa-solid fa-circle-check"></i> Chỉ sửa Cột <strong>H ➔ M</strong></div>
+                    <div class="member-subtext"><i class="fa-solid fa-lock" style="color:#dc2626;"></i> Khóa Bảng 1 • Dùng Gmail</div>
                   </div>
                 </div>
               </div>
@@ -1644,9 +1667,7 @@
               <div class="team-leader-col">
                 <div class="leader-clean-card">
                   <div class="leader-avatar-group">
-                    <div class="leader-avatar-box">
-                      <i class="fa-solid fa-user-shield"></i>
-                    </div>
+                    <img src="assets/leader_cloud_agent.jpg" alt="Leader AI Agent Operator" class="leader-photo-img">
                     <div class="leader-title-text">
                       <h4>LEADER <span class="member-badge badge-leader">Admin Cloud</span></h4>
                       <span>Người Duy Nhất Sở Hữu AI Agent</span>
