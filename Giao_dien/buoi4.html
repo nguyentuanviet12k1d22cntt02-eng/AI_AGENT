@@ -555,36 +555,24 @@
       }
     }
     /* ==========================================================================
-       TEAM LAB: PHÂN QUYỀN VÙNG GOOGLE SHEETS & LEADER AI AGENT (SLIDE 8)
+       TEAM LAB: PHÂN QUYỀN VÙNG GOOGLE SHEETS & LEADER AI AGENT (SLIDE 8) - TỐI GIẢN & DỄ NHÌN
        ========================================================================== */
     .team-lab-container {
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
-      margin-top: 0.8rem;
+      margin-top: 0.6rem;
     }
     .team-architecture-stage {
       display: grid;
-      grid-template-columns: 270px 1fr 290px;
+      grid-template-columns: 280px 1fr 310px;
       gap: 16px;
       align-items: stretch;
-      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-      border: 1px solid #312e81;
-      border-radius: var(--radius-md);
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
       padding: 1.25rem;
-      box-shadow: 0 10px 30px -8px rgba(15, 23, 42, 0.4);
-      position: relative;
-      overflow: hidden;
-    }
-    .team-architecture-stage::before {
-      content: '';
-      position: absolute;
-      top: -60px;
-      left: 30%;
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%);
-      pointer-events: none;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
 
     /* Cột Trái: 2 Members */
@@ -595,97 +583,95 @@
       justify-content: center;
     }
     .member-role-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: var(--radius-sm);
-      padding: 12px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px;
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      transition: all 0.25s ease;
+      gap: 12px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      transition: border-color 0.2s ease;
     }
     .member-role-card:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: #60a5fa;
-      transform: translateX(4px);
+      border-color: #94a3b8;
     }
     .member-avatar-box {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: #1e293b;
-      border: 2px solid #3b82f6;
-      color: #60a5fa;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #334155;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       flex-shrink: 0;
     }
     .member-info h4 {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #0f172a;
       margin: 0;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
     .member-badge {
-      font-size: 0.68rem;
-      font-weight: 800;
-      padding: 2px 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
       border-radius: 4px;
-      font-family: var(--font-mono);
+      font-family: inherit;
     }
-    .badge-shopee { background: #fee2e2; color: #dc2626; }
-    .badge-tiktok { background: #f3e8ff; color: #9333ea; }
+    .badge-shopee { background: #fee2e2; color: #991b1b; }
+    .badge-tiktok { background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; }
+    .badge-leader { background: #e0e7ff; color: #3730a3; }
     .member-info p {
-      font-size: 0.76rem;
-      color: #cbd5e1;
-      margin: 4px 0 0 0;
-      line-height: 1.4;
+      font-size: 0.83rem;
+      color: #475569;
+      margin: 6px 0 0 0;
+      line-height: 1.45;
     }
 
-    /* Khung Trung Tâm: Hộp Đỏ Bảng Tính Google Sheets Phân Quyền Vùng */
-    .team-system-redbox {
-      background: rgba(239, 68, 68, 0.05);
-      border: 2px solid #ef4444;
-      border-radius: var(--radius-sm);
-      padding: 12px;
+    /* Khung Trung Tâm: Bảng Tính Google Sheets Phân Quyền Vùng */
+    .team-system-cleanbox {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      box-shadow: 0 0 25px rgba(239, 68, 68, 0.12) inset;
-      position: relative;
+      gap: 12px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
-    .redbox-header {
+    .cleanbox-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px dashed rgba(239, 68, 68, 0.4);
+      border-bottom: 1px solid #e2e8f0;
       padding-bottom: 8px;
     }
-    .redbox-title {
-      font-size: 0.84rem;
-      font-weight: 800;
-      color: #fca5a5;
+    .cleanbox-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #0f172a;
       display: flex;
       align-items: center;
-      gap: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      gap: 8px;
     }
-    .redbox-ranges-grid {
+    .cleanbox-ranges-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
     }
-    .protected-range-item {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid #334155;
-      border-radius: 8px;
-      padding: 10px;
+    .protected-range-clean {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -697,51 +683,52 @@
     }
     .range-col-tag {
       font-family: var(--font-mono);
-      font-size: 0.74rem;
-      font-weight: 800;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.15);
-      padding: 2px 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1e293b;
+      background: #e2e8f0;
+      padding: 2px 8px;
       border-radius: 4px;
     }
     .range-lock-status {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #fbbf24;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #b45309;
     }
-    .protected-range-item h5 {
+    .protected-range-clean h5 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 2px 0 0 0;
+    }
+    .protected-range-clean p {
       font-size: 0.82rem;
-      font-weight: 700;
-      color: #ffffff;
+      color: #475569;
       margin: 0;
+      line-height: 1.45;
     }
-    .protected-range-item p {
-      font-size: 0.74rem;
-      color: #94a3b8;
-      margin: 0;
-      line-height: 1.35;
-    }
-    .conflict-test-box {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid #ef4444;
+    .conflict-test-clean {
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
       border-radius: 6px;
-      padding: 8px 10px;
-      font-size: 0.74rem;
-      color: #fecaca;
+      padding: 10px 12px;
+      font-size: 0.83rem;
+      color: #92400e;
       display: flex;
-      align-items: center;
-      gap: 8px;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.45;
     }
-    .redbox-dashboard-tab {
-      background: rgba(124, 58, 237, 0.15);
-      border: 1px solid #8b5cf6;
+    .cleanbox-dashboard-tab {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
       border-radius: 6px;
-      padding: 8px 12px;
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.78rem;
-      color: #ddd6fe;
+      font-size: 0.83rem;
+      color: #166534;
     }
 
     /* Cột Phải: Leader */
@@ -750,58 +737,66 @@
       flex-direction: column;
       justify-content: center;
     }
-    .leader-card-highlight {
-      background: rgba(124, 58, 237, 0.18);
-      border: 2px solid #a855f7;
-      border-radius: var(--radius-sm);
-      padding: 12px;
+    .leader-clean-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.25);
+      gap: 12px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
     .leader-avatar-group {
       display: flex;
       align-items: center;
       gap: 10px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 10px;
     }
     .leader-avatar-box {
-      width: 46px;
-      height: 46px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: #3b0764;
-      border: 2px solid #d946ef;
-      color: #f0abfc;
+      background: #e0e7ff;
+      border: 1px solid #c7d2fe;
+      color: #4338ca;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       flex-shrink: 0;
     }
     .leader-title-text h4 {
-      font-size: 0.94rem;
-      font-weight: 800;
-      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #0f172a;
       margin: 0;
     }
     .leader-title-text span {
-      font-size: 0.72rem;
-      color: #e879f9;
-      font-weight: 700;
+      font-size: 0.78rem;
+      color: #4338ca;
+      font-weight: 600;
     }
     .leader-spec-list {
-      font-size: 0.75rem;
-      color: #cbd5e1;
-      line-height: 1.45;
-      padding-left: 1rem;
+      font-size: 0.82rem;
+      color: #334155;
+      line-height: 1.5;
+      padding-left: 1.1rem;
       margin: 0;
+    }
+    .leader-spec-list li {
+      margin-bottom: 6px;
+    }
+    .leader-spec-list li:last-child {
+      margin-bottom: 0;
     }
 
     @media (max-width: 1080px) {
       .team-architecture-stage {
         grid-template-columns: 1fr;
       }
-      .redbox-ranges-grid {
+      .cleanbox-ranges-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -1567,7 +1562,7 @@
           </div>
 
           <div class="team-lab-container">
-            <!-- SƠ ĐỒ KIẾN TRÚC MÔ HÌNH HỆ THỐNG TEAM 3 NGƯỜI (TÁI HIỆN BỐ CỤC PHÁC THẢO) -->
+            <!-- SƠ ĐỒ KIẾN TRÚC MÔ HÌNH HỆ THỐNG TEAM 3 NGƯỜI (TỐI GIẢN - DỄ NHÌN) -->
             <div class="team-architecture-stage">
               
               <!-- CỘT TRÁI: 2 THÀNH VIÊN NGHIỆP VỤ (GOOGLE ACCOUNT BÌNH THƯỜNG) -->
@@ -1575,82 +1570,82 @@
                 <!-- Member A -->
                 <div class="member-role-card">
                   <div class="member-avatar-box">
-                    <i class="fa-solid fa-user-tie"></i>
+                    <i class="fa-solid fa-user"></i>
                   </div>
                   <div class="member-info">
                     <h4>Member A <span class="member-badge badge-shopee">Kênh Shopee</span></h4>
-                    <p>Tài khoản Google cá nhân. Được phân quyền <strong>CHỈ SỬA BẢNG 1</strong> (Cột A:F). Bị cấm đụng vào Bảng 2.</p>
+                    <p>Tài khoản Google cá nhân. Được phân quyền <strong>CHỈ SỬA BẢNG 1</strong> (Cột A:F). Bị cấm chỉnh sửa Bảng 2.</p>
                   </div>
                 </div>
 
                 <!-- Member B -->
                 <div class="member-role-card">
                   <div class="member-avatar-box">
-                    <i class="fa-solid fa-user-tie"></i>
+                    <i class="fa-solid fa-user"></i>
                   </div>
                   <div class="member-info">
                     <h4>Member B <span class="member-badge badge-tiktok">TikTok Shop</span></h4>
-                    <p>Tài khoản Google cá nhân. Được phân quyền <strong>CHỈ SỬA BẢNG 2</strong> (Cột H:M). Bị cấm đụng vào Bảng 1.</p>
+                    <p>Tài khoản Google cá nhân. Được phân quyền <strong>CHỈ SỬA BẢNG 2</strong> (Cột H:M). Bị cấm chỉnh sửa Bảng 1.</p>
                   </div>
                 </div>
               </div>
 
-              <!-- KHUNG GIỮA: HỘP ĐỎ HỆ THỐNG BẢNG TÍNH GOOGLE SHEETS PHÂN QUYỀN VÙNG -->
-              <div class="team-system-redbox">
-                <div class="redbox-header">
-                  <div class="redbox-title">
-                    <i class="fa-solid fa-table"></i> Google Sheets Dùng Chung (Phân Quyền Vùng - Protected Ranges)
+              <!-- KHUNG GIỮA: BẢNG TÍNH GOOGLE SHEETS PHÂN QUYỀN VÙNG (CLEAN BOX) -->
+              <div class="team-system-cleanbox">
+                <div class="cleanbox-header">
+                  <div class="cleanbox-title">
+                    <i class="fa-solid fa-file-excel" style="color:#107c41;"></i> Google Sheets Dùng Chung (Phân Quyền Vùng)
                   </div>
-                  <span style="font-size:0.72rem; color:#fca5a5; font-weight:700;"><i class="fa-solid fa-lock"></i> Data Governance</span>
+                  <span style="font-size:0.75rem; color:#475569; font-weight:600;"><i class="fa-solid fa-shield-halved"></i> Data Protection</span>
                 </div>
 
-                <!-- 2 Bảng phân quyền độc lập trên Sheet 1 -->
-                <div class="redbox-ranges-grid">
-                  <!-- Range 1 -->
-                  <div class="protected-range-item" style="border-left: 3px solid #ef4444;">
+                <!-- 2 Vùng phân quyền độc lập trên Sheet 1 -->
+                <div class="cleanbox-ranges-grid">
+                  <!-- Vùng 1 -->
+                  <div class="protected-range-clean" style="border-left: 3px solid #dc2626;">
                     <div class="range-item-header">
                       <span class="range-col-tag">VÙNG BẢNG 1 (CỘT A ➔ F)</span>
                       <span class="range-lock-status"><i class="fa-solid fa-lock"></i> Khóa dải ô</span>
                     </div>
-                    <h5>Dữ Liệu Đơn Hàng Shopee</h5>
-                    <p>• <strong>Người sửa:</strong> Member A & Leader<br>• <strong>Member B:</strong> ❌ Chặn quyền (Chỉ xem)</p>
+                    <h5>Dữ Liệu Đơn Shopee</h5>
+                    <p>• <strong>Quyền sửa:</strong> Member A & Leader<br>• <strong>Member B:</strong> Chặn quyền sửa (Chỉ xem)</p>
                   </div>
 
-                  <!-- Range 2 -->
-                  <div class="protected-range-item" style="border-left: 3px solid #8b5cf6;">
+                  <!-- Vùng 2 -->
+                  <div class="protected-range-clean" style="border-left: 3px solid #2563eb;">
                     <div class="range-item-header">
                       <span class="range-col-tag">VÙNG BẢNG 2 (CỘT H ➔ M)</span>
                       <span class="range-lock-status"><i class="fa-solid fa-lock"></i> Khóa dải ô</span>
                     </div>
                     <h5>Dữ Liệu Đơn TikTok Shop</h5>
-                    <p>• <strong>Người sửa:</strong> Member B & Leader<br>• <strong>Member A:</strong> ❌ Chặn quyền (Chỉ xem)</p>
+                    <p>• <strong>Quyền sửa:</strong> Member B & Leader<br>• <strong>Member A:</strong> Chặn quyền sửa (Chỉ xem)</p>
                   </div>
                 </div>
 
                 <!-- Tình huống test bảo mật của bài tập -->
-                <div class="conflict-test-box">
-                  <i class="fa-solid fa-triangle-exclamation" style="font-size:1.1rem; color:#ef4444; flex-shrink:0;"></i>
+                <div class="conflict-test-clean">
+                  <i class="fa-solid fa-circle-exclamation" style="font-size:1.1rem; color:#d97706; flex-shrink:0; margin-top:2px;"></i>
                   <div>
-                    <strong>Tình huống kiểm thử bảo mật (Security Test):</strong> Học viên A cố tình gõ đè vào Cột H-M của Bảng 2 ➔ Hệ thống Google Sheets lập tức từ chối và cảnh báo: <em>"Bạn đang cố gắng chỉnh sửa vùng được bảo vệ"</em>.
+                    <strong>Tình huống kiểm thử bảo mật (Security Test):</strong> Học viên A cố tình gõ vào Cột H-M của Bảng 2 ➔ Google Sheets lập tức từ chối và hiện thông báo: <em>"Bạn đang cố gắng chỉnh sửa ô hoặc đối tượng được bảo vệ"</em>.
                   </div>
                 </div>
 
                 <!-- Tab Dashboard 3D do AI Agent kiểm soát -->
-                <div class="redbox-dashboard-tab">
+                <div class="cleanbox-dashboard-tab">
                   <div style="display:flex; align-items:center; gap:8px;">
-                    <i class="fa-solid fa-chart-pie" style="color:#a78bfa;"></i>
-                    <strong>Tab 2: [DASHBOARD_EXECUTIVE_3D]</strong>
+                    <i class="fa-solid fa-chart-column" style="color:#16a34a;"></i>
+                    <strong>Tab 2: [DASHBOARD_3D]</strong>
                   </div>
-                  <span style="font-size:0.72rem; color:#c4b5fd;">🔒 Khóa toàn bộ: Chỉ Leader & AI Agent ghi số liệu</span>
+                  <span style="font-size:0.75rem; color:#15803d; font-weight:600;"><i class="fa-solid fa-lock"></i> Khóa toàn bộ: Chỉ Leader & AI Agent ghi số liệu</span>
                 </div>
               </div>
 
               <!-- CỘT PHẢI: LEADER (SỞ HỮU DUY NHẤT 1 SERVICE ACCOUNT & VẬN HÀNH AI AGENT) -->
               <div class="team-leader-col">
-                <div class="leader-card-highlight">
+                <div class="leader-clean-card">
                   <div class="leader-avatar-group">
                     <div class="leader-avatar-box">
-                      <i class="fa-solid fa-crown"></i>
+                      <i class="fa-solid fa-user-shield"></i>
                     </div>
                     <div class="leader-title-text">
                       <h4>LEADER <span class="member-badge badge-leader">Admin Cloud</span></h4>
@@ -1661,7 +1656,7 @@
                     <li>Khởi tạo Google Cloud Project & Bật Sheets/Drive API.</li>
                     <li>Tạo <strong>1 Service Account duy nhất</strong> (`credential.json`).</li>
                     <li>Tạo file Google Sheet, phân quyền dải ô cho Member A, B.</li>
-                    <li>Vận hành <strong>Antigravity AI Agent</strong>: Đọc cả 2 vùng bị khóa, tự tính toán và vẽ <strong>Dashboard 3D</strong>.</li>
+                    <li>Vận hành <strong>Antigravity AI Agent</strong>: Tự động đọc cả 2 vùng bị khóa, phân tích số liệu và vẽ <strong>Dashboard 3D</strong>.</li>
                   </ul>
                 </div>
               </div>
