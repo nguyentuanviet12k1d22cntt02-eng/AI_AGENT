@@ -246,14 +246,15 @@ document.addEventListener('DOMContentLoaded', () => {
       `
     },
     8: {
-      title: "Thử Thách Master: Xây Dựng Dashboard Kho 3D 20 SKU",
-      time: "20 phút",
+      title: "Bài Tập Thực Chiến Team 3 Người: Phân Quyền Dải Ô & AI Agent Tổng Hợp",
+      time: "25 phút",
       notes: `
-        <p><strong>🎯 Mục tiêu slide:</strong> Học viên tự tay copy Prompt mẫu, dán vào Antigravity IDE và ngắm nhìn Dashboard 3D xuất hiện trên Google Sheets của mình.</p>
+        <p><strong>🎯 Mục tiêu slide:</strong> Hướng dẫn chia nhóm 3 người mô phỏng môi trường doanh nghiệp thực tế: 1 Leader vận hành AI Agent với 1 Service Account duy nhất, 2 Members phụ trách 2 mảng bán hàng riêng biệt.</p>
         <ul>
-          <li><strong>Thực hành ngay:</strong> Yêu cầu học viên bấm nút <strong>"Sao chép Prompt"</strong>, thay thế <code>SPREADSHEET_ID</code> và bấm Run.</li>
-          <li><strong>Đánh giá kết quả:</strong> Kiểm tra xem bảng tính của học viên đã có đủ 4 thẻ KPI, biểu đồ thanh 3D, biểu đồ tròn 3D và định dạng cảnh báo tồn kho chưa.</li>
-          <li><strong>Tổng kết:</strong> Chúc mừng học viên đã chinh phục trọn vẹn năng lực Tự Động Hóa Google Cloud với AI Agent!</li>
+          <li><strong>Bước 1 - Phân quyền dải ô (Protected Ranges):</strong> Leader tạo sheet <code>DON_HANG_TONG_HOP</code>, chia 2 bảng. Cài đặt <em>Data > Protect sheets and ranges</em>: khóa cột A:F chỉ cho Member A sửa, khóa cột H:M chỉ cho Member B sửa.</li>
+          <li><strong>Bước 2 - Tình huống thử nghiệm bảo mật:</strong> Cho Member A cố tình nhập vào cột H:M hoặc Member B gõ vào A:F để quan sát thông báo từ chối truy cập của Google Sheets.</li>
+          <li><strong>Bước 3 - Leader khởi chạy AI Agent:</strong> Chỉ duy nhất Leader sở hữu file JSON Service Account và chạy Antigravity AI Agent. Agent có quyền Editor toàn file nên tự động đọc dữ liệu cả 2 bảng và dựng tab <code>DASHBOARD_3D_CEO</code> với 4 KPI Card cùng 2 biểu đồ BAR_3D & PIE_3D.</li>
+          <li><strong>Tư duy quản trị:</strong> Bảo mật cấp dải ô (Cell-level Security) cho con người nhập liệu kết hợp tự động hóa tập trung (Centralized AI Execution) qua 1 Service Account duy nhất.</li>
         </ul>
       `
     }

@@ -554,8 +554,254 @@
         grid-template-columns: repeat(2, 1fr);
       }
     }
-    @media (max-width: 640px) {
-      .arch-nodes-grid, .debugging-grid {
+    /* ==========================================================================
+       TEAM LAB: PHÂN QUYỀN VÙNG GOOGLE SHEETS & LEADER AI AGENT (SLIDE 8)
+       ========================================================================== */
+    .team-lab-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 0.8rem;
+    }
+    .team-architecture-stage {
+      display: grid;
+      grid-template-columns: 270px 1fr 290px;
+      gap: 16px;
+      align-items: stretch;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      border: 1px solid #312e81;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: 0 10px 30px -8px rgba(15, 23, 42, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .team-architecture-stage::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 30%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Cột Trái: 2 Members */
+    .team-members-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+    }
+    .member-role-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      transition: all 0.25s ease;
+    }
+    .member-role-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #60a5fa;
+      transform: translateX(4px);
+    }
+    .member-avatar-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #1e293b;
+      border: 2px solid #3b82f6;
+      color: #60a5fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .member-info h4 {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .member-badge {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+    }
+    .badge-shopee { background: #fee2e2; color: #dc2626; }
+    .badge-tiktok { background: #f3e8ff; color: #9333ea; }
+    .member-info p {
+      font-size: 0.76rem;
+      color: #cbd5e1;
+      margin: 4px 0 0 0;
+      line-height: 1.4;
+    }
+
+    /* Khung Trung Tâm: Hộp Đỏ Bảng Tính Google Sheets Phân Quyền Vùng */
+    .team-system-redbox {
+      background: rgba(239, 68, 68, 0.05);
+      border: 2px solid #ef4444;
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.12) inset;
+      position: relative;
+    }
+    .redbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed rgba(239, 68, 68, 0.4);
+      padding-bottom: 8px;
+    }
+    .redbox-title {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: #fca5a5;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .redbox-ranges-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .protected-range-item {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .range-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .range-col-tag {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .range-lock-status {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #fbbf24;
+    }
+    .protected-range-item h5 {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+    .protected-range-item p {
+      font-size: 0.74rem;
+      color: #94a3b8;
+      margin: 0;
+      line-height: 1.35;
+    }
+    .conflict-test-box {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #ef4444;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 0.74rem;
+      color: #fecaca;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .redbox-dashboard-tab {
+      background: rgba(124, 58, 237, 0.15);
+      border: 1px solid #8b5cf6;
+      border-radius: 6px;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #ddd6fe;
+    }
+
+    /* Cột Phải: Leader */
+    .team-leader-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .leader-card-highlight {
+      background: rgba(124, 58, 237, 0.18);
+      border: 2px solid #a855f7;
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.25);
+    }
+    .leader-avatar-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .leader-avatar-box {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #3b0764;
+      border: 2px solid #d946ef;
+      color: #f0abfc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .leader-title-text h4 {
+      font-size: 0.94rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0;
+    }
+    .leader-title-text span {
+      font-size: 0.72rem;
+      color: #e879f9;
+      font-weight: 700;
+    }
+    .leader-spec-list {
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+      padding-left: 1rem;
+      margin: 0;
+    }
+
+    @media (max-width: 1080px) {
+      .team-architecture-stage {
+        grid-template-columns: 1fr;
+      }
+      .redbox-ranges-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -1308,124 +1554,184 @@
       </section>
 
       <!-- ======================================================================
-           SLIDE 8: THỬ THÁCH THỰC HÀNH & BỘ PROMPT DOANH NGHIỆP THỰC CHIẾN
+           SLIDE 8: THỬ THÁCH TEAM 3 NGƯỜI: PHÂN QUYỀN VÙNG & HỢP NHẤT AI AGENT 3D
            ====================================================================== -->
       <section class="slide-page" data-slide="8" id="slide-8">
         <div class="slide-content">
           <div class="slide-header">
-            <span class="slide-category-tag tag-primary"><i class="fa-solid fa-trophy"></i> Thử Thách Master AI Agent</span>
-            <h2 class="slide-title">Xây Dựng Dashboard Quản Trị Kho 3D Đa Ngành Hàng (20 SKU)</h2>
+            <span class="slide-category-tag tag-primary"><i class="fa-solid fa-users-gear"></i> Thử Thách Nhóm 3 Người Thực Chiến</span>
+            <h2 class="slide-title">Mô Hình Làm Việc Nhóm: Phân Quyền Vùng Google Sheets & Hợp Nhất Bằng AI Agent 3D</h2>
             <p class="slide-lead">
-              Áp dụng toàn bộ kiến thức Buổi 4: Sử dụng prompt chuẩn doanh nghiệp dưới đây để ra lệnh cho AI Agent tự động tạo lập toàn bộ sổ kho và biểu đồ 3D trên Google Sheets của bạn.
+              Kịch bản chuẩn doanh nghiệp: <strong>Member A</strong> và <strong>Member B</strong> thao tác trên cùng 1 Sheet nhưng bị khóa vùng độc lập (Protected Ranges). <strong>Leader</strong> sở hữu duy nhất 1 Service Account, chỉ đạo <strong>AI Agent</strong> đọc xuyên vùng và render Dashboard 3D tổng hợp.
             </p>
           </div>
 
-          <div class="grid-2-col" style="margin-top: 1rem; gap: 1.5rem;">
-            <!-- Cột trái: Bộ Prompt chuẩn 1-click copy -->
-            <div class="glass-card">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <h3 style="font-size:0.98rem; font-weight:800; color:#0f172a; margin:0; display:flex; align-items:center; gap:6px;">
-                  <i class="fa-solid fa-terminal" style="color:#7c3aed;"></i> Câu Lệnh Prompt Mẫu (1-Click Copy)
-                </h3>
-                <button class="btn-copy-prompt" id="copyPromptBuoi4Btn" title="Sao chép prompt vào bộ nhớ tạm">
-                  <i class="fa-solid fa-copy"></i> Sao chép Prompt
-                </button>
-              </div>
-              <p style="font-size:0.82rem; color:#64748b; margin-bottom:8px;">
-                Dán câu lệnh này vào cửa sổ chat của Antigravity Agent sau khi đã bỏ file <code>credential.json</code> vào thư mục dự án:
-              </p>
-              <div class="prompt-template-container">
-                <div class="prompt-template-header">
-                  <span><i class="fa-solid fa-code"></i> Prompt_Tao_Dashboard_Kho_3D.txt</span>
-                  <span style="color:#a78bfa;">Google Sheets API Automation</span>
+          <div class="team-lab-container">
+            <!-- SƠ ĐỒ KIẾN TRÚC MÔ HÌNH HỆ THỐNG TEAM 3 NGƯỜI (TÁI HIỆN BỐ CỤC PHÁC THẢO) -->
+            <div class="team-architecture-stage">
+              
+              <!-- CỘT TRÁI: 2 THÀNH VIÊN NGHIỆP VỤ (GOOGLE ACCOUNT BÌNH THƯỜNG) -->
+              <div class="team-members-col">
+                <!-- Member A -->
+                <div class="member-role-card">
+                  <div class="member-avatar-box">
+                    <i class="fa-solid fa-user-tie"></i>
+                  </div>
+                  <div class="member-info">
+                    <h4>Member A <span class="member-badge badge-shopee">Kênh Shopee</span></h4>
+                    <p>Tài khoản Google cá nhân. Được phân quyền <strong>CHỈ SỬA BẢNG 1</strong> (Cột A:F). Bị cấm đụng vào Bảng 2.</p>
+                  </div>
                 </div>
-                <pre class="prompt-template-code" id="promptTextBuoi4">Bạn đóng vai trò là Senior Data Engineer & Business Analyst.
-Tôi đã để file khóa xác thực 'credential.json' trong thư mục làm việc và đã chia sẻ quyền Editor trên Google Sheets cho email của Service Account này.
 
-Nhiệm vụ của bạn:
-1. Đọc khóa 'credential.json' và kết nối đến Google Sheets của tôi (Spreadsheet ID: [DÁN_ID_CỦA_BẠN_VÀO_ĐÂY]).
-2. Tạo cấu trúc bảng tính chuyên nghiệp gồm 2 tab:
-   - Tab 1: 'Dashboard_Tong_Quan'
-     + 4 Thẻ KPI trên cùng: Tổng Mã Hàng (SKU), Tổng Giá Trị Tồn Kho (VND), Tỷ Lệ Xuất/Nhập (%), Cảnh Báo Tồn Kho Dưới Định Mức.
-     + 1 Biểu đồ thanh 3D (3D Bar Chart) so sánh biến động Xuất vs Nhập của 5 nhóm ngành hàng.
-     + 1 Biểu đồ tròn 3D (3D Pie Chart) trực quan hóa cơ cấu tỷ trọng giá trị tồn kho.
-   - Tab 2: 'So_Chi_Tiet_Kho'
-     + Bảng dữ liệu 20 SKU gồm: Mã SKU, Tên Sản Phẩm, Nhóm Ngành, Tồn Đầu, Nhập Trong Kỳ, Xuất Trong Kỳ, Tồn Cuối Kỳ, Đơn Giá, Thành Tiền Tồn, Trạng Thái.
-     + Tô màu có điều kiện (Conditional Formatting) màu đỏ nhạt cho các mặt hàng có tồn cuối < 15 đơn vị.
-3. Nếu gặp bất kỳ lỗi nào từ Google Sheets API (đặc biệt là thuộc tính 3D chart), hãy tự phân tích lỗi và sửa lại mã nguồn cho đến khi chạy thành công 100%.</pre>
+                <!-- Member B -->
+                <div class="member-role-card">
+                  <div class="member-avatar-box">
+                    <i class="fa-solid fa-user-tie"></i>
+                  </div>
+                  <div class="member-info">
+                    <h4>Member B <span class="member-badge badge-tiktok">TikTok Shop</span></h4>
+                    <p>Tài khoản Google cá nhân. Được phân quyền <strong>CHỈ SỬA BẢNG 2</strong> (Cột H:M). Bị cấm đụng vào Bảng 1.</p>
+                  </div>
+                </div>
               </div>
+
+              <!-- KHUNG GIỮA: HỘP ĐỎ HỆ THỐNG BẢNG TÍNH GOOGLE SHEETS PHÂN QUYỀN VÙNG -->
+              <div class="team-system-redbox">
+                <div class="redbox-header">
+                  <div class="redbox-title">
+                    <i class="fa-solid fa-table"></i> Google Sheets Dùng Chung (Phân Quyền Vùng - Protected Ranges)
+                  </div>
+                  <span style="font-size:0.72rem; color:#fca5a5; font-weight:700;"><i class="fa-solid fa-lock"></i> Data Governance</span>
+                </div>
+
+                <!-- 2 Bảng phân quyền độc lập trên Sheet 1 -->
+                <div class="redbox-ranges-grid">
+                  <!-- Range 1 -->
+                  <div class="protected-range-item" style="border-left: 3px solid #ef4444;">
+                    <div class="range-item-header">
+                      <span class="range-col-tag">VÙNG BẢNG 1 (CỘT A ➔ F)</span>
+                      <span class="range-lock-status"><i class="fa-solid fa-lock"></i> Khóa dải ô</span>
+                    </div>
+                    <h5>Dữ Liệu Đơn Hàng Shopee</h5>
+                    <p>• <strong>Người sửa:</strong> Member A & Leader<br>• <strong>Member B:</strong> ❌ Chặn quyền (Chỉ xem)</p>
+                  </div>
+
+                  <!-- Range 2 -->
+                  <div class="protected-range-item" style="border-left: 3px solid #8b5cf6;">
+                    <div class="range-item-header">
+                      <span class="range-col-tag">VÙNG BẢNG 2 (CỘT H ➔ M)</span>
+                      <span class="range-lock-status"><i class="fa-solid fa-lock"></i> Khóa dải ô</span>
+                    </div>
+                    <h5>Dữ Liệu Đơn TikTok Shop</h5>
+                    <p>• <strong>Người sửa:</strong> Member B & Leader<br>• <strong>Member A:</strong> ❌ Chặn quyền (Chỉ xem)</p>
+                  </div>
+                </div>
+
+                <!-- Tình huống test bảo mật của bài tập -->
+                <div class="conflict-test-box">
+                  <i class="fa-solid fa-triangle-exclamation" style="font-size:1.1rem; color:#ef4444; flex-shrink:0;"></i>
+                  <div>
+                    <strong>Tình huống kiểm thử bảo mật (Security Test):</strong> Học viên A cố tình gõ đè vào Cột H-M của Bảng 2 ➔ Hệ thống Google Sheets lập tức từ chối và cảnh báo: <em>"Bạn đang cố gắng chỉnh sửa vùng được bảo vệ"</em>.
+                  </div>
+                </div>
+
+                <!-- Tab Dashboard 3D do AI Agent kiểm soát -->
+                <div class="redbox-dashboard-tab">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-chart-pie" style="color:#a78bfa;"></i>
+                    <strong>Tab 2: [DASHBOARD_EXECUTIVE_3D]</strong>
+                  </div>
+                  <span style="font-size:0.72rem; color:#c4b5fd;">🔒 Khóa toàn bộ: Chỉ Leader & AI Agent ghi số liệu</span>
+                </div>
+              </div>
+
+              <!-- CỘT PHẢI: LEADER (SỞ HỮU DUY NHẤT 1 SERVICE ACCOUNT & VẬN HÀNH AI AGENT) -->
+              <div class="team-leader-col">
+                <div class="leader-card-highlight">
+                  <div class="leader-avatar-group">
+                    <div class="leader-avatar-box">
+                      <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <div class="leader-title-text">
+                      <h4>LEADER <span class="member-badge badge-leader">Admin Cloud</span></h4>
+                      <span>Người Duy Nhất Sở Hữu AI Agent</span>
+                    </div>
+                  </div>
+                  <ul class="leader-spec-list">
+                    <li>Khởi tạo Google Cloud Project & Bật Sheets/Drive API.</li>
+                    <li>Tạo <strong>1 Service Account duy nhất</strong> (`credential.json`).</li>
+                    <li>Tạo file Google Sheet, phân quyền dải ô cho Member A, B.</li>
+                    <li>Vận hành <strong>Antigravity AI Agent</strong>: Đọc cả 2 vùng bị khóa, tự tính toán và vẽ <strong>Dashboard 3D</strong>.</li>
+                  </ul>
+                </div>
+              </div>
+
             </div>
 
-            <!-- Cột phải: Data Preview & Resource Hub -->
-            <div class="glass-card">
-              <h3 style="font-size:0.98rem; font-weight:800; color:#0f172a; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
-                <i class="fa-solid fa-table-list" style="color:#2563eb;"></i> Dữ Liệu Tồn Kho Mẫu 5 Nhóm Ngành Hàng
-              </h3>
-              <div class="data-preview-table-wrapper" style="max-height:220px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:6px;">
-                <table class="data-preview-table">
-                  <thead>
-                    <tr>
-                      <th>Mã SKU</th>
-                      <th>Tên Sản Phẩm</th>
-                      <th>Nhóm Ngành</th>
-                      <th>Tồn Cuối</th>
-                      <th>Trạng Thái</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><code>SKU-001</code></td>
-                      <td>Tai nghe Bluetooth ANC</td>
-                      <td>Điện tử</td>
-                      <td>45</td>
-                      <td><span class="badge-channel badge-safe">Bình thường</span></td>
-                    </tr>
-                    <tr>
-                      <td><code>SKU-002</code></td>
-                      <td>Bàn phím cơ không dây</td>
-                      <td>Điện tử</td>
-                      <td><strong>8</strong></td>
-                      <td><span class="badge-channel badge-risk">Cảnh báo tồn</span></td>
-                    </tr>
-                    <tr>
-                      <td><code>SKU-003</code></td>
-                      <td>Sữa rửa mặt tràm trà</td>
-                      <td>Mỹ phẩm</td>
-                      <td>120</td>
-                      <td><span class="badge-channel badge-safe">Bình thường</span></td>
-                    </tr>
-                    <tr>
-                      <td><code>SKU-004</code></td>
-                      <td>Serum dưỡng ẩm B5</td>
-                      <td>Mỹ phẩm</td>
-                      <td><strong>12</strong></td>
-                      <td><span class="badge-channel badge-risk">Cảnh báo tồn</span></td>
-                    </tr>
-                    <tr>
-                      <td><code>SKU-005</code></td>
-                      <td>Cà phê hạt Robusta 1kg</td>
-                      <td>Thực phẩm</td>
-                      <td>85</td>
-                      <td><span class="badge-channel badge-safe">Bình thường</span></td>
-                    </tr>
-                  </tbody>
-                </table>
+            <!-- PHẦN DƯỚI: PROMPT CỦA LEADER & QUY TRÌNH 4 BƯỚC THỰC HÀNH -->
+            <div class="grid-2-col" style="gap: 1.25rem;">
+              
+              <!-- Cột trái: Prompt chuẩn 1-click copy cho Leader -->
+              <div class="glass-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                  <h3 style="font-size:0.95rem; font-weight:800; color:#0f172a; margin:0; display:flex; align-items:center; gap:6px;">
+                    <i class="fa-solid fa-terminal" style="color:#7c3aed;"></i> Prompt Chỉ Huy Cho Leader (1-Click Copy)
+                  </h3>
+                  <button class="btn-copy-prompt" id="copyPromptBuoi4Btn" title="Sao chép prompt vào bộ nhớ tạm">
+                    <i class="fa-solid fa-copy"></i> Sao chép Prompt
+                  </button>
+                </div>
+                <div class="prompt-template-container">
+                  <div class="prompt-template-header">
+                    <span><i class="fa-solid fa-code"></i> Prompt_Leader_Hop_Nhat_3D.txt</span>
+                    <span style="color:#a78bfa;">Service Account Executive Automation</span>
+                  </div>
+                  <pre class="prompt-template-code" id="promptTextBuoi4">Bạn đóng vai trò là Senior Data Engineer phụ trách tự động hóa cho Ban Quản Trị.
+Tôi là Leader dự án, đã cấp quyền Editor cho Service Account 'credential.json' vào Google Sheet ID: [DÁN_SPREADSHEET_ID_CỦA_NHÓM].
+
+Bảng tính gồm Sheet 1 mang tên 'So_Theo_Doi_Chung' với 2 vùng dữ liệu do 2 nhân viên nhập:
+- Vùng Shopee: Cột A đến F (Do Member A phụ trách)
+- Vùng TikTok Shop: Cột H đến M (Do Member B phụ trách)
+
+Nhiệm vụ của bạn:
+1. Đọc dữ liệu đồng thời từ cả 2 vùng Bảng 1 (Cột A:F) và Bảng 2 (Cột H:M) trên Sheet 'So_Theo_Doi_Chung'.
+2. Tạo mới một Sheet có tên 'DASHBOARD_EXECUTIVE_3D' và thiết lập:
+   - 4 Thẻ KPI trên cùng: Tổng Doanh Thu 2 Kênh, Tổng Đơn Thành Công, Tỷ Lệ Hoàn Hủy Bình Quân, Tỷ Lệ Đóng Góp Doanh Thu (Shopee vs TikTok).
+   - 1 Biểu đồ thanh 3D (3D Bar Chart) so sánh chi tiết Doanh Thu và Chi Phí Ads giữa 2 kênh.
+   - 1 Biểu đồ tròn 3D (3D Pie Chart) trực quan hóa cơ cấu tỷ trọng doanh số.
+3. Nếu phát hiện Google Sheets API trả về lỗi thuộc tính 3D, hãy tự động sửa mã nguồn (Self-debugging) sang Bar 3D và Pie 3D để đảm bảo chạy thành công 100%.</pre>
+                </div>
               </div>
 
-              <!-- HỘP TẢI TÀI NGUYÊN MẪU -->
-              <div style="margin-top:14px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
-                <div style="font-size:0.85rem; font-weight:700; color:#0f172a; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
-                  <i class="fa-solid fa-folder-open" style="color:#7c3aed;"></i> Bộ Tài Nguyên Thực Hành Đính Kèm:
-                </div>
-                <div style="display:flex; flex-direction:column; gap:6px;">
-                  <div style="font-size:0.8rem; color:#475569;">
-                    • <strong>Tệp video hướng dẫn:</strong> <code>assets/Video_Huong_Dan_AI_Agent_Google_Sheets_3D_Fragrance_Remix.mp4</code>
+              <!-- Cột phải: 4 Bước triển khai bài tập nhóm -->
+              <div class="glass-card">
+                <h3 style="font-size:0.95rem; font-weight:800; color:#0f172a; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+                  <i class="fa-solid fa-list-check" style="color:#2563eb;"></i> Quy Trình 4 Bước Phối Hợp Team 3 Người
+                </h3>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                  <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
+                    <strong style="color:#7c3aed; font-size:0.84rem; display:block;">Bước 1 (Leader): Tạo Hạ Tầng & Phân Quyền Vùng</strong>
+                    <span style="font-size:0.78rem; color:#64748b; line-height:1.4; display:block; margin-top:2px;">
+                      Leader bật Sheets API, tạo 1 Service Account. Tạo Google Sheet, bôi đen Cột A:F khóa chỉ cho Member A sửa; bôi đen Cột H:M khóa chỉ cho Member B sửa.
+                    </span>
                   </div>
-                  <div style="font-size:0.8rem; color:#475569;">
-                    • <strong>Sơ đồ kiến trúc:</strong> <code>assets/so_do_kien_truc_buoi_4.png</code>
+                  <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
+                    <strong style="color:#2563eb; font-size:0.84rem; display:block;">Bước 2 (Member A & B): Nhập Liệu Đồng Thời</strong>
+                    <span style="font-size:0.78rem; color:#64748b; line-height:1.4; display:block; margin-top:2px;">
+                      Member A mở Google Sheet nhập liệu Shopee vào Cột A:F. Member B mở cùng lúc nhập liệu TikTok vào Cột H:M mà không sợ xung đột.
+                    </span>
                   </div>
-                  <div style="font-size:0.8rem; color:#475569;">
-                    • <strong>Phụ đề tiếng Việt:</strong> <code>assets/subtitles_buoi4.srt</code> (37 mốc chi tiết)
+                  <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:8px; padding:10px 12px;">
+                    <strong style="color:#b91c1c; font-size:0.84rem; display:block;">Bước 3 (Thử Thách Bảo Mật): Thử Nghiệm Chặn Quyền</strong>
+                    <span style="font-size:0.78rem; color:#7f1d1d; line-height:1.4; display:block; margin-top:2px;">
+                      Member A thử gõ sang ô của Member B ➔ Quan sát thông báo lỗi từ Google Sheets. Đây là minh chứng cốt lõi của nguyên tắc Bảo Vệ Vùng.
+                    </span>
+                  </div>
+                  <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px 12px;">
+                    <strong style="color:#15803d; font-size:0.84rem; display:block;">Bước 4 (Leader): Kích Hoạt AI Agent Hợp Nhất 3D</strong>
+                    <span style="font-size:0.78rem; color:#14532d; line-height:1.4; display:block; margin-top:2px;">
+                      Leader chạy Antigravity Agent, nạp prompt. AI Agent tự động đọc cả 2 vùng bị khóa và tạo ra Dashboard 3D hoàn chỉnh cho cả nhóm chiêm ngưỡng.
+                    </span>
                   </div>
                 </div>
               </div>
