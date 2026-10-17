@@ -1610,7 +1610,7 @@
               <div class="team-members-col">
                 <!-- Member A -->
                 <div class="member-role-card">
-                  <img src="assets/member_a_shopee.jpg" alt="Member A Shopee Specialist" class="member-photo-img">
+                  <img src="assets/member_a_shopee.jpg" alt="Member A Shopee Specialist" class="member-photo-img" onclick="window.zoomSheetImage('assets/member_a_shopee.jpg', 'Member A: Chuyên viên Kênh Shopee (Chỉ sửa Cột A ➔ F)')" title="Nhấp để xem ảnh to">
                   <div class="member-info">
                     <h4>Member A <span class="member-badge badge-shopee">Kênh Shopee</span></h4>
                     <div class="member-perm-pill"><i class="fa-solid fa-circle-check"></i> Chỉ sửa Cột <strong>A ➔ F</strong></div>
@@ -1620,7 +1620,7 @@
 
                 <!-- Member B -->
                 <div class="member-role-card">
-                  <img src="assets/member_b_tiktok.jpg" alt="Member B TikTok Shop Specialist" class="member-photo-img">
+                  <img src="assets/member_b_tiktok.jpg" alt="Member B TikTok Shop Specialist" class="member-photo-img" onclick="window.zoomSheetImage('assets/member_b_tiktok.jpg', 'Member B: Chuyên viên TikTok Shop (Chỉ sửa Cột H ➔ M)')" title="Nhấp để xem ảnh to">
                   <div class="member-info">
                     <h4>Member B <span class="member-badge badge-tiktok">TikTok Shop</span></h4>
                     <div class="member-perm-pill"><i class="fa-solid fa-circle-check"></i> Chỉ sửa Cột <strong>H ➔ M</strong></div>
@@ -1637,24 +1637,24 @@
                   </div>
                   <!-- BỘ CHUYỂN TAB 1 (SỔ DỮ LIỆU) VÀ TAB 2 (DASHBOARD 3D) -->
                   <div class="sheet-tab-switcher">
-                    <button class="sheet-tab-btn active" id="tabBtnRanges" title="Xem Tab 1: Sổ Dữ Liệu Phân Quyền">
+                    <button type="button" class="sheet-tab-btn active" id="tabBtnRanges" onclick="window.switchSheetTab('ranges')" title="Xem Tab 1: Sổ Dữ Liệu Phân Quyền">
                       <i class="fa-solid fa-table-cells"></i> Tab 1: Sổ Phân Quyền
                     </button>
-                    <button class="sheet-tab-btn" id="tabBtnDashboard" title="Xem Tab 2: Dashboard 3D Hợp Nhất">
+                    <button type="button" class="sheet-tab-btn" id="tabBtnDashboard" onclick="window.switchSheetTab('dashboard')" title="Xem Tab 2: Dashboard 3D Hợp Nhất">
                       <i class="fa-solid fa-chart-pie"></i> Tab 2: Dashboard 3D
                     </button>
                   </div>
                 </div>
 
                 <!-- HÌNH ẢNH TAB 1: MÔ PHỎNG GOOGLE SHEETS PHÂN QUYỀN VÙNG THỰC TẾ -->
-                <div class="sheets-mockup-wrapper" id="paneRanges">
-                  <img src="assets/google_sheets_protected_ranges.png" alt="Mô phỏng Tab 1: Google Sheets Phân Quyền Vùng (Protected Ranges Cột A:F và H:M)" class="sheets-mockup-img zoomable-img" title="Nhấp vào hình để phóng to toàn màn hình">
+                <div class="sheets-mockup-wrapper" id="paneRanges" onclick="window.zoomSheetImage('assets/google_sheets_protected_ranges.png', 'Mô phỏng Tab 1: Google Sheets Phân Quyền Vùng (Protected Ranges Cột A:F và H:M)')" title="Nhấp vào hình để phóng to toàn màn hình">
+                  <img src="assets/google_sheets_protected_ranges.png" alt="Mô phỏng Tab 1: Google Sheets Phân Quyền Vùng (Protected Ranges Cột A:F và H:M)" class="sheets-mockup-img zoomable-img">
                   <div class="sheets-mockup-badge"><i class="fa-solid fa-magnifying-glass-plus"></i> Tab 1 • Nhấp hình để phóng to chi tiết</div>
                 </div>
 
                 <!-- HÌNH ẢNH TAB 2: DASHBOARD 3D ĐIỀU HÀNH DO AI AGENT RENDER -->
-                <div class="sheets-mockup-wrapper" id="paneDashboard" style="display:none;">
-                  <img src="assets/google_sheets_dashboard_3d.png" alt="Mô phỏng Tab 2: Executive 3D Dashboard do AI Agent tự động render" class="sheets-mockup-img zoomable-img" title="Nhấp vào hình để phóng to toàn màn hình">
+                <div class="sheets-mockup-wrapper" id="paneDashboard" style="display:none;" onclick="window.zoomSheetImage('assets/google_sheets_dashboard_3d.png', 'Mô phỏng Tab 2: Executive 3D Dashboard do AI Agent tự động render')" title="Nhấp vào hình để phóng to toàn màn hình">
+                  <img src="assets/google_sheets_dashboard_3d.png" alt="Mô phỏng Tab 2: Executive 3D Dashboard do AI Agent tự động render" class="sheets-mockup-img zoomable-img">
                   <div class="sheets-mockup-badge" style="background:rgba(88, 28, 135, 0.85);"><i class="fa-solid fa-magnifying-glass-plus"></i> Tab 2 Dashboard 3D • Nhấp hình để phóng to chi tiết</div>
                 </div>
 
@@ -1680,7 +1680,7 @@
               <div class="team-leader-col">
                 <div class="leader-clean-card">
                   <div class="leader-avatar-group">
-                    <img src="assets/leader_cloud_agent.jpg" alt="Leader AI Agent Operator" class="leader-photo-img">
+                    <img src="assets/leader_cloud_agent.jpg" alt="Leader AI Agent Operator" class="leader-photo-img" onclick="window.zoomSheetImage('assets/leader_cloud_agent.jpg', 'Leader: Quản trị viên Google Cloud & Vận hành AI Agent')" title="Nhấp để xem ảnh to">
                     <div class="leader-title-text">
                       <h4>LEADER <span class="member-badge badge-leader">Admin Cloud</span></h4>
                       <span>Người Duy Nhất Sở Hữu AI Agent</span>
@@ -1792,20 +1792,77 @@ Nhiệm vụ của bạn:
 
   </div>
 
-  <!-- LIGHTBOX MODAL PHÓNG TO SƠ ĐỒ GỐC -->
-  <div class="image-lightbox" id="diagramLightbox" aria-hidden="true">
+  <!-- LIGHTBOX MODAL PHÓNG TO HÌNH ẢNH TOÀN MÀN HÌNH -->
+  <div class="image-lightbox" id="diagramLightbox" aria-hidden="true" onclick="if(event.target === this) window.closeZoomModal()">
     <div class="lightbox-content">
-      <button class="lightbox-close-btn" id="closeLightboxBtn" title="Đóng xem ảnh (Esc)">
+      <button type="button" class="lightbox-close-btn" id="closeLightboxBtn" onclick="window.closeZoomModal()" title="Đóng xem ảnh (Phím Esc)">
         <i class="fa-solid fa-xmark"></i>
       </button>
-      <img src="assets/so_do_kien_truc_buoi_4.png" alt="Sơ đồ kiến trúc tích hợp AI Agent Google Sheets 3D" id="lightboxImg">
-      <div class="lightbox-caption">
-        <i class="fa-solid fa-diagram-project"></i> Sơ Đồ Kiến Trúc Tích Hợp: Google Cloud Platform ➔ Service Account JSON ➔ Antigravity AI Agent ➔ Google Sheets 3D
+      <img src="assets/google_sheets_protected_ranges.png" alt="Xem chi tiết hình ảnh" id="lightboxImg">
+      <div class="lightbox-caption" id="lightboxCaptionText">
+        <i class="fa-solid fa-magnifying-glass-plus"></i> Xem chi tiết hình ảnh
       </div>
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
-  <script src="buoi4.js?v=20261016_1800"></script>
+  <!-- INLINE GLOBAL SCRIPTS: ĐẢM BẢO HOẠT ĐỘNG 100% KỂ CẢ KHI FILE JS BỊ CACHE -->
+  <script>
+    // 1. Chuyển đổi Tab 1 & Tab 2 trong Khung Bảng Tính
+    window.switchSheetTab = function(tabName) {
+      var btnRanges = document.getElementById('tabBtnRanges');
+      var btnDashboard = document.getElementById('tabBtnDashboard');
+      var paneRanges = document.getElementById('paneRanges');
+      var paneDashboard = document.getElementById('paneDashboard');
+
+      if (tabName === 'dashboard') {
+        if (btnDashboard) btnDashboard.classList.add('active');
+        if (btnRanges) btnRanges.classList.remove('active');
+        if (paneDashboard) paneDashboard.style.display = 'block';
+        if (paneRanges) paneRanges.style.display = 'none';
+      } else {
+        if (btnRanges) btnRanges.classList.add('active');
+        if (btnDashboard) btnDashboard.classList.remove('active');
+        if (paneRanges) paneRanges.style.display = 'block';
+        if (paneDashboard) paneDashboard.style.display = 'none';
+      }
+    };
+
+    // 2. Phóng to hình ảnh toàn màn hình qua Lightbox
+    window.zoomSheetImage = function(imgSrc, captionText) {
+      var modal = document.getElementById('diagramLightbox');
+      var modalImg = document.getElementById('lightboxImg');
+      var modalCaption = document.getElementById('lightboxCaptionText');
+      
+      if (!modal) return;
+      if (modalImg && imgSrc) {
+        modalImg.src = imgSrc;
+      }
+      if (modalCaption && captionText) {
+        modalCaption.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i> ' + captionText;
+      }
+      
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+    };
+
+    // 3. Đóng Lightbox
+    window.closeZoomModal = function() {
+      var modal = document.getElementById('diagramLightbox');
+      if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    };
+
+    // 4. Phím tắt Esc để đóng modal
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        window.closeZoomModal();
+      }
+    });
+  </script>
+
+  <!-- JAVASCRIPT LOGIC NGOÀI (CẬP NHẬT VERSION QUERY CHỐNG CACHE TRÌNH DUYỆT) -->
+  <script src="buoi4.js?v=20261017_1125_fix"></script>
 </body>
 </html>
