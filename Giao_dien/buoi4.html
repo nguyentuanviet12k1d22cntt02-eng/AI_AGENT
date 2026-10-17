@@ -565,8 +565,8 @@
     }
     .team-architecture-stage {
       display: grid;
-      grid-template-columns: 240px 1fr 230px 260px;
-      gap: 14px;
+      grid-template-columns: 280px 1fr 310px;
+      gap: 16px;
       align-items: stretch;
       background: #f8fafc;
       border: 1px solid #cbd5e1;
@@ -833,130 +833,11 @@
       margin-bottom: 0;
     }
 
-    /* Khối Trung Gian: Antigravity AI Agent Hub (Thiết Kế Trực Quan - Không Dùng Nhiều Chữ) */
-    .team-agent-col {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .agent-clean-card {
-      background: #ffffff;
-      border: 1.5px solid #c4b5fd;
-      border-radius: 10px;
-      padding: 14px 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 10px;
-      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.08);
-      position: relative;
-      transition: all 0.25s ease;
-    }
-    .agent-clean-card:hover {
-      border-color: #8b5cf6;
-      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.14);
-    }
-    .agent-logo-showcase {
-      width: 100px;
-      height: 100px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%);
-      border: 1.5px solid #ddd6fe;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.12);
-      cursor: zoom-in;
-      position: relative;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .agent-logo-showcase:hover {
-      transform: scale(1.06);
-      box-shadow: 0 6px 18px rgba(124, 58, 237, 0.22);
-    }
-    .agent-hero-logo {
-      width: 78px;
-      height: 78px;
-      object-fit: contain;
-      display: block;
-    }
-    .agent-zoom-badge {
-      position: absolute;
-      bottom: -6px;
-      background: #7c3aed;
-      color: #ffffff;
-      font-size: 0.65rem;
-      font-weight: 700;
-      padding: 1px 7px;
-      border-radius: 10px;
-      white-space: nowrap;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-      pointer-events: none;
-    }
-    .agent-title-block {
-      margin-top: 2px;
-    }
-    .agent-title-block h4 {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #1e1b4b;
-      letter-spacing: 0.5px;
-      margin: 0 0 2px 0;
-    }
-    .agent-tag-badge {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #6d28d9;
-      background: #ede9fe;
-      border: 1px solid #ddd6fe;
-      padding: 2px 8px;
-      border-radius: 10px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .agent-flow-connector {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      width: 100%;
-      margin-top: 2px;
-    }
-    .agent-flow-item {
-      font-size: 0.74rem;
-      font-weight: 700;
-      border-radius: 6px;
-      padding: 6px 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      line-height: 1.25;
-      text-align: left;
-    }
-    .agent-flow-item.flow-read {
-      background: #f5f3ff;
-      color: #5b21b6;
-      border: 1px solid #ddd6fe;
-    }
-    .agent-flow-item.flow-lead {
-      background: #eff6ff;
-      color: #1e40af;
-      border: 1px solid #bfdbfe;
-    }
-    .agent-flow-item.flow-chart {
-      background: #f0fdf4;
-      color: #166534;
-      border: 1px solid #bbf7d0;
-    }
-
-    @media (max-width: 1280px) {
+    @media (max-width: 1080px) {
       .team-architecture-stage {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
       }
-    }
-    @media (max-width: 768px) {
-      .team-architecture-stage {
+      .cleanbox-ranges-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -1795,38 +1676,6 @@
                 </div>
               </div>
 
-              <!-- CỘT GIỮA-PHẢI: ANTIGRAVITY AI AGENT (KHỐI LOGO & CẦU NỐI TRỰC QUAN) -->
-              <div class="team-agent-col">
-                <div class="agent-clean-card">
-                  <!-- KHỐI LOGO ANTIGRAVITY NỔI BẬT (CLICK ĐỂ PHÓNG TO) -->
-                  <div class="agent-logo-showcase" onclick="window.zoomSheetImage('assets/antigravity_logo.png', 'Logo Nền Tảng Antigravity AI Agent (Google DeepMind)')" title="Nhấp vào hình để phóng to Logo Antigravity">
-                    <img src="assets/antigravity_logo.png" alt="Antigravity AI Agent Logo" class="agent-hero-logo zoomable-img">
-                    <div class="agent-zoom-badge"><i class="fa-solid fa-magnifying-glass-plus"></i> Antigravity</div>
-                  </div>
-
-                  <div class="agent-title-block">
-                    <h4>ANTIGRAVITY</h4>
-                    <span class="agent-tag-badge"><i class="fa-solid fa-bolt"></i> AI Agent Hub</span>
-                  </div>
-
-                  <!-- 3 LUỒNG TƯƠNG TÁC HỆ THỐNG TRỰC QUAN (KHÔNG DÙNG VĂN BẢN DÀI DÒNG) -->
-                  <div class="agent-flow-connector">
-                    <div class="agent-flow-item flow-read">
-                      <i class="fa-solid fa-arrow-left" style="color:#7c3aed;"></i>
-                      <span>Đọc xuyên 2 vùng (A & B)</span>
-                    </div>
-                    <div class="agent-flow-item flow-lead">
-                      <i class="fa-solid fa-arrow-right" style="color:#2563eb;"></i>
-                      <span>Nhận Service Account & Prompt</span>
-                    </div>
-                    <div class="agent-flow-item flow-chart">
-                      <i class="fa-solid fa-chart-column" style="color:#16a34a;"></i>
-                      <span>Tự động vẽ Dashboard 3D</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <!-- CỘT PHẢI: LEADER (SỞ HỮU DUY NHẤT 1 SERVICE ACCOUNT & VẬN HÀNH AI AGENT) -->
               <div class="team-leader-col">
                 <div class="leader-clean-card">
@@ -1838,10 +1687,10 @@
                     </div>
                   </div>
                   <ul class="leader-spec-list">
-                    <li>Khởi tạo GCP & Bật Sheets/Drive API.</li>
-                    <li>Tạo <strong>1 Service Account duy nhất</strong>.</li>
-                    <li>Phân quyền dải ô cho Member A, B.</li>
-                    <li>Vận hành <strong>Antigravity AI Agent</strong> vẽ <strong>Dashboard 3D</strong>.</li>
+                    <li>Khởi tạo Google Cloud Project & Bật Sheets/Drive API.</li>
+                    <li>Tạo <strong>1 Service Account duy nhất</strong> (`credential.json`).</li>
+                    <li>Tạo file Google Sheet, phân quyền dải ô cho Member A, B.</li>
+                    <li>Vận hành <strong>Antigravity AI Agent</strong>: Tự động đọc cả 2 vùng bị khóa, phân tích số liệu và vẽ <strong>Dashboard 3D</strong>.</li>
                   </ul>
                 </div>
               </div>
