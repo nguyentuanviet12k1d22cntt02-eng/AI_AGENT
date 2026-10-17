@@ -340,18 +340,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 4. LIGHTBOX MODAL CHO SƠ ĐỒ GỐC
+  // 4. LIGHTBOX MODAL PHÓNG TO HÌNH ẢNH LINH HOẠT
   // ==========================================
   const diagramLightbox = document.getElementById('diagramLightbox');
   const openDiagramModalBtn = document.getElementById('openDiagramModalBtn');
   const previewDiagramCard = document.getElementById('previewDiagramCard');
   const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = diagramLightbox ? diagramLightbox.querySelector('.lightbox-caption') : null;
 
-  function openLightbox() {
-    if (diagramLightbox) {
-      diagramLightbox.classList.add('active');
-      diagramLightbox.setAttribute('aria-hidden', 'false');
+  function openLightbox(customSrc, customCaption) {
+    if (!diagramLightbox) return;
+    
+    if (lightboxImg) {
+      lightboxImg.src = customSrc || 'assets/so_do_kien_truc_buoi_4.png';
     }
+    if (lightboxCaption) {
+      lightboxCaption.innerHTML = customCaption || '<i class="fa-solid fa-magnifying-glass-plus"></i> Xem chi tiết hình ảnh sơ đồ';
+    }
+
+    diagramLightbox.classList.add('active');
+    diagramLightbox.setAttribute('aria-hidden', 'false');
   }
 
   function closeLightbox() {
@@ -362,10 +371,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (openDiagramModalBtn) {
-    openDiagramModalBtn.addEventListener('click', openLightbox);
+    openDiagramModalBtn.addEventListener('click', () => openLightbox('assets/so_do_kien_truc_buoi_4.png', '<i class="fa-solid fa-diagram-project"></i> Sơ Đồ Kiến Trúc Tích Hợp: Google Cloud Platform ➔ Service Account ➔ Antigravity AI Agent ➔ Google Sheets 3D'));
   }
   if (previewDiagramCard) {
-    previewDiagramCard.addEventListener('click', openLightbox);
+    previewDiagramCard.addEventListener('click', () => openLightbox('assets/so_do_kien_truc_buoi_4.png', '<i class="fa-solid fa-diagram-project"></i> Sơ Đồ Kiến Trúc Tích Hợp: Google Cloud Platform ➔ Service Account ➔ Antigravity AI Agent ➔ Google Sheets 3D'));
   }
   if (closeLightboxBtn) {
     closeLightboxBtn.addEventListener('click', closeLightbox);
@@ -375,6 +384,44 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target === diagramLightbox) {
         closeLightbox();
       }
+    });
+  }
+
+  // Tự động gắn sự kiện phóng to cho tất cả hình ảnh có class .zoomable-img hoặc ảnh đại diện
+  document.querySelectorAll('.zoomable-img, .member-photo-img, .leader-photo-img').forEach(img => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const src = img.getAttribute('src');
+      const alt = img.getAttribute('alt') || 'Chi tiết hình ảnh';
+      const caption = `<i class="fa-solid fa-magnifying-glass-plus"></i> ${alt}`;
+      openLightbox(src, caption);
+    });
+  });
+
+  // ==========================================
+  // 4.1. CHUYỂN ĐỔI TAB 1 (PHÂN QUYỀN) & TAB 2 (DASHBOARD 3D) SLIDE 8
+  // ==========================================
+  const tabBtnRanges = document.getElementById('tabBtnRanges');
+  const tabBtnDashboard = document.getElementById('tabBtnDashboard');
+  const paneRanges = document.getElementById('paneRanges');
+  const paneDashboard = document.getElementById('paneDashboard');
+
+  if (tabBtnRanges && tabBtnDashboard && paneRanges && paneDashboard) {
+    tabBtnRanges.addEventListener('click', (e) => {
+      e.preventDefault();
+      tabBtnRanges.classList.add('active');
+      tabBtnDashboard.classList.remove('active');
+      paneRanges.style.display = 'block';
+      paneDashboard.style.display = 'none';
+    });
+
+    tabBtnDashboard.addEventListener('click', (e) => {
+      e.preventDefault();
+      tabBtnDashboard.classList.add('active');
+      tabBtnRanges.classList.remove('active');
+      paneDashboard.style.display = 'block';
+      paneRanges.style.display = 'none';
     });
   }
 

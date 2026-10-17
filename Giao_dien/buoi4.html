@@ -687,6 +687,36 @@
       align-items: center;
       gap: 8px;
     }
+    .sheet-tab-switcher {
+      display: flex;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 3px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .sheet-tab-btn {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #64748b;
+      background: transparent;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+    .sheet-tab-btn:hover {
+      color: #0f172a;
+    }
+    .sheet-tab-btn.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
     .sheets-mockup-wrapper {
       border: 1px solid #cbd5e1;
       border-radius: 8px;
@@ -694,12 +724,14 @@
       background: #ffffff;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
       position: relative;
+      cursor: zoom-in;
     }
     .sheets-mockup-img {
       width: 100%;
       height: auto;
       display: block;
       transition: transform 0.25s ease;
+      cursor: zoom-in;
     }
     .sheets-mockup-img:hover {
       transform: scale(1.008);
@@ -1601,15 +1633,29 @@
               <div class="team-system-cleanbox">
                 <div class="cleanbox-header">
                   <div class="cleanbox-title">
-                    <i class="fa-solid fa-file-excel" style="color:#107c41;"></i> Google Sheets Dùng Chung (Phân Quyền Vùng)
+                    <i class="fa-solid fa-file-excel" style="color:#107c41;"></i> Google Sheets Dùng Chung
                   </div>
-                  <span style="font-size:0.75rem; color:#475569; font-weight:600;"><i class="fa-solid fa-shield-halved"></i> Data Protection</span>
+                  <!-- BỘ CHUYỂN TAB 1 (SỔ DỮ LIỆU) VÀ TAB 2 (DASHBOARD 3D) -->
+                  <div class="sheet-tab-switcher">
+                    <button class="sheet-tab-btn active" id="tabBtnRanges" title="Xem Tab 1: Sổ Dữ Liệu Phân Quyền">
+                      <i class="fa-solid fa-table-cells"></i> Tab 1: Sổ Phân Quyền
+                    </button>
+                    <button class="sheet-tab-btn" id="tabBtnDashboard" title="Xem Tab 2: Dashboard 3D Hợp Nhất">
+                      <i class="fa-solid fa-chart-pie"></i> Tab 2: Dashboard 3D
+                    </button>
+                  </div>
                 </div>
 
-                <!-- HÌNH ẢNH MÔ PHỎNG GOOGLE SHEETS PHÂN QUYỀN VÙNG THỰC TẾ -->
-                <div class="sheets-mockup-wrapper">
-                  <img src="assets/google_sheets_protected_ranges.png" alt="Mô phỏng Google Sheets Phân Quyền Vùng Protected Ranges" class="sheets-mockup-img">
-                  <div class="sheets-mockup-badge"><i class="fa-solid fa-shield-halved"></i> Google Sheets Data Governance • Protected Ranges</div>
+                <!-- HÌNH ẢNH TAB 1: MÔ PHỎNG GOOGLE SHEETS PHÂN QUYỀN VÙNG THỰC TẾ -->
+                <div class="sheets-mockup-wrapper" id="paneRanges">
+                  <img src="assets/google_sheets_protected_ranges.png" alt="Mô phỏng Tab 1: Google Sheets Phân Quyền Vùng (Protected Ranges Cột A:F và H:M)" class="sheets-mockup-img zoomable-img" title="Nhấp vào hình để phóng to toàn màn hình">
+                  <div class="sheets-mockup-badge"><i class="fa-solid fa-magnifying-glass-plus"></i> Tab 1 • Nhấp hình để phóng to chi tiết</div>
+                </div>
+
+                <!-- HÌNH ẢNH TAB 2: DASHBOARD 3D ĐIỀU HÀNH DO AI AGENT RENDER -->
+                <div class="sheets-mockup-wrapper" id="paneDashboard" style="display:none;">
+                  <img src="assets/google_sheets_dashboard_3d.png" alt="Mô phỏng Tab 2: Executive 3D Dashboard do AI Agent tự động render" class="sheets-mockup-img zoomable-img" title="Nhấp vào hình để phóng to toàn màn hình">
+                  <div class="sheets-mockup-badge" style="background:rgba(88, 28, 135, 0.85);"><i class="fa-solid fa-magnifying-glass-plus"></i> Tab 2 Dashboard 3D • Nhấp hình để phóng to chi tiết</div>
                 </div>
 
                 <!-- Tình huống test bảo mật của bài tập -->
